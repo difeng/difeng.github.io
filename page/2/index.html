@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>difeng</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="difeng">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="difeng">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="difeng">
+<meta name="twitter:description">
+  
+    <link rel="alternative" href="/atom.xml" title="difeng" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">difeng</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-mysql-replication" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/06/27/mysql-replication/" class="article-date">
+  <time datetime="2015-06-27T15:11:28.000Z" itemprop="datePublished">2015-06-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/27/mysql-replication/">mysql主从复制+读写分离</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.先在master上创建一个用户用来复制。<br>mysql&gt; grant replication slave,replication client on <em>.</em> to repl@’%’ identified by ‘repl’ with grant option<br>mysql&gt; flush privileges;</p>
+<p>master的my.cnf配置文件配置如下：<br>server_id = 1<br>log_bin = mysql-bin<br>从服务器的my.cnf配置如下：<br>log_bin = mysql-bin<br>relay_log = mysql-relay-log<br>log_slave_updates = 1<br>read_only = 1<br>在从服务器上执行如下命令：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; change master to master_host=<span class="string">'cherry'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_user = <span class="string">'repl'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_password=<span class="string">'repl'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_<span class="built_in">log</span>_file=<span class="string">'mysql-bin.000001'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_<span class="built_in">log</span>_pos=<span class="number">0</span>;</span><br></pre></td></tr></table></figure></p>
+<p>启动slave：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; start slave;</span><br><span class="line"></span><br><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>查看slave状态:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mysql&gt; show slave status\G;</span><br><span class="line"></span><br><span class="line">*************************** <span class="number">1</span>. row ***************************</span><br><span class="line"></span><br><span class="line">               Slave_IO_State: Waiting <span class="keyword">for</span> master to send event</span><br><span class="line"></span><br><span class="line">                  Master_Host: cherry</span><br><span class="line"></span><br><span class="line">                  Master_User: repl</span><br><span class="line"></span><br><span class="line">                  Master_Port: <span class="number">3306</span></span><br><span class="line"></span><br><span class="line">                Connect_Retry: <span class="number">60</span></span><br><span class="line"></span><br><span class="line">              Master_Log_File: mysql-bin.<span class="number">000001</span></span><br><span class="line"></span><br><span class="line">          Read_Master_Log_Pos: <span class="number">107</span></span><br><span class="line"></span><br><span class="line">               Relay_Log_File: mysql-relay-log.<span class="number">000002</span></span><br><span class="line"></span><br><span class="line">                Relay_Log_Pos: <span class="number">253</span></span><br><span class="line"></span><br><span class="line">        Relay_Master_Log_File: mysql-bin.<span class="number">000001</span></span><br><span class="line"></span><br><span class="line">             Slave_IO_Running: Yes</span><br><span class="line"></span><br><span class="line">            Slave_SQL_Running: Yes</span><br><span class="line"></span><br><span class="line">              Replicate_Do_DB: </span><br><span class="line"></span><br><span class="line">          Replicate_Ignore_DB:</span><br></pre></td></tr></table></figure></p>
+<p>查看复制线程：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show processlist\G;</span><br><span class="line"></span><br><span class="line">*************************** <span class="number">1</span>. row ***************************</span><br><span class="line"></span><br><span class="line">     Id: <span class="number">40</span></span><br><span class="line"></span><br><span class="line">   User: root</span><br><span class="line"></span><br><span class="line">   Host: localhost</span><br><span class="line"></span><br><span class="line">     db: NULL</span><br><span class="line"></span><br><span class="line">Command: Query</span><br><span class="line"></span><br><span class="line">   Time: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  State: NULL</span><br><span class="line"></span><br><span class="line">   Info: show processlist</span><br><span class="line"></span><br><span class="line">*************************** <span class="number">2</span>. row ***************************</span><br><span class="line"></span><br><span class="line">     Id: <span class="number">41</span></span><br><span class="line"></span><br><span class="line">   User: system user</span><br><span class="line"></span><br><span class="line">   Host: </span><br><span class="line"></span><br><span class="line">     db: NULL</span><br><span class="line"></span><br><span class="line">Command: Connect</span><br><span class="line"></span><br><span class="line">   Time: <span class="number">185</span></span><br><span class="line"></span><br><span class="line">  State: Waiting <span class="keyword">for</span> master to send event</span><br><span class="line"></span><br><span class="line">   Info: NULL</span><br></pre></td></tr></table></figure></p>
+<p>在master上新建一个数据库test;<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show databases;</span><br><span class="line"></span><br><span class="line">+-------------------------+</span><br><span class="line"></span><br><span class="line">| Database                |</span><br><span class="line"></span><br><span class="line">+-------------------------+</span><br><span class="line"></span><br><span class="line">| information_schema      |</span><br><span class="line"></span><br><span class="line">| dbtest                  |</span><br><span class="line"></span><br><span class="line">| mysql                   |</span><br><span class="line"></span><br><span class="line">| performance_schema      |</span><br><span class="line"></span><br><span class="line">| qualityinsight          |</span><br><span class="line"></span><br><span class="line">| qualityinsight_wireless |</span><br><span class="line"></span><br><span class="line">+-------------------------+</span><br><span class="line"></span><br><span class="line"><span class="number">6</span> rows <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; create database <span class="built_in">test</span>;</span><br><span class="line"></span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>在slave上查看：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show databases;</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line">| Database           |</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line">| information_schema |</span><br><span class="line"></span><br><span class="line">| mysql              |</span><br><span class="line"></span><br><span class="line">| performance_schema |</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line"><span class="number">3</span> rows <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; show databases;</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line">| Database           |</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line">| information_schema |</span><br><span class="line"></span><br><span class="line">| mysql              |</span><br><span class="line"></span><br><span class="line">| performance_schema |</span><br><span class="line"></span><br><span class="line">| <span class="built_in">test</span>               |</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line"><span class="number">4</span> rows <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<h3 id="下载并安装mysql-proxy">下载并安装mysql-proxy</h3><p> 去mysql官网下载mysql-proxy的二进制安装文件<br>将其解压到<br>/usr/local下然后将其添加到系统path中去<br>例如:<br>下载的包为mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit.gz<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span></span><br><span class="line">tar -xvf mysql-proxy-<span class="number">0.8</span>.<span class="number">5</span>-linux-glibc2.<span class="number">3</span>-x86-<span class="number">64</span>bit.gz</span><br></pre></td></tr></table></figure></p>
+<p>解压后为：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/mysql-proxy-<span class="number">0.8</span>.<span class="number">5</span>-linux-glibc2.<span class="number">3</span>-x86-<span class="number">64</span>bit</span><br></pre></td></tr></table></figure></p>
+<p>配置系统path,编辑/etc/profile文件，在其中添加path。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/mysql-proxy-<span class="number">0.8</span>.<span class="number">5</span>-linux-glibc2.<span class="number">3</span>-x86-<span class="number">64</span>bit/bin</span><br></pre></td></tr></table></figure></p>
+<p>使path生效<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure></p>
+<p>使用命令：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql-proxy --help</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; grant all on *.* to <span class="string">'proxy'</span>@<span class="string">'cherry'</span> identified by <span class="string">'proxy'</span>;</span><br><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.07</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; flush privileges;</span><br><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.02</span> sec)</span><br></pre></td></tr></table></figure>
+<p>启动mysql-proxy，并加载读写分离脚本splitting.lua<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql-proxy --proxy-address=cherry:<span class="number">4040</span> --proxy-backend-addresses=cherry:<span class="number">3306</span> --proxy-read-only-backend-addresses=dizi:<span class="number">3306</span> --proxy-lua-script=/usr/<span class="built_in">local</span>/mysql-proxy/share/doc/mysql-proxy/rw-splitting.lua</span><br><span class="line"><span class="number">2015</span>-<span class="number">06</span>-<span class="number">28</span> <span class="number">00</span>:<span class="number">12</span>:<span class="number">50</span>: (critical) plugin proxy <span class="number">0.8</span>.<span class="number">5</span> started</span><br></pre></td></tr></table></figure></p>
+<p>测试读写分离</p>
+<p>1.连接代理<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">~$ mysql -uproxy -p -h cherry -P <span class="number">4040</span></span><br><span class="line"></span><br><span class="line">mysql&gt; create database <span class="built_in">test</span>;</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.02</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; use <span class="built_in">test</span></span><br><span class="line">Database changed</span><br><span class="line"></span><br><span class="line">mysql&gt; create table `<span class="built_in">test</span>_webpage`(   `id` bigint(<span class="number">20</span>) NOT NULL AUTO_INCREMENT COMMENT <span class="string">'表id'</span>, `name` varchar(<span class="number">50</span>) DEFAULT NULL,    KEY `id` (`id`) );ERROR <span class="number">1050</span> (<span class="number">42</span>S01): Table <span class="string">'test_webpage'</span> already exists</span><br><span class="line">mysql&gt; create table `student`(   `id` bigint(<span class="number">20</span>) NOT NULL AUTO_INCREMENT COMMENT <span class="string">'表i'</span>, `name` varchar(<span class="number">50</span>) DEFAULT NULL,    KEY `id` (`id`) );</span><br><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.10</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; insert into student values(<span class="number">1</span>,<span class="string">'apple'</span>);</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.12</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+-------+</span><br><span class="line">| id | name  |</span><br><span class="line">+----+-------+</span><br><span class="line">|  <span class="number">1</span> | apple |</span><br><span class="line">+----+-------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>2.登上slave<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| <span class="built_in">test</span>               |</span><br><span class="line">+--------------------+</span><br><span class="line"><span class="number">3</span> rows <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; use <span class="built_in">test</span></span><br><span class="line">Database changed</span><br><span class="line"></span><br><span class="line">mysql&gt; show tables;</span><br><span class="line">+----------------+</span><br><span class="line">| Tables_<span class="keyword">in</span>_<span class="built_in">test</span> |</span><br><span class="line">+----------------+</span><br><span class="line">| student        |</span><br><span class="line">+----------------+</span><br><span class="line"><span class="number">1</span> rows <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+-------+</span><br><span class="line">| id | name  |</span><br><span class="line">+----+-------+</span><br><span class="line">|  <span class="number">1</span> | apple |</span><br><span class="line">+----+-------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>3.停掉slave上的复制线程<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; slave stop;&#10;Query OK, 0 rows affected (0.09 sec)</span><br></pre></td></tr></table></figure></p>
+<p>4.在连接的代理端，向student表中添加一条数据<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into student values(<span class="number">2</span>,<span class="string">'cherry'</span>);</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.12</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>5.到student中查看<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+-------+</span><br><span class="line">| id | name  |</span><br><span class="line">+----+-------+</span><br><span class="line">|  <span class="number">1</span> | apple |</span><br><span class="line">+----+-------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>说明写是在master上执行的</p>
+<p>在代理端查询</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from test.student;</span><br><span class="line">+----+-------+</span><br><span class="line">| id | name  |</span><br><span class="line">+----+-------+</span><br><span class="line">|  <span class="number">1</span> | apple |</span><br><span class="line">+----+-------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>说明是从从服务器上查的</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/06/27/mysql-replication/" data-id="ciiyiwyfq000bl4pr53y2l92x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-dubbo-study" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/06/27/dubbo-study/" class="article-date">
+  <time datetime="2015-06-27T08:56:53.000Z" itemprop="datePublished">2015-06-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/27/dubbo-study/">Dubbo框架的使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-_构建dubbo的源码开发环境">1. 构建dubbo的源码开发环境</h3><p>从github上将整个dubbo项目全克隆下来<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/alibaba/dubbo.git</span><br></pre></td></tr></table></figure></p>
+<p>往eclipse中导入dubbo工程时要保证eclipse已经安装好了maven插件，并且你本地也已经装了maven。<br>在eclipse中通过import maven project将dubbo导入到eclipse中的工作空间中。导入好的dubbo项目如下图所示，有些项目中有红叉是因为xml中关于dubbo的前缀不识别的问题。<br>Dubbo整个大项目结构如下：</p>
+<p><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_1.png" alt=""><br>源码环境建好后，我们可以将dubbo的管理平台admin工程打包成war包供我们以下使用。<br>dubbo官网建议使用zookeeper作为注册中心。所以我们得上apache官网下载，下载链接如下：<br><a href="http://apache.mirrors.pair.com/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz" target="_blank" rel="external">http://apache.mirrors.pair.com/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz</a></p>
+<h3 id="2-_搭建注册中心">2. 搭建注册中心</h3><ol>
+<li>将下载好的zookeeper解压，将解压后的config目录下的zoo_sample.cfg的配置文件重命名为zoo.cfg。<br>启动注册中心：<br>进入到zookeeper的bin目录下<br>Windows下直接输入：zkServer.cmd<br>Linux下: sh  zkServer.sh  start<br>启动后可以看到如下信息,至于日志和配置文件的路径和其中参数调整就不多说了，可以参考样例进行调整。<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_2.png" alt=""><h3 id="3-_管理平台的服务启动">3. 管理平台的服务启动</h3>将打包好的dubbo-admin.war放到tomcat6的webapp下，启动tomcat6，tomcat6的启动就不多说了。<br>admin启动后：<br>访问admin可以被看到如下的admin界面：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_3.png" alt=""><br>输入用户名：root,密码root，具体用户配置可去admin的配置文件dubbo.properties里<br>去配置</li>
+</ol>
+<p>登陆后dubbo的首页<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_4.png" alt=""><br>这时去看提供者和消费者列表，可以看到都是空的。</p>
+<h3 id="4-_启动服务监控者">4. 启动服务监控者</h3><p>在eclipse中启动给出额dubbo-monitor-simple，注意该项目是放在jetty中运行的。<br>在test下启动监控服务之前，先修改jetty的端口以免和之前的admin的服务端口冲突。<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_7.png" alt=""><br>监控服务启动后,访问地址如下：<br><a href="http://127.0.0.1:8081/" target="_blank" rel="external">http://127.0.0.1:8081/</a><br>进入到监控服务<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_8.png" alt=""></p>
+<h3 id="5-_启动服务提供者">5. 启动服务提供者</h3><p>在eclipse中启动dubbo给出的dubbo-demo-provider，<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_9.png" alt=""><br>启动provider之前得改一test下的dubbo.properties文件中的注册中心的地址，修改为本地的zookeeper的地址。<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_10.png" alt=""><br>启动服务提供者后，可以看到服务注册到zookeeper上：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_11.png" alt=""><br>到admin平台可看到此服务<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_12.png" alt=""></p>
+<h3 id="6-_启动服务消费者">6. 启动服务消费者</h3><p>在eclipse中启动dubbo给出的dubbo-demo-consumer，<br>启动之前和服务提供者一样，先修改一下服务注册方的地址为本地zookeeper的地址<br>在test下启动consumer,可以看到消费者成功调用服务提供者的服务。</p>
+<p><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_13.png" alt=""><br>此时可以到admin平台看到此消费者<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_14.png" alt=""><br>到监控平台可以看到所有的服务提供者，消费者，监控者等等信息。<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_8.png" alt=""><br>可以看到注册中心的信息<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_16.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/06/27/dubbo-study/" data-id="ciiyiwygt000jl4prktwnfsck" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-mysql-partitions" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/06/21/mysql-partitions/" class="article-date">
+  <time datetime="2015-06-21T15:23:12.000Z" itemprop="datePublished">2015-06-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/21/mysql-partitions/">mysql的分区的使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="myswql分区的类型有如下几种：">myswql分区的类型有如下几种：</h3><h4 id="1-range分区">1.range分区</h4><p>按变化的区间将表分成不同区块，使用VALUES LESS THAN操作符来进行定义变化的区间，这些区间要连续且不重复<br>例如：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table `student`(&#10;  `id` bigint(20) NOT NULL,&#10;  `name` varchar(255) DEFAULT NULL,&#10;  `age` int(3),&#10;  `store_id` int(11)&#10;)&#10;partition by range(`id`)(&#10;    PARTITION p0 VALUES LESS THAN (6),&#10;    PARTITION p1 VALUES LESS THAN (11),&#10;    PARTITION p2 VALUES LESS THAN (16),&#10;    PARTITION p3 VALUES LESS THAN (21)&#10;);</span><br></pre></td></tr></table></figure></p>
+<p>最好做法是再分一个最小上界的分区,当数据范围不在前面的分区时，将数据放到此分区下，以后通过重新分区再将此分区分为几个固定区间和一个最小上界区间。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`student`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> range(<span class="string">`id`</span>)(</span><br><span class="line">    <span class="keyword">PARTITION</span> p0 <span class="keyword">VALUES</span> LESS THAN (<span class="number">6</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p1 <span class="keyword">VALUES</span> LESS THAN (<span class="number">11</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p2 <span class="keyword">VALUES</span> LESS THAN (<span class="number">16</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p3 <span class="keyword">VALUES</span> LESS THAN (<span class="number">21</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pmax <span class="keyword">VALUES</span> LESS THAN MAXVALUE </span><br><span class="line">);</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="2-LIST分区">2.LIST分区</h4><p>list分区是基于列值去匹配一个离散集合中的值来进行选择。<br>离散集合也可以用一个表达式来确定。<br>例如：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`student`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">PARTITION</span> <span class="keyword">BY</span> LIST(store_id) (</span><br><span class="line">    <span class="keyword">PARTITION</span> pNorth <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">3</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">17</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pEast <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">19</span>,<span class="number">20</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pWest <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">4</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">18</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pCentral <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">7</span>,<span class="number">8</span>,<span class="number">15</span>,<span class="number">16</span>)</span><br><span class="line">);</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="3-columns分区">3.columns分区</h4><p>与range和list不同的是columns允许分区键使用多个列，columns配合range和list使用的。<br>例如：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`student`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> range <span class="keyword">columns</span>(<span class="string">`id`</span>,<span class="string">`store_id`</span>)(</span><br><span class="line">    <span class="keyword">PARTITION</span> p0 <span class="keyword">VALUES</span> LESS THAN (<span class="number">6</span>,<span class="number">10</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p1 <span class="keyword">VALUES</span> LESS THAN (<span class="number">11</span>,<span class="number">20</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p2 <span class="keyword">VALUES</span> LESS THAN (<span class="number">16</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p3 <span class="keyword">VALUES</span> LESS THAN (<span class="number">21</span>,<span class="number">40</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pmax <span class="keyword">VALUES</span> LESS THAN (MAXVALUE,MAXVALUE)</span><br><span class="line">);</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="4-hash分区">4.hash分区</h4><p>通过指定规则，将数据均匀地分布到各个区中<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`students`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> hash(<span class="string">`id`</span>)</span><br><span class="line">partitions <span class="number">10</span></span></span><br></pre></td></tr></table></figure></p>
+<p>上面的sql将建表student并根据hash（id）将表分为10个分区，通过hash(<code>id</code>)将数据平均到各个分区中。</p>
+<h3 id="mysql子分区使用">mysql子分区使用</h3><h4 id="1-建表：">1.建表：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`test_sub_partition`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">BIGINT</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT COMMENT <span class="string">'表id'</span>,</span><br><span class="line">  <span class="string">`other_key`</span> <span class="built_in">BIGINT</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`value`</span> <span class="built_in">BIGINT</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`test_time`</span> DATETIME <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">   <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">INNODB</span> AUTO_INCREMENT=<span class="number">1058080</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8</span><br><span class="line">  <span class="keyword">PARTITION</span> <span class="keyword">BY</span> RANGE (<span class="keyword">TO_DAYS</span>(<span class="string">`test_time`</span>))</span><br><span class="line">  SUBPARTITION <span class="keyword">BY</span> HASH(other_key)</span><br><span class="line">  SUBPARTITIONS <span class="number">10</span></span><br><span class="line">  (</span><br><span class="line"> <span class="keyword">PARTITION</span> p20150616 <span class="keyword">VALUES</span> LESS THAN (<span class="number">736131</span>),</span><br><span class="line"> <span class="keyword">PARTITION</span> p20150617 <span class="keyword">VALUES</span> LESS THAN (<span class="number">736132</span>),</span><br><span class="line"> <span class="keyword">PARTITION</span> pmax <span class="keyword">VALUES</span> LESS THAN MAXVALUE)</span></span><br></pre></td></tr></table></figure>
+<p> 主分区以“test_time”进行range分区，一天分一个区，在每个主分区下再以(other_key%10)进行子分区，是数据均匀放到每个子分区,也就是说other_key%10余几就放到哪个分区里。<br>分区后可以去mysql的数据库目录下进行查看，由于上面为指定子分区名称，所以子分区名称组织是这样的：主分区名称+sp+序号</p>
+<p>通过从数据库schema里面也可查出相关此表的分区信息<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> table_name,partition_name,subpartition_name,partition_method,subpartition_method,partition_expression,subpartition_expression,partition_description <span class="keyword">FROM</span> INFORMATION_SCHEMA.PARTITIONS <span class="keyword">WHERE</span> TABLE_NAME=<span class="string">'test_sub_partition'</span>;</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://7xawio.com1.z0.glb.clouddn.com/mysql_subpartitions.png" alt="img"> </p>
+<h4 id="2-插入数据">2.插入数据</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`test_sub_partition`</span>(other_key,test_time) <span class="keyword">VALUES</span>(<span class="number">0</span>,<span class="string">'2015-06-16'</span>),(<span class="number">1</span>,<span class="string">'2015-06-17'</span>),(<span class="number">2</span>,<span class="string">'2015-06-16'</span>),(<span class="number">3</span>,<span class="string">'2015-06-17'</span>),(<span class="number">4</span>,<span class="string">'2015-06-16'</span>),(<span class="number">5</span>,<span class="string">'2015-06-17'</span>),(<span class="number">6</span>,<span class="string">'2015-06-16'</span>),(<span class="number">7</span>,<span class="string">'2015-06-17'</span>),(<span class="number">8</span>,<span class="string">'2015-06-16'</span>),(<span class="number">9</span>,<span class="string">'2015-06-17'</span>),(<span class="number">10</span>,<span class="string">'2015-06-16'</span>),(<span class="number">11</span>,<span class="string">'2015-06-17'</span>),(<span class="number">12</span>,<span class="string">'2015-06-16'</span>),(<span class="number">13</span>,<span class="string">'2015-06-17'</span>),(<span class="number">14</span>,<span class="string">'2015-06-16'</span>),(<span class="number">15</span>,<span class="string">'2015-06-17'</span>),(<span class="number">16</span>,<span class="string">'2015-06-16'</span>),(<span class="number">17</span>,<span class="string">'2015-06-17'</span>),(<span class="number">18</span>,<span class="string">'2015-06-16'</span>),(<span class="number">19</span>,<span class="string">'2015-06-17'</span>),(<span class="number">20</span>,<span class="string">'2015-06-16'</span>),(<span class="number">21</span>,<span class="string">'2015-06-17'</span>),(<span class="number">22</span>,<span class="string">'2015-06-16'</span>),(<span class="number">23</span>,<span class="string">'2015-06-17'</span>),(<span class="number">24</span>,<span class="string">'2015-06-16'</span>),(<span class="number">25</span>,<span class="string">'2015-06-17'</span>),(<span class="number">26</span>,<span class="string">'2015-06-16'</span>),(<span class="number">27</span>,<span class="string">'2015-06-17'</span>),(<span class="number">28</span>,<span class="string">'2015-06-16'</span>),(<span class="number">29</span>,<span class="string">'2015-06-17'</span>),(<span class="number">30</span>,<span class="string">'2015-06-16'</span>),(<span class="number">31</span>,<span class="string">'2015-06-17'</span>),(<span class="number">32</span>,<span class="string">'2015-06-16'</span>),(<span class="number">33</span>,<span class="string">'2015-06-17'</span>),(<span class="number">34</span>,<span class="string">'2015-06-16'</span>),(<span class="number">35</span>,<span class="string">'2015-06-17'</span>),(<span class="number">36</span>,<span class="string">'2015-06-16'</span>),(<span class="number">37</span>,<span class="string">'2015-06-17'</span>),(<span class="number">38</span>,<span class="string">'2015-06-16'</span>),(<span class="number">39</span>,<span class="string">'2015-06-17'</span>),(<span class="number">40</span>,<span class="string">'2015-06-16'</span>),(<span class="number">41</span>,<span class="string">'2015-06-17'</span>),(<span class="number">42</span>,<span class="string">'2015-06-16'</span>),(<span class="number">43</span>,<span class="string">'2015-06-17'</span>),(<span class="number">44</span>,<span class="string">'2015-06-16'</span>),(<span class="number">45</span>,<span class="string">'2015-06-17'</span>),(<span class="number">46</span>,<span class="string">'2015-06-16'</span>),(<span class="number">47</span>,<span class="string">'2015-06-17'</span>),(<span class="number">48</span>,<span class="string">'2015-06-16'</span>),(<span class="number">49</span>,<span class="string">'2015-06-17'</span>),(<span class="number">50</span>,<span class="string">'2015-06-16'</span>),(<span class="number">51</span>,<span class="string">'2015-06-17'</span>),(<span class="number">52</span>,<span class="string">'2015-06-16'</span>),(<span class="number">53</span>,<span class="string">'2015-06-17'</span>),(<span class="number">54</span>,<span class="string">'2015-06-16'</span>),(<span class="number">55</span>,<span class="string">'2015-06-17'</span>),(<span class="number">56</span>,<span class="string">'2015-06-16'</span>),(<span class="number">57</span>,<span class="string">'2015-06-17'</span>),(<span class="number">58</span>,<span class="string">'2015-06-16'</span>),(<span class="number">59</span>,<span class="string">'2015-06-17'</span>),(<span class="number">60</span>,<span class="string">'2015-06-16'</span>),(<span class="number">61</span>,<span class="string">'2015-06-17'</span>),(<span class="number">62</span>,<span class="string">'2015-06-16'</span>),(<span class="number">63</span>,<span class="string">'2015-06-17'</span>),(<span class="number">64</span>,<span class="string">'2015-06-16'</span>),(<span class="number">65</span>,<span class="string">'2015-06-17'</span>),(<span class="number">66</span>,<span class="string">'2015-06-16'</span>),(<span class="number">67</span>,<span class="string">'2015-06-17'</span>),(<span class="number">68</span>,<span class="string">'2015-06-16'</span>),(<span class="number">69</span>,<span class="string">'2015-06-17'</span>),(<span class="number">70</span>,<span class="string">'2015-06-16'</span>),(<span class="number">71</span>,<span class="string">'2015-06-17'</span>),(<span class="number">72</span>,<span class="string">'2015-06-16'</span>),(<span class="number">73</span>,<span class="string">'2015-06-17'</span>),(<span class="number">74</span>,<span class="string">'2015-06-16'</span>),(<span class="number">75</span>,<span class="string">'2015-06-17'</span>),(<span class="number">76</span>,<span class="string">'2015-06-16'</span>),(<span class="number">77</span>,<span class="string">'2015-06-17'</span>),(<span class="number">78</span>,<span class="string">'2015-06-16'</span>),(<span class="number">79</span>,<span class="string">'2015-06-17'</span>),(<span class="number">80</span>,<span class="string">'2015-06-16'</span>),(<span class="number">81</span>,<span class="string">'2015-06-17'</span>),(<span class="number">82</span>,<span class="string">'2015-06-16'</span>),(<span class="number">83</span>,<span class="string">'2015-06-17'</span>),(<span class="number">84</span>,<span class="string">'2015-06-16'</span>),(<span class="number">85</span>,<span class="string">'2015-06-17'</span>),(<span class="number">86</span>,<span class="string">'2015-06-16'</span>),(<span class="number">87</span>,<span class="string">'2015-06-17'</span>),(<span class="number">88</span>,<span class="string">'2015-06-16'</span>),(<span class="number">89</span>,<span class="string">'2015-06-17'</span>),(<span class="number">90</span>,<span class="string">'2015-06-16'</span>),(<span class="number">91</span>,<span class="string">'2015-06-17'</span>),(<span class="number">92</span>,<span class="string">'2015-06-16'</span>),(<span class="number">93</span>,<span class="string">'2015-06-17'</span>),(<span class="number">94</span>,<span class="string">'2015-06-16'</span>),(<span class="number">95</span>,<span class="string">'2015-06-17'</span>),(<span class="number">96</span>,<span class="string">'2015-06-16'</span>),(<span class="number">97</span>,<span class="string">'2015-06-17'</span>),(<span class="number">98</span>,<span class="string">'2015-06-16'</span>),(<span class="number">99</span>,<span class="string">'2015-06-17'</span>)</span></span><br></pre></td></tr></table></figure>
+<p>3.验证<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">EXPLAIN</span> PARTITIONS <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> test_sub_partition <span class="keyword">WHERE</span> test_time= <span class="string">'2015-06-16'</span> <span class="keyword">AND</span> other_key <span class="keyword">IN</span> (<span class="number">1</span>,<span class="number">11</span>,<span class="number">21</span>,<span class="number">31</span>,<span class="number">41</span>,<span class="number">51</span>,<span class="number">61</span>,<span class="number">71</span>,<span class="number">81</span>,<span class="number">91</span>)</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://7xawio.com1.z0.glb.clouddn.com/mysql_subpartitions_result_01.png" alt="img"><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">EXPLAIN</span> PARTITIONS <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> test_sub_partition <span class="keyword">WHERE</span> test_time= <span class="string">'2015-06-16'</span> <span class="keyword">AND</span> other_key <span class="keyword">IN</span> (<span class="number">2</span>,<span class="number">12</span>,<span class="number">22</span>,<span class="number">32</span>,<span class="number">42</span>,<span class="number">52</span>,<span class="number">62</span>,<span class="number">72</span>,<span class="number">82</span>,<span class="number">92</span>)</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://7xawio.com1.z0.glb.clouddn.com/mysql_subpartitions_result_02.png" alt="img"> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/06/21/mysql-partitions/" data-id="ciiyiwyfs000cl4pr6d44c79a" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-reverseList" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/06/21/reverseList/" class="article-date">
+  <time datetime="2015-06-21T15:17:52.000Z" itemprop="datePublished">2015-06-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/21/reverseList/">单向链表的反转</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="单向链表的反转">单向链表的反转</h4><p>今天偶尔看到一个关于单链表反转的问题，说是用递归实现，提起了我的兴趣，记得当初校招找工作的时候，笔试经常会考，不过当时都是用迭代来做的，没有想过用递归来实现。以下是我的两种实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListReverse</span> </span>&#123;</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * 递归实现</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Node <span class="title">reverseByRecursive</span><span class="params">(Node h)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(h == <span class="keyword">null</span> || h.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> h;</span><br><span class="line">		&#125;</span><br><span class="line">		Node nh = reverseByRecursive(h.next);</span><br><span class="line">		h.next.next = h;</span><br><span class="line">		h.next = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">return</span> nh;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * 迭代实现</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Node <span class="title">reverseByIteration</span><span class="params">(Node h)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(h == <span class="keyword">null</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Node preNode = <span class="keyword">null</span>;</span><br><span class="line">		Node curNode = h;</span><br><span class="line">		<span class="keyword">while</span>(curNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">			Node next = curNode.next;</span><br><span class="line">			curNode.next = preNode;</span><br><span class="line">			preNode = curNode;</span><br><span class="line">			curNode = next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> preNode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> len = <span class="number">10</span>;</span><br><span class="line">		Node h = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">		Node curNode = h;</span><br><span class="line">		<span class="keyword">while</span>(curNode != <span class="keyword">null</span> &amp;&amp; i &lt; len)&#123;</span><br><span class="line">			curNode.id = i;</span><br><span class="line">			curNode.next = i == len - <span class="number">1</span>?<span class="keyword">null</span>:<span class="keyword">new</span> Node();</span><br><span class="line">			curNode = curNode.next;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line">		h.printNodes();</span><br><span class="line">		ListReverse listReverse = <span class="keyword">new</span> ListReverse();</span><br><span class="line">		System.out.println();</span><br><span class="line">		Node retNode = <span class="keyword">null</span>;</span><br><span class="line">		<span class="comment">//迭代实现</span></span><br><span class="line">		<span class="comment">//retNode = listReverse.reverseByIteration(h);</span></span><br><span class="line">		<span class="comment">//递归实现</span></span><br><span class="line">		retNode = listReverse.reverseByRecursive(h);</span><br><span class="line">		<span class="keyword">if</span>(retNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">			retNode.printNodes();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="javadoc">/**</span><br><span class="line">*链表节点</span><br><span class="line">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	Node next;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printNodes</span><span class="params">()</span></span>&#123;</span><br><span class="line">		Node curNode = <span class="keyword">this</span>;</span><br><span class="line">		<span class="keyword">while</span>(curNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">			System.out.print(curNode.id + <span class="string">"\t"</span>);</span><br><span class="line">			curNode = curNode.next;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Node [id="</span> + id + <span class="string">", next="</span> + next + <span class="string">"]"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上述递归实现的思路如下：<br>从当前节点依次递归反转下一个节点，<br>每次递归的出口条件是下个节点的next为null，<br>当前节点后面的所有节点都反转成功后，将此当前节点的next也设置为null，为上层递归做好出口。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/06/21/reverseList/" data-id="ciiyiwyey0001l4prh1tagke5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-java-threadpool" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/14/java-threadpool/" class="article-date">
+  <time datetime="2015-03-14T12:28:00.000Z" itemprop="datePublished">2015-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/14/java-threadpool/">java线程池详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-_为什么要引入线程池技术">1. 为什么要引入线程池技术</h2><p>在多线程环境下，线程的创建和销毁花费的时间和消耗的系统资源都是相当大的，如果有太多的线程创建，而不能对其加以控制，那么最终会导致系统资源不足，为了尽可能减少的创建和销毁线程的次数，充分利用已有资源来进行服务，因此引入了线程池。</p>
+<h2 id="2-_合理使用线程池的好处">2. 合理使用线程池的好处</h2><p>（1）降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗<br>（2）提高响应速度。当任务到达时，任务可以不需要等到线程创建就能立即执行。<br>（3）提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。但是要做到合理的利用线程池，必须对其原理了如指掌。</p>
+<h2 id="3-_线程池工作原理">3. 线程池工作原理</h2><p>一般来说一个线程池包括如下几个组成部分：<br>（1）线程管理器（ThreadPool）<br> &emsp;&emsp; 用于创建并管理线程池<br>（2）工作线程（PoolWorker）<br> &emsp;&emsp; 线程池中实际执行任务的线程<br>（3）任务接口（Task）<br> &emsp;&emsp; 每个任务必须实现的接口，以供工作线程调度任务的执行，它主要规定了任务的入口，任务执行完后的收尾工作，任务的执行状态等；<br>（4）任务队列（taskqueue）<br>  &emsp;&emsp; 用于存放没有处理的任务</p>
+<h2 id="4-_java中线程池的使用">4. java中线程池的使用</h2><p>（1）线程池创建的几个方式<br>  使用Executors提供的几个静态方法来创建<br> public static ExecutorService newSingleThreadExecutor()<br> public static ExecutorService newFixedThreadPool(int nThreads)<br> public static ExecutorService newCachedThreadPool()<br>public static ScheduledExecutorService    newScheduledThreadPool(int corePoolSize)<br> newSingleThreadExcutor():<br>返回一个包含单线程的线程池，该线程池只能含有一个线程，当该线程执行过程有异常或故障，将会启动一个新的线程继续执行该线程未完成的任务。<br>ExecutorService newFixedThreadPool(int nThreads)：<br>返回一个包含指定数目线程的线程池。<br> public static ExecutorService newCachedThreadPool()<br>创建一个可重用其中线程的线程池，即根据需要创建线程，若线程池中有可重用的线程将调用之前构造的线程，若没有则新建一个线程并将其添加到线程池u中。尚未使用超过60秒的线程将会从线程池中移除。<br>newScheduledThreadPool(int corePoolSize)：<br>创建一个可以进行定时或周期执行任务的线程池。<br>（2）使用线程池和不使用线程池的对比<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPoolDemo</span> </span>&#123;</span><br><span class="line">	<span class="comment">//要创建的线程数</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> count = <span class="number">1000</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String [] str)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"没有使用线程池前:"</span>);</span><br><span class="line">		System.out.println(count + <span class="string">" 个线程没有使用线程池花费 "</span> + withoutPool() + <span class="string">" 毫秒"</span>);</span><br><span class="line">		System.out.println(<span class="string">"使用线程池后:"</span>);</span><br><span class="line">		System.out.println(count + <span class="string">" 个线程使用线程池花费 "</span> + withPool() + <span class="string">" 毫秒"</span>);</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * 使用线程池</span><br><span class="line">	 *<span class="javadoctag"> @return</span></span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">withPool</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">		<span class="keyword">final</span> List&lt;Integer&gt; l = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">		ThreadPoolExecutor tp = <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">1</span>,<span class="number">1</span>,<span class="number">60</span>,TimeUnit.SECONDS,<span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;(count));</span><br><span class="line">		<span class="keyword">final</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++)&#123;</span><br><span class="line">			tp.execute(<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">				<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">					l.add(random.nextInt());</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">		tp.shutdown();</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			tp.awaitTermination(<span class="number">1</span>,TimeUnit.DAYS);</span><br><span class="line">		&#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> System.currentTimeMillis() - startTime;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * 没有使用线程池</span><br><span class="line">	 *<span class="javadoctag"> @return</span></span><br><span class="line">	 */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">withoutPool</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">    	<span class="keyword">final</span> List&lt;Integer&gt; l = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">    	<span class="keyword">final</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++)&#123;</span><br><span class="line">    		Thread thread = <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">    			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    				l.add(random.nextInt());</span><br><span class="line">    			&#125;</span><br><span class="line">    		&#125;;</span><br><span class="line">    		thread.start();</span><br><span class="line">    		<span class="keyword">try</span>&#123;</span><br><span class="line">    		 thread.join();</span><br><span class="line">    		&#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">    			e.printStackTrace();</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> System.currentTimeMillis() - startTime;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>  执行结果：<br>没有使用线程池前:<br>1000 个线程没有使用线程池花费 103 毫秒<br>使用线程池后:<br>1000 个线程使用线程池花费 18 毫秒</p>
+<p><strong>明显可以看出使用线程池后花费的时间更少</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/14/java-threadpool/" data-id="ciiyiwyg5000fl4prl8065lyz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-nodeinstallpage" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/11/nodeinstallpage/" class="article-date">
+  <time datetime="2015-03-11T05:00:37.000Z" itemprop="datePublished">2015-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/11/nodeinstallpage/">nodejs 服务器环境搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-通过apt-get方式安装">1.通过apt-get方式安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install nodejs</span><br><span class="line">$ sudo apt-get install nmp</span><br></pre></td></tr></table></figure>
+<h3 id="查看版本">查看版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br><span class="line">  v0.<span class="number">6.12</span></span><br><span class="line">$ npm -v</span><br><span class="line">  <span class="number">1.1</span>.<span class="number">4</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装express时需要node的版本在0-8-0之上，上边apt-get安装源中的版本太低_所以不行，以后如果apt软件源更新的话应该可以。保证版本没问题后再安装express">安装express时需要node的版本在0.8.0之上，上边apt-get安装源中的版本太低 所以不行，以后如果apt软件源更新的话应该可以。保证版本没问题后再安装express</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g express-generator</span><br></pre></td></tr></table></figure>
+<h3 id="express_安装成功后新建一个demo">express 安装成功后新建一个demo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ express <span class="operator">-e</span> nodejs-demo</span><br><span class="line">  create : nodejs-demo</span><br><span class="line">  create : nodejs-demo/package.json</span><br><span class="line">  create : nodejs-demo/app.js</span><br><span class="line">  create : nodejs-demo/public</span><br><span class="line">  create : nodejs-demo/public/javascripts</span><br><span class="line">  create : nodejs-demo/public/images</span><br><span class="line">  create : nodejs-demo/public/stylesheets</span><br><span class="line">  create : nodejs-demo/public/stylesheets/style.css</span><br><span class="line">  create : nodejs-demo/routes</span><br><span class="line">  create : nodejs-demo/routes/index.js</span><br><span class="line">  create : nodejs-demo/routes/users.js</span><br><span class="line">  create : nodejs-demo/views</span><br><span class="line">  create : nodejs-demo/views/index.ejs</span><br><span class="line">  create : nodejs-demo/views/error.ejs</span><br><span class="line">  create : nodejs-demo/bin</span><br><span class="line">  create : nodejs-demo/bin/www</span><br><span class="line">  install dependencies:</span><br><span class="line">  install dependencies:</span><br><span class="line">$ <span class="built_in">cd</span> nodejs-demo &amp;&amp; npm install</span><br><span class="line">  run the app:</span><br><span class="line">$ DEBUG=nodejs-demo ./bin/www</span><br></pre></td></tr></table></figure>
+<h3 id="安装项目依赖">安装项目依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> nodejs-demo &amp;&amp; npm install</span><br><span class="line">  ejs@<span class="number">0.8</span>.<span class="number">8</span> node_modules/ejs</span><br><span class="line">debug@<span class="number">2.0</span>.<span class="number">0</span> node_modules/debug</span><br><span class="line">└── ms@<span class="number">0.6</span>.<span class="number">2</span></span><br><span class="line"></span><br><span class="line">cookie-parser@<span class="number">1.3</span>.<span class="number">3</span> node_modules/cookie-parser</span><br><span class="line">├── cookie@<span class="number">0.1</span>.<span class="number">2</span></span><br><span class="line">└── cookie-signature@<span class="number">1.0</span>.<span class="number">5</span></span><br><span class="line"></span><br><span class="line">serve-favicon@<span class="number">2.1</span>.<span class="number">7</span> node_modules/serve-favicon</span><br><span class="line">├── ms@<span class="number">0.6</span>.<span class="number">2</span></span><br><span class="line">├── fresh@<span class="number">0.2</span>.<span class="number">4</span></span><br><span class="line">└── etag@<span class="number">1.5</span>.<span class="number">1</span> (crc@<span class="number">3.2</span>.<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">morgan@<span class="number">1.3</span>.<span class="number">2</span> node_modules/morgan</span><br><span class="line">├── basic-auth@<span class="number">1.0</span>.<span class="number">0</span></span><br><span class="line">├── depd@<span class="number">0.4</span>.<span class="number">5</span></span><br><span class="line">└── on-finished@<span class="number">2.1</span>.<span class="number">0</span> (ee-first@<span class="number">1.0</span>.<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">express@<span class="number">4.9</span>.<span class="number">8</span> node_modules/express</span><br><span class="line">├── merge-descriptors@<span class="number">0.0</span>.<span class="number">2</span></span><br><span class="line">├── utils-merge@<span class="number">1.0</span>.<span class="number">0</span></span><br><span class="line">├── cookie@<span class="number">0.1</span>.<span class="number">2</span></span><br><span class="line">├── fresh@<span class="number">0.2</span>.<span class="number">4</span></span><br><span class="line">├── escape-html@<span class="number">1.0</span>.<span class="number">1</span></span><br><span class="line">├── range-parser@<span class="number">1.0</span>.<span class="number">2</span></span><br><span class="line">├── cookie-signature@<span class="number">1.0</span>.<span class="number">5</span></span><br><span class="line">├── vary@<span class="number">1.0</span>.<span class="number">0</span></span><br><span class="line">├── media-typer@<span class="number">0.3</span>.<span class="number">0</span></span><br><span class="line">├── methods@<span class="number">1.1</span>.<span class="number">0</span></span><br><span class="line">├── parseurl@<span class="number">1.3</span>.<span class="number">0</span></span><br><span class="line">├── finalhandler@<span class="number">0.2</span>.<span class="number">0</span></span><br><span class="line">├── serve-static@<span class="number">1.6</span>.<span class="number">4</span></span><br><span class="line">├── path-to-regexp@<span class="number">0.1</span>.<span class="number">3</span></span><br><span class="line">├── depd@<span class="number">0.4</span>.<span class="number">5</span></span><br><span class="line">├── qs@<span class="number">2.2</span>.<span class="number">4</span></span><br><span class="line">├── on-finished@<span class="number">2.1</span>.<span class="number">1</span> (ee-first@<span class="number">1.1</span>.<span class="number">0</span>)</span><br><span class="line">├── proxy-addr@<span class="number">1.0</span>.<span class="number">4</span> (forwarded@<span class="number">0.1</span>.<span class="number">0</span>, ipaddr.js@<span class="number">0.1</span>.<span class="number">5</span>)</span><br><span class="line">├── etag@<span class="number">1.4</span>.<span class="number">0</span> (crc@<span class="number">3.0</span>.<span class="number">0</span>)</span><br><span class="line">├── send@<span class="number">0.9</span>.<span class="number">3</span> (destroy@<span class="number">1.0</span>.<span class="number">3</span>, ms@<span class="number">0.6</span>.<span class="number">2</span>, on-finished@<span class="number">2.1</span>.<span class="number">0</span>, mime@<span class="number">1.2</span>.<span class="number">11</span>)</span><br><span class="line">├── accepts@<span class="number">1.1</span>.<span class="number">4</span> (negotiator@<span class="number">0.4</span>.<span class="number">9</span>, mime-types@<span class="number">2.0</span>.<span class="number">4</span>)</span><br><span class="line">└── <span class="built_in">type</span>-is@<span class="number">1.5</span>.<span class="number">4</span> (mime-types@<span class="number">2.0</span>.<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">body-parser@<span class="number">1.8</span>.<span class="number">4</span> node_modules/body-parser</span><br><span class="line">├── media-typer@<span class="number">0.3</span>.<span class="number">0</span></span><br><span class="line">├── bytes@<span class="number">1.0</span>.<span class="number">0</span></span><br><span class="line">├── raw-body@<span class="number">1.3</span>.<span class="number">0</span></span><br><span class="line">├── depd@<span class="number">0.4</span>.<span class="number">5</span></span><br><span class="line">├── on-finished@<span class="number">2.1</span>.<span class="number">0</span> (ee-first@<span class="number">1.0</span>.<span class="number">5</span>)</span><br><span class="line">├── qs@<span class="number">2.2</span>.<span class="number">4</span></span><br><span class="line">├── iconv-lite@<span class="number">0.4</span>.<span class="number">4</span></span><br><span class="line">└── <span class="built_in">type</span>-is@<span class="number">1.5</span>.<span class="number">4</span> (mime-types@<span class="number">2.0</span>.<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="启动服务命令">启动服务命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ DEBUG=nodejs-demo ./bin/www</span><br></pre></td></tr></table></figure>
+<h3 id="访问服务">访问服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:<span class="number">3000</span></span><br><span class="line">  &lt;!DOCTYPE html&gt;</span><br><span class="line">  &lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">      &lt;title&gt;Express&lt;/title&gt;</span><br><span class="line">      &lt;link rel=<span class="string">'stylesheet'</span> href=<span class="string">'/stylesheets/style.css'</span> /&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">      &lt;h1&gt;Express&lt;/h1&gt;</span><br><span class="line">      &lt;p&gt;Welcome to Express&lt;/p&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">  &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>到此nodejs环境搭建成功</p>
+<h2 id="2-编译安装">2.编译安装</h2><h3 id="先下载需要安装的版本">先下载需要安装的版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget http://nodejs.org/dist/v0.<span class="number">10.26</span>/node-v0.<span class="number">10.35</span>.tar.gz</span><br></pre></td></tr></table></figure>
+<h3 id="解压">解压</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf node-v0.<span class="number">10.35</span>.tar.gz</span><br></pre></td></tr></table></figure>
+<h3 id="进入到目录">进入到目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span>  node-v0.<span class="number">10.35</span></span><br><span class="line">   ./configure</span><br><span class="line"> make</span><br><span class="line"> sudo make install</span><br></pre></td></tr></table></figure>
+<p>编译安装好后，npm是装好的，不用再单独装<br>新建demo进行测试的步骤与上面第一种方式的一样。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/11/nodeinstallpage/" data-id="ciiyiwyfo000al4prb0lhw8jr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-remarkable" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/09/remarkable/" class="article-date">
+  <time datetime="2015-03-09T15:56:23.000Z" itemprop="datePublished">2015-03-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/09/remarkable/">ubuntu下remarkable的安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>到remarkable官网<a href="http://remarkableapp.net/" target="_blank" rel="external">http://remarkableapp.net/</a> 下载remarkable的deb的安装包remarkable_1.25_all.deb</li>
+<li><p>安装remarkable需要三个依赖库 python3-bs4,python3-markdown, wkhtmltopdf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install <span class="operator">-f</span> python3-bs4 python3-markdown wkhtmltopdf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装remarkable</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i remarkable_1.<span class="number">25</span>_all.deb</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/09/remarkable/" data-id="ciiyiwyf10002l4prwgqpm8wy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-music" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/08/music/" class="article-date">
+  <time datetime="2015-03-08T07:17:47.000Z" itemprop="datePublished">2015-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/08/music/">music</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://7xawio.com1.z0.glb.clouddn.com/IMG_20141214_162918.jpg" alt=""> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/08/music/" data-id="ciiyiwyfv000dl4pra8z0e1d2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/07/hello-world/" class="article-date">
+  <time datetime="2015-03-07T10:52:02.955Z" itemprop="datePublished">2015-03-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/07/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/07/hello-world/" data-id="ciiyiwygi000hl4pr3d0w5b5u" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-fly" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/05/fly/" class="article-date">
+  <time datetime="2015-03-05T15:40:17.000Z" itemprop="datePublished">2015-03-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/05/fly/">fly</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/05/fly/" data-id="ciiyiwygq000il4pr4y2jkk58" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/设计模式/" style="font-size: NaNpx;">设计模式</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/01/03/redis-demo/">redis单机多实例使用</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/27/log4j-study/">log4j的使用</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/19/storm-kafka-demo/">storm-kafka使用</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/05/design-pattern-observer/">observer(观察者模式)-对象行为模式</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/29/design-pattern-memento/">memento（备忘录）-对象行为模式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 difeng<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

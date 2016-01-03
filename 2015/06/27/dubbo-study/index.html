@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Dubbo框架的使用 | difeng</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. 构建dubbo的源码开发环境从github上将整个dubbo项目全克隆下来1git clone https://github.com/alibaba/dubbo.git
+往eclipse中导入dubbo工程时要保证eclipse已经安装好了maven插件，并且你本地也已经装了maven。在eclipse中通过import maven project将dubbo导入到eclipse中的工作空间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dubbo框架的使用">
+<meta property="og:url" content="http://yoursite.com/2015/06/27/dubbo-study/index.html">
+<meta property="og:site_name" content="difeng">
+<meta property="og:description" content="1. 构建dubbo的源码开发环境从github上将整个dubbo项目全克隆下来1git clone https://github.com/alibaba/dubbo.git
+往eclipse中导入dubbo工程时要保证eclipse已经安装好了maven插件，并且你本地也已经装了maven。在eclipse中通过import maven project将dubbo导入到eclipse中的工作空间">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_1.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_2.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_3.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_4.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_7.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_8.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_9.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_10.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_11.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_12.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_13.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_14.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_8.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/dubbo_16.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dubbo框架的使用">
+<meta name="twitter:description" content="1. 构建dubbo的源码开发环境从github上将整个dubbo项目全克隆下来1git clone https://github.com/alibaba/dubbo.git
+往eclipse中导入dubbo工程时要保证eclipse已经安装好了maven插件，并且你本地也已经装了maven。在eclipse中通过import maven project将dubbo导入到eclipse中的工作空间">
+  
+    <link rel="alternative" href="/atom.xml" title="difeng" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">difeng</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-dubbo-study" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/06/27/dubbo-study/" class="article-date">
+  <time datetime="2015-06-27T08:56:53.000Z" itemprop="datePublished">2015-06-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Dubbo框架的使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-_构建dubbo的源码开发环境">1. 构建dubbo的源码开发环境</h3><p>从github上将整个dubbo项目全克隆下来<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/alibaba/dubbo.git</span><br></pre></td></tr></table></figure></p>
+<p>往eclipse中导入dubbo工程时要保证eclipse已经安装好了maven插件，并且你本地也已经装了maven。<br>在eclipse中通过import maven project将dubbo导入到eclipse中的工作空间中。导入好的dubbo项目如下图所示，有些项目中有红叉是因为xml中关于dubbo的前缀不识别的问题。<br>Dubbo整个大项目结构如下：</p>
+<p><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_1.png" alt=""><br>源码环境建好后，我们可以将dubbo的管理平台admin工程打包成war包供我们以下使用。<br>dubbo官网建议使用zookeeper作为注册中心。所以我们得上apache官网下载，下载链接如下：<br><a href="http://apache.mirrors.pair.com/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz" target="_blank" rel="external">http://apache.mirrors.pair.com/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz</a></p>
+<h3 id="2-_搭建注册中心">2. 搭建注册中心</h3><ol>
+<li>将下载好的zookeeper解压，将解压后的config目录下的zoo_sample.cfg的配置文件重命名为zoo.cfg。<br>启动注册中心：<br>进入到zookeeper的bin目录下<br>Windows下直接输入：zkServer.cmd<br>Linux下: sh  zkServer.sh  start<br>启动后可以看到如下信息,至于日志和配置文件的路径和其中参数调整就不多说了，可以参考样例进行调整。<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_2.png" alt=""><h3 id="3-_管理平台的服务启动">3. 管理平台的服务启动</h3>将打包好的dubbo-admin.war放到tomcat6的webapp下，启动tomcat6，tomcat6的启动就不多说了。<br>admin启动后：<br>访问admin可以被看到如下的admin界面：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_3.png" alt=""><br>输入用户名：root,密码root，具体用户配置可去admin的配置文件dubbo.properties里<br>去配置</li>
+</ol>
+<p>登陆后dubbo的首页<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_4.png" alt=""><br>这时去看提供者和消费者列表，可以看到都是空的。</p>
+<h3 id="4-_启动服务监控者">4. 启动服务监控者</h3><p>在eclipse中启动给出额dubbo-monitor-simple，注意该项目是放在jetty中运行的。<br>在test下启动监控服务之前，先修改jetty的端口以免和之前的admin的服务端口冲突。<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_7.png" alt=""><br>监控服务启动后,访问地址如下：<br><a href="http://127.0.0.1:8081/" target="_blank" rel="external">http://127.0.0.1:8081/</a><br>进入到监控服务<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_8.png" alt=""></p>
+<h3 id="5-_启动服务提供者">5. 启动服务提供者</h3><p>在eclipse中启动dubbo给出的dubbo-demo-provider，<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_9.png" alt=""><br>启动provider之前得改一test下的dubbo.properties文件中的注册中心的地址，修改为本地的zookeeper的地址。<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_10.png" alt=""><br>启动服务提供者后，可以看到服务注册到zookeeper上：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_11.png" alt=""><br>到admin平台可看到此服务<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_12.png" alt=""></p>
+<h3 id="6-_启动服务消费者">6. 启动服务消费者</h3><p>在eclipse中启动dubbo给出的dubbo-demo-consumer，<br>启动之前和服务提供者一样，先修改一下服务注册方的地址为本地zookeeper的地址<br>在test下启动consumer,可以看到消费者成功调用服务提供者的服务。</p>
+<p><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_13.png" alt=""><br>此时可以到admin平台看到此消费者<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_14.png" alt=""><br>到监控平台可以看到所有的服务提供者，消费者，监控者等等信息。<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_8.png" alt=""><br>可以看到注册中心的信息<br><img src="http://7xawio.com1.z0.glb.clouddn.com/dubbo_16.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/06/27/dubbo-study/" data-id="ciiyiwygt000jl4prktwnfsck" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/06/27/mysql-replication/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mysql主从复制+读写分离
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/06/21/mysql-partitions/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mysql的分区的使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/设计模式/" style="font-size: NaNpx;">设计模式</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/01/03/redis-demo/">redis单机多实例使用</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/27/log4j-study/">log4j的使用</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/19/storm-kafka-demo/">storm-kafka使用</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/05/design-pattern-observer/">observer(观察者模式)-对象行为模式</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/29/design-pattern-memento/">memento（备忘录）-对象行为模式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 difeng<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>mysql主从复制+读写分离 | difeng</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.先在master上创建一个用户用来复制。mysql&amp;gt; grant replication slave,replication client on . to repl@’%’ identified by ‘repl’ with grant optionmysql&amp;gt; flush privileges;
+master的my.cnf配置文件配置如下：server_id = 1log_bin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql主从复制+读写分离">
+<meta property="og:url" content="http://yoursite.com/2015/06/27/mysql-replication/index.html">
+<meta property="og:site_name" content="difeng">
+<meta property="og:description" content="1.先在master上创建一个用户用来复制。mysql&amp;gt; grant replication slave,replication client on . to repl@’%’ identified by ‘repl’ with grant optionmysql&amp;gt; flush privileges;
+master的my.cnf配置文件配置如下：server_id = 1log_bin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql主从复制+读写分离">
+<meta name="twitter:description" content="1.先在master上创建一个用户用来复制。mysql&amp;gt; grant replication slave,replication client on . to repl@’%’ identified by ‘repl’ with grant optionmysql&amp;gt; flush privileges;
+master的my.cnf配置文件配置如下：server_id = 1log_bin">
+  
+    <link rel="alternative" href="/atom.xml" title="difeng" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">difeng</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-mysql-replication" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/06/27/mysql-replication/" class="article-date">
+  <time datetime="2015-06-27T15:11:28.000Z" itemprop="datePublished">2015-06-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      mysql主从复制+读写分离
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.先在master上创建一个用户用来复制。<br>mysql&gt; grant replication slave,replication client on <em>.</em> to repl@’%’ identified by ‘repl’ with grant option<br>mysql&gt; flush privileges;</p>
+<p>master的my.cnf配置文件配置如下：<br>server_id = 1<br>log_bin = mysql-bin<br>从服务器的my.cnf配置如下：<br>log_bin = mysql-bin<br>relay_log = mysql-relay-log<br>log_slave_updates = 1<br>read_only = 1<br>在从服务器上执行如下命令：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; change master to master_host=<span class="string">'cherry'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_user = <span class="string">'repl'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_password=<span class="string">'repl'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_<span class="built_in">log</span>_file=<span class="string">'mysql-bin.000001'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_<span class="built_in">log</span>_pos=<span class="number">0</span>;</span><br></pre></td></tr></table></figure></p>
+<p>启动slave：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; start slave;</span><br><span class="line"></span><br><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>查看slave状态:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mysql&gt; show slave status\G;</span><br><span class="line"></span><br><span class="line">*************************** <span class="number">1</span>. row ***************************</span><br><span class="line"></span><br><span class="line">               Slave_IO_State: Waiting <span class="keyword">for</span> master to send event</span><br><span class="line"></span><br><span class="line">                  Master_Host: cherry</span><br><span class="line"></span><br><span class="line">                  Master_User: repl</span><br><span class="line"></span><br><span class="line">                  Master_Port: <span class="number">3306</span></span><br><span class="line"></span><br><span class="line">                Connect_Retry: <span class="number">60</span></span><br><span class="line"></span><br><span class="line">              Master_Log_File: mysql-bin.<span class="number">000001</span></span><br><span class="line"></span><br><span class="line">          Read_Master_Log_Pos: <span class="number">107</span></span><br><span class="line"></span><br><span class="line">               Relay_Log_File: mysql-relay-log.<span class="number">000002</span></span><br><span class="line"></span><br><span class="line">                Relay_Log_Pos: <span class="number">253</span></span><br><span class="line"></span><br><span class="line">        Relay_Master_Log_File: mysql-bin.<span class="number">000001</span></span><br><span class="line"></span><br><span class="line">             Slave_IO_Running: Yes</span><br><span class="line"></span><br><span class="line">            Slave_SQL_Running: Yes</span><br><span class="line"></span><br><span class="line">              Replicate_Do_DB: </span><br><span class="line"></span><br><span class="line">          Replicate_Ignore_DB:</span><br></pre></td></tr></table></figure></p>
+<p>查看复制线程：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show processlist\G;</span><br><span class="line"></span><br><span class="line">*************************** <span class="number">1</span>. row ***************************</span><br><span class="line"></span><br><span class="line">     Id: <span class="number">40</span></span><br><span class="line"></span><br><span class="line">   User: root</span><br><span class="line"></span><br><span class="line">   Host: localhost</span><br><span class="line"></span><br><span class="line">     db: NULL</span><br><span class="line"></span><br><span class="line">Command: Query</span><br><span class="line"></span><br><span class="line">   Time: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  State: NULL</span><br><span class="line"></span><br><span class="line">   Info: show processlist</span><br><span class="line"></span><br><span class="line">*************************** <span class="number">2</span>. row ***************************</span><br><span class="line"></span><br><span class="line">     Id: <span class="number">41</span></span><br><span class="line"></span><br><span class="line">   User: system user</span><br><span class="line"></span><br><span class="line">   Host: </span><br><span class="line"></span><br><span class="line">     db: NULL</span><br><span class="line"></span><br><span class="line">Command: Connect</span><br><span class="line"></span><br><span class="line">   Time: <span class="number">185</span></span><br><span class="line"></span><br><span class="line">  State: Waiting <span class="keyword">for</span> master to send event</span><br><span class="line"></span><br><span class="line">   Info: NULL</span><br></pre></td></tr></table></figure></p>
+<p>在master上新建一个数据库test;<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show databases;</span><br><span class="line"></span><br><span class="line">+-------------------------+</span><br><span class="line"></span><br><span class="line">| Database                |</span><br><span class="line"></span><br><span class="line">+-------------------------+</span><br><span class="line"></span><br><span class="line">| information_schema      |</span><br><span class="line"></span><br><span class="line">| dbtest                  |</span><br><span class="line"></span><br><span class="line">| mysql                   |</span><br><span class="line"></span><br><span class="line">| performance_schema      |</span><br><span class="line"></span><br><span class="line">| qualityinsight          |</span><br><span class="line"></span><br><span class="line">| qualityinsight_wireless |</span><br><span class="line"></span><br><span class="line">+-------------------------+</span><br><span class="line"></span><br><span class="line"><span class="number">6</span> rows <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; create database <span class="built_in">test</span>;</span><br><span class="line"></span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>在slave上查看：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show databases;</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line">| Database           |</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line">| information_schema |</span><br><span class="line"></span><br><span class="line">| mysql              |</span><br><span class="line"></span><br><span class="line">| performance_schema |</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line"><span class="number">3</span> rows <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; show databases;</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line">| Database           |</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line">| information_schema |</span><br><span class="line"></span><br><span class="line">| mysql              |</span><br><span class="line"></span><br><span class="line">| performance_schema |</span><br><span class="line"></span><br><span class="line">| <span class="built_in">test</span>               |</span><br><span class="line"></span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line"><span class="number">4</span> rows <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<h3 id="下载并安装mysql-proxy">下载并安装mysql-proxy</h3><p> 去mysql官网下载mysql-proxy的二进制安装文件<br>将其解压到<br>/usr/local下然后将其添加到系统path中去<br>例如:<br>下载的包为mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit.gz<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span></span><br><span class="line">tar -xvf mysql-proxy-<span class="number">0.8</span>.<span class="number">5</span>-linux-glibc2.<span class="number">3</span>-x86-<span class="number">64</span>bit.gz</span><br></pre></td></tr></table></figure></p>
+<p>解压后为：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/mysql-proxy-<span class="number">0.8</span>.<span class="number">5</span>-linux-glibc2.<span class="number">3</span>-x86-<span class="number">64</span>bit</span><br></pre></td></tr></table></figure></p>
+<p>配置系统path,编辑/etc/profile文件，在其中添加path。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/mysql-proxy-<span class="number">0.8</span>.<span class="number">5</span>-linux-glibc2.<span class="number">3</span>-x86-<span class="number">64</span>bit/bin</span><br></pre></td></tr></table></figure></p>
+<p>使path生效<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure></p>
+<p>使用命令：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql-proxy --help</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; grant all on *.* to <span class="string">'proxy'</span>@<span class="string">'cherry'</span> identified by <span class="string">'proxy'</span>;</span><br><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.07</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; flush privileges;</span><br><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.02</span> sec)</span><br></pre></td></tr></table></figure>
+<p>启动mysql-proxy，并加载读写分离脚本splitting.lua<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql-proxy --proxy-address=cherry:<span class="number">4040</span> --proxy-backend-addresses=cherry:<span class="number">3306</span> --proxy-read-only-backend-addresses=dizi:<span class="number">3306</span> --proxy-lua-script=/usr/<span class="built_in">local</span>/mysql-proxy/share/doc/mysql-proxy/rw-splitting.lua</span><br><span class="line"><span class="number">2015</span>-<span class="number">06</span>-<span class="number">28</span> <span class="number">00</span>:<span class="number">12</span>:<span class="number">50</span>: (critical) plugin proxy <span class="number">0.8</span>.<span class="number">5</span> started</span><br></pre></td></tr></table></figure></p>
+<p>测试读写分离</p>
+<p>1.连接代理<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">~$ mysql -uproxy -p -h cherry -P <span class="number">4040</span></span><br><span class="line"></span><br><span class="line">mysql&gt; create database <span class="built_in">test</span>;</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.02</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; use <span class="built_in">test</span></span><br><span class="line">Database changed</span><br><span class="line"></span><br><span class="line">mysql&gt; create table `<span class="built_in">test</span>_webpage`(   `id` bigint(<span class="number">20</span>) NOT NULL AUTO_INCREMENT COMMENT <span class="string">'表id'</span>, `name` varchar(<span class="number">50</span>) DEFAULT NULL,    KEY `id` (`id`) );ERROR <span class="number">1050</span> (<span class="number">42</span>S01): Table <span class="string">'test_webpage'</span> already exists</span><br><span class="line">mysql&gt; create table `student`(   `id` bigint(<span class="number">20</span>) NOT NULL AUTO_INCREMENT COMMENT <span class="string">'表i'</span>, `name` varchar(<span class="number">50</span>) DEFAULT NULL,    KEY `id` (`id`) );</span><br><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.10</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; insert into student values(<span class="number">1</span>,<span class="string">'apple'</span>);</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.12</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+-------+</span><br><span class="line">| id | name  |</span><br><span class="line">+----+-------+</span><br><span class="line">|  <span class="number">1</span> | apple |</span><br><span class="line">+----+-------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>2.登上slave<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| <span class="built_in">test</span>               |</span><br><span class="line">+--------------------+</span><br><span class="line"><span class="number">3</span> rows <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; use <span class="built_in">test</span></span><br><span class="line">Database changed</span><br><span class="line"></span><br><span class="line">mysql&gt; show tables;</span><br><span class="line">+----------------+</span><br><span class="line">| Tables_<span class="keyword">in</span>_<span class="built_in">test</span> |</span><br><span class="line">+----------------+</span><br><span class="line">| student        |</span><br><span class="line">+----------------+</span><br><span class="line"><span class="number">1</span> rows <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+-------+</span><br><span class="line">| id | name  |</span><br><span class="line">+----+-------+</span><br><span class="line">|  <span class="number">1</span> | apple |</span><br><span class="line">+----+-------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>3.停掉slave上的复制线程<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&#62; slave stop;&#10;Query OK, 0 rows affected (0.09 sec)</span><br></pre></td></tr></table></figure></p>
+<p>4.在连接的代理端，向student表中添加一条数据<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into student values(<span class="number">2</span>,<span class="string">'cherry'</span>);</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.12</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>5.到student中查看<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+-------+</span><br><span class="line">| id | name  |</span><br><span class="line">+----+-------+</span><br><span class="line">|  <span class="number">1</span> | apple |</span><br><span class="line">+----+-------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>说明写是在master上执行的</p>
+<p>在代理端查询</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from test.student;</span><br><span class="line">+----+-------+</span><br><span class="line">| id | name  |</span><br><span class="line">+----+-------+</span><br><span class="line">|  <span class="number">1</span> | apple |</span><br><span class="line">+----+-------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> <span class="built_in">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>说明是从从服务器上查的</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/06/27/mysql-replication/" data-id="ciiyiwyfq000bl4pr53y2l92x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/07/28/java-btrace/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          java性能监控工具Btrace的使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/06/27/dubbo-study/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Dubbo框架的使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/设计模式/" style="font-size: NaNpx;">设计模式</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/01/03/redis-demo/">redis单机多实例使用</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/27/log4j-study/">log4j的使用</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/19/storm-kafka-demo/">storm-kafka使用</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/05/design-pattern-observer/">observer(观察者模式)-对象行为模式</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/29/design-pattern-memento/">memento（备忘录）-对象行为模式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 difeng<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
