@@ -1,87 +1,111 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
   
-  <title>difeng</title>
+  <title>第 2 頁 | difeng</title>
+  <meta name="author" content="difeng">
+  
+  
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="difeng">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="difeng">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="difeng">
-<meta name="twitter:description">
+
   
-    <link rel="alternative" href="/atom.xml" title="difeng" type="application/atom+xml">
+  <meta property="og:site_name" content="difeng"/>
+
   
+    <meta property="og:image" content="undefined"/>
   
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="difeng" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   
 
 </head>
+
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">difeng</a>
-      </h1>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">difeng</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="q" value="site:http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
+        <div class="icon"></div>
+        <time datetime="2015-07-28T10:06:39.000Z"><a href="/2015/07/28/java-btrace/">2015-07-28</a></time>
+      
+      
   
-    <article id="post-mysql-replication" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/06/27/mysql-replication/" class="article-date">
-  <time datetime="2015-06-27T15:11:28.000Z" itemprop="datePublished">2015-06-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/06/27/mysql-replication/">mysql主从复制+读写分离</a>
-    </h1>
+    <h1 class="title"><a href="/2015/07/28/java-btrace/">java性能监控工具Btrace的使用</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
+      
+        <h3 id="1-btrace的简介">1.btrace的简介</h3><p>BTrace是java平台上一种安全的，动态的跟踪工具。BTrace可用于动态跟踪运行中的Java程序。Btrace可以在目标程序的字节码中中注入跟踪代码(字节码跟踪)。</p>
+<h3 id="2-btrace的安装（以linux平台为例）">2.btrace的安装（以linux平台为例）</h3><p>去Btrace的官网下载Btrace安装包btrace-bin.tar.gz，这里下的是1.2.5.1的版本<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# wget https://kenai.com/projects/btrace/downloads/download/releases/release-1.2.5.1/btrace-bin.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>将下载下来的btrace解压到目标文件夹。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mkdir /usr/local/btrace&#10;[root@localhost ~]# tar -zxvf btrace-bin.tar.gz -C /usr/local/btrace</span><br></pre></td></tr></table></figure></p>
+<p>然后配置BTRACE_HOME，编辑/etc/profile文件，在path中加入btrace。<br>BTRACE_HOME的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export BTRACE_HOME=/usr/local/btrace</span><br></pre></td></tr></table></figure></p>
+<p>将btrace加入到path中。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$BTRACE_HOME/bin</span><br></pre></td></tr></table></figure></p>
+<p>配置完成后在命令行输入btrace，即可看到如下信息。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># btrace</span></span><br><span class="line">Usage: btrace &lt;options&gt; &lt;pid&gt; &lt;btrace <span class="built_in">source</span> or .class file&gt; &lt;btrace arguments&gt;</span><br><span class="line"><span class="built_in">where</span> possible options include:</span><br><span class="line">  -classpath &lt;path&gt; Specify <span class="built_in">where</span> to find user class files and annotation processors</span><br><span class="line">  -cp &lt;path&gt;        Specify <span class="built_in">where</span> to find user class files and annotation processors</span><br><span class="line">  -I &lt;path&gt;         Specify <span class="built_in">where</span> to find include files</span><br><span class="line">  -p &lt;port&gt;         Specify port to <span class="built_in">which</span> the btrace agent listens <span class="keyword">for</span> clients</span><br></pre></td></tr></table></figure></p>
+<p>3.编写待监控的程序。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Case1</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		CaseObject caseObject = <span class="keyword">new</span> CaseObject();</span><br><span class="line">		Random random = <span class="keyword">new</span> Random();</span><br><span class="line">		<span class="keyword">boolean</span> ret = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">while</span>(ret)&#123;</span><br><span class="line">        	caseObject.execute(random.nextInt(<span class="number">1000</span>));</span><br><span class="line">        	Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CaseObject</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">execute</span><span class="params">(<span class="keyword">int</span> sleepTime)</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"sleep:"</span> + sleepTime);</span><br><span class="line">		Thread.sleep(sleepTime);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-写监控脚本">4.写监控脚本</h3><p>a.获取类CaseObject的方法exute调用时传的参数，返回值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="annotation">@BTrace</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CaseTraceMethodArgsAndReturn</span></span>&#123;</span><br><span class="line"><span class="annotation">@OnMethod</span>(</span><br><span class="line">clazz=<span class="string">"com.CaseObject"</span>,</span><br><span class="line">method=<span class="string">"execute"</span>,</span><br><span class="line">location=<span class="annotation">@Location</span>(Kind.RETURN)</span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traceExecute</span><span class="params">(<span class="keyword">int</span>     sleepTime,@Return <span class="keyword">boolean</span> result)</span></span>&#123;</span><br><span class="line">   println(<span class="string">"call CaseObject.execute"</span>);</span><br><span class="line">   println(strcat(<span class="string">"sleepTime is:"</span>,str(sleepTime)));</span><br><span class="line">   println(strcat(<span class="string">"return value is:"</span>,str(result)));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>b.获取excute执行耗时<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"><span class="annotation">@BTrace</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span>  <span class="title">CaseTraceMethodExcuteTime</span></span>&#123;</span><br><span class="line">   <span class="annotation">@OnMethod</span>(clazz = <span class="string">"com.CaseObject"</span>, method = <span class="string">"execute"</span>,location =       <span class="annotation">@Location</span>(Kind.RETURN))</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">onExecuteReturn</span><span class="params">(@Duration <span class="keyword">long</span> durationL)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> duration = (<span class="keyword">int</span>) durationL / <span class="number">1000000</span>;</span><br><span class="line">        println(strcat(<span class="string">"excute method time is "</span>,strcat(str(duration),<span class="string">" ms "</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>c.获取方法的调用者<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"><span class="annotation">@BTrace</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CaseTraceMethodInvoker</span></span>&#123;</span><br><span class="line">   <span class="annotation">@OnMethod</span>(clazz = <span class="string">"com.CaseObject"</span>, method = <span class="string">"execute"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getInvoker</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       println(<span class="string">"who call CaseObject.execute :"</span>);</span><br><span class="line">       jstack();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="5-运行监控脚本">5.运行监控脚本</h3><p>a.编译被监测程序<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost demo]# javac com/Case1.java</span><br></pre></td></tr></table></figure></p>
+<p>b.监控程序启动<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost demo]# java com/Case1&#10;[root@localhost demo]# java com/Case1&#10;sleep:426&#10;sleep:160&#10;sleep:515</span><br></pre></td></tr></table></figure></p>
+<p>c.通过jps获取被监控程序的进程号<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# jps&#10;19354 Jps&#10;19272 Case1</span><br></pre></td></tr></table></figure></p>
+<p>d.执行监控脚本<br>获取方法执行参数和返回值<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# btrace -cp build/ -p 2021 19272 CaseTraceMethodArgsAndReturn.java  &#10;call CaseObject.execute&#10;sleepTime is:578&#10;return value is:true</span><br></pre></td></tr></table></figure></p>
+<p>获取方法的执行时间<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# btrace -cp build/ -p 2021 19272 CaseTraceMethodExcuteTime.java &#10;excute method time is 282 ms &#10;excute method time is 81 ms</span><br></pre></td></tr></table></figure></p>
+<p>获取方法的调用者<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# btrace -cp build/ -p 2021 19272 CaseTraceMethodInvoker.java &#10;who call CaseObject.execute :&#10;com.CaseObject.execute(Case1.java)&#10;com.Case1.main(Case1.java:11)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-27T15:11:28.000Z"><a href="/2015/06/27/mysql-replication/">2015-06-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/27/mysql-replication/">mysql主从复制+读写分离</a></h1>
+  
+
+    </header>
+    <div class="entry">
       
         <p>1.先在master上创建一个用户用来复制。<br>mysql&gt; grant replication slave,replication client on <em>.</em> to repl@’%’ identified by ‘repl’ with grant option<br>mysql&gt; flush privileges;</p>
 <p>master的my.cnf配置文件配置如下：<br>server_id = 1<br>log_bin = mysql-bin<br>从服务器的my.cnf配置如下：<br>log_bin = mysql-bin<br>relay_log = mysql-relay-log<br>log_slave_updates = 1<br>read_only = 1<br>在从服务器上执行如下命令：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; change master to master_host=<span class="string">'cherry'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_user = <span class="string">'repl'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_password=<span class="string">'repl'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_<span class="built_in">log</span>_file=<span class="string">'mysql-bin.000001'</span>,</span><br><span class="line"></span><br><span class="line">    -&gt; master_<span class="built_in">log</span>_pos=<span class="number">0</span>;</span><br></pre></td></tr></table></figure></p>
@@ -110,38 +134,34 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/06/27/mysql-replication/" data-id="ciiyiwyfq000bl4pr53y2l92x" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-dubbo-study" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/06/27/dubbo-study/" class="article-date">
-  <time datetime="2015-06-27T08:56:53.000Z" itemprop="datePublished">2015-06-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-27T08:56:53.000Z"><a href="/2015/06/27/dubbo-study/">2015-06-27</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/06/27/dubbo-study/">Dubbo框架的使用</a>
-    </h1>
+    <h1 class="title"><a href="/2015/06/27/dubbo-study/">Dubbo框架的使用</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <h3 id="1-_构建dubbo的源码开发环境">1. 构建dubbo的源码开发环境</h3><p>从github上将整个dubbo项目全克隆下来<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/alibaba/dubbo.git</span><br></pre></td></tr></table></figure></p>
 <p>往eclipse中导入dubbo工程时要保证eclipse已经安装好了maven插件，并且你本地也已经装了maven。<br>在eclipse中通过import maven project将dubbo导入到eclipse中的工作空间中。导入好的dubbo项目如下图所示，有些项目中有红叉是因为xml中关于dubbo的前缀不识别的问题。<br>Dubbo整个大项目结构如下：</p>
@@ -157,168 +177,152 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/06/27/dubbo-study/" data-id="ciiyiwygt000jl4prktwnfsck" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-mysql-partitions" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/06/21/mysql-partitions/" class="article-date">
-  <time datetime="2015-06-21T15:23:12.000Z" itemprop="datePublished">2015-06-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-21T15:23:12.000Z"><a href="/2015/06/21/mysql-partitions/">2015-06-21</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/06/21/mysql-partitions/">mysql的分区的使用</a>
-    </h1>
+    <h1 class="title"><a href="/2015/06/21/mysql-partitions/">mysql的分区的使用</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <h3 id="myswql分区的类型有如下几种：">myswql分区的类型有如下几种：</h3><h4 id="1-range分区">1.range分区</h4><p>按变化的区间将表分成不同区块，使用VALUES LESS THAN操作符来进行定义变化的区间，这些区间要连续且不重复<br>例如：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table `student`(&#10;  `id` bigint(20) NOT NULL,&#10;  `name` varchar(255) DEFAULT NULL,&#10;  `age` int(3),&#10;  `store_id` int(11)&#10;)&#10;partition by range(`id`)(&#10;    PARTITION p0 VALUES LESS THAN (6),&#10;    PARTITION p1 VALUES LESS THAN (11),&#10;    PARTITION p2 VALUES LESS THAN (16),&#10;    PARTITION p3 VALUES LESS THAN (21)&#10;);</span><br></pre></td></tr></table></figure></p>
-<p>最好做法是再分一个最小上界的分区,当数据范围不在前面的分区时，将数据放到此分区下，以后通过重新分区再将此分区分为几个固定区间和一个最小上界区间。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`student`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> range(<span class="string">`id`</span>)(</span><br><span class="line">    <span class="keyword">PARTITION</span> p0 <span class="keyword">VALUES</span> LESS THAN (<span class="number">6</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p1 <span class="keyword">VALUES</span> LESS THAN (<span class="number">11</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p2 <span class="keyword">VALUES</span> LESS THAN (<span class="number">16</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p3 <span class="keyword">VALUES</span> LESS THAN (<span class="number">21</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pmax <span class="keyword">VALUES</span> LESS THAN MAXVALUE </span><br><span class="line">);</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="2-LIST分区">2.LIST分区</h4><p>list分区是基于列值去匹配一个离散集合中的值来进行选择。<br>离散集合也可以用一个表达式来确定。<br>例如：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`student`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">PARTITION</span> <span class="keyword">BY</span> LIST(store_id) (</span><br><span class="line">    <span class="keyword">PARTITION</span> pNorth <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">3</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">17</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pEast <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">19</span>,<span class="number">20</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pWest <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">4</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">18</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pCentral <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">7</span>,<span class="number">8</span>,<span class="number">15</span>,<span class="number">16</span>)</span><br><span class="line">);</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="3-columns分区">3.columns分区</h4><p>与range和list不同的是columns允许分区键使用多个列，columns配合range和list使用的。<br>例如：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`student`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> range <span class="keyword">columns</span>(<span class="string">`id`</span>,<span class="string">`store_id`</span>)(</span><br><span class="line">    <span class="keyword">PARTITION</span> p0 <span class="keyword">VALUES</span> LESS THAN (<span class="number">6</span>,<span class="number">10</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p1 <span class="keyword">VALUES</span> LESS THAN (<span class="number">11</span>,<span class="number">20</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p2 <span class="keyword">VALUES</span> LESS THAN (<span class="number">16</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p3 <span class="keyword">VALUES</span> LESS THAN (<span class="number">21</span>,<span class="number">40</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pmax <span class="keyword">VALUES</span> LESS THAN (MAXVALUE,MAXVALUE)</span><br><span class="line">);</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="4-hash分区">4.hash分区</h4><p>通过指定规则，将数据均匀地分布到各个区中<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`students`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> hash(<span class="string">`id`</span>)</span><br><span class="line">partitions <span class="number">10</span></span></span><br></pre></td></tr></table></figure></p>
+<p>最好做法是再分一个最小上界的分区,当数据范围不在前面的分区时，将数据放到此分区下，以后通过重新分区再将此分区分为几个固定区间和一个最小上界区间。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`student`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">range</span>(<span class="string">`id`</span>)(</span><br><span class="line">    <span class="keyword">PARTITION</span> p0 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">6</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p1 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">11</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p2 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">16</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p3 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">21</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pmax <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> MAXVALUE </span><br><span class="line">);</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="2-LIST分区">2.LIST分区</h4><p>list分区是基于列值去匹配一个离散集合中的值来进行选择。<br>离散集合也可以用一个表达式来确定。<br>例如：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`student`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">PARTITION</span> <span class="keyword">BY</span> <span class="keyword">LIST</span>(store_id) (</span><br><span class="line">    <span class="keyword">PARTITION</span> pNorth <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">3</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">17</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pEast <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">19</span>,<span class="number">20</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pWest <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">4</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">18</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pCentral <span class="keyword">VALUES</span> <span class="keyword">IN</span> (<span class="number">7</span>,<span class="number">8</span>,<span class="number">15</span>,<span class="number">16</span>)</span><br><span class="line">);</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="3-columns分区">3.columns分区</h4><p>与range和list不同的是columns允许分区键使用多个列，columns配合range和list使用的。<br>例如：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`student`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">range</span> <span class="keyword">columns</span>(<span class="string">`id`</span>,<span class="string">`store_id`</span>)(</span><br><span class="line">    <span class="keyword">PARTITION</span> p0 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">6</span>,<span class="number">10</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p1 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">11</span>,<span class="number">20</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p2 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">16</span>,<span class="number">30</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> p3 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">21</span>,<span class="number">40</span>),</span><br><span class="line">    <span class="keyword">PARTITION</span> pmax <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (MAXVALUE,MAXVALUE)</span><br><span class="line">);</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="4-hash分区">4.hash分区</h4><p>通过指定规则，将数据均匀地分布到各个区中<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`students`</span>(</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>),</span><br><span class="line">  <span class="string">`store_id`</span> <span class="built_in">int</span>(<span class="number">11</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">hash</span>(<span class="string">`id`</span>)</span><br><span class="line"><span class="keyword">partitions</span> <span class="number">10</span></span></span><br></pre></td></tr></table></figure></p>
 <p>上面的sql将建表student并根据hash（id）将表分为10个分区，通过hash(<code>id</code>)将数据平均到各个分区中。</p>
-<h3 id="mysql子分区使用">mysql子分区使用</h3><h4 id="1-建表：">1.建表：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`test_sub_partition`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">BIGINT</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT COMMENT <span class="string">'表id'</span>,</span><br><span class="line">  <span class="string">`other_key`</span> <span class="built_in">BIGINT</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`value`</span> <span class="built_in">BIGINT</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`test_time`</span> DATETIME <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">   <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">INNODB</span> AUTO_INCREMENT=<span class="number">1058080</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8</span><br><span class="line">  <span class="keyword">PARTITION</span> <span class="keyword">BY</span> RANGE (<span class="keyword">TO_DAYS</span>(<span class="string">`test_time`</span>))</span><br><span class="line">  SUBPARTITION <span class="keyword">BY</span> HASH(other_key)</span><br><span class="line">  SUBPARTITIONS <span class="number">10</span></span><br><span class="line">  (</span><br><span class="line"> <span class="keyword">PARTITION</span> p20150616 <span class="keyword">VALUES</span> LESS THAN (<span class="number">736131</span>),</span><br><span class="line"> <span class="keyword">PARTITION</span> p20150617 <span class="keyword">VALUES</span> LESS THAN (<span class="number">736132</span>),</span><br><span class="line"> <span class="keyword">PARTITION</span> pmax <span class="keyword">VALUES</span> LESS THAN MAXVALUE)</span></span><br></pre></td></tr></table></figure>
+<h3 id="mysql子分区使用">mysql子分区使用</h3><h4 id="1-建表：">1.建表：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`test_sub_partition`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">BIGINT</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT <span class="keyword">COMMENT</span> <span class="string">'表id'</span>,</span><br><span class="line">  <span class="string">`other_key`</span> <span class="built_in">BIGINT</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`value`</span> <span class="built_in">BIGINT</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`test_time`</span> DATETIME <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">   <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">INNODB</span> AUTO_INCREMENT=<span class="number">1058080</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8</span><br><span class="line">  <span class="keyword">PARTITION</span> <span class="keyword">BY</span> <span class="keyword">RANGE</span> (<span class="keyword">TO_DAYS</span>(<span class="string">`test_time`</span>))</span><br><span class="line">  <span class="keyword">SUBPARTITION</span> <span class="keyword">BY</span> <span class="keyword">HASH</span>(other_key)</span><br><span class="line">  <span class="keyword">SUBPARTITIONS</span> <span class="number">10</span></span><br><span class="line">  (</span><br><span class="line"> <span class="keyword">PARTITION</span> p20150616 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">736131</span>),</span><br><span class="line"> <span class="keyword">PARTITION</span> p20150617 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">736132</span>),</span><br><span class="line"> <span class="keyword">PARTITION</span> pmax <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> MAXVALUE)</span></span><br></pre></td></tr></table></figure>
 <p> 主分区以“test_time”进行range分区，一天分一个区，在每个主分区下再以(other_key%10)进行子分区，是数据均匀放到每个子分区,也就是说other_key%10余几就放到哪个分区里。<br>分区后可以去mysql的数据库目录下进行查看，由于上面为指定子分区名称，所以子分区名称组织是这样的：主分区名称+sp+序号</p>
-<p>通过从数据库schema里面也可查出相关此表的分区信息<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> table_name,partition_name,subpartition_name,partition_method,subpartition_method,partition_expression,subpartition_expression,partition_description <span class="keyword">FROM</span> INFORMATION_SCHEMA.PARTITIONS <span class="keyword">WHERE</span> TABLE_NAME=<span class="string">'test_sub_partition'</span>;</span></span><br></pre></td></tr></table></figure></p>
+<p>通过从数据库schema里面也可查出相关此表的分区信息<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> table_name,partition_name,subpartition_name,partition_method,subpartition_method,partition_expression,subpartition_expression,partition_description <span class="keyword">FROM</span> INFORMATION_SCHEMA.<span class="keyword">PARTITIONS</span> <span class="keyword">WHERE</span> TABLE_NAME=<span class="string">'test_sub_partition'</span>;</span></span><br></pre></td></tr></table></figure></p>
 <p><img src="http://7xawio.com1.z0.glb.clouddn.com/mysql_subpartitions.png" alt="img"> </p>
 <h4 id="2-插入数据">2.插入数据</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`test_sub_partition`</span>(other_key,test_time) <span class="keyword">VALUES</span>(<span class="number">0</span>,<span class="string">'2015-06-16'</span>),(<span class="number">1</span>,<span class="string">'2015-06-17'</span>),(<span class="number">2</span>,<span class="string">'2015-06-16'</span>),(<span class="number">3</span>,<span class="string">'2015-06-17'</span>),(<span class="number">4</span>,<span class="string">'2015-06-16'</span>),(<span class="number">5</span>,<span class="string">'2015-06-17'</span>),(<span class="number">6</span>,<span class="string">'2015-06-16'</span>),(<span class="number">7</span>,<span class="string">'2015-06-17'</span>),(<span class="number">8</span>,<span class="string">'2015-06-16'</span>),(<span class="number">9</span>,<span class="string">'2015-06-17'</span>),(<span class="number">10</span>,<span class="string">'2015-06-16'</span>),(<span class="number">11</span>,<span class="string">'2015-06-17'</span>),(<span class="number">12</span>,<span class="string">'2015-06-16'</span>),(<span class="number">13</span>,<span class="string">'2015-06-17'</span>),(<span class="number">14</span>,<span class="string">'2015-06-16'</span>),(<span class="number">15</span>,<span class="string">'2015-06-17'</span>),(<span class="number">16</span>,<span class="string">'2015-06-16'</span>),(<span class="number">17</span>,<span class="string">'2015-06-17'</span>),(<span class="number">18</span>,<span class="string">'2015-06-16'</span>),(<span class="number">19</span>,<span class="string">'2015-06-17'</span>),(<span class="number">20</span>,<span class="string">'2015-06-16'</span>),(<span class="number">21</span>,<span class="string">'2015-06-17'</span>),(<span class="number">22</span>,<span class="string">'2015-06-16'</span>),(<span class="number">23</span>,<span class="string">'2015-06-17'</span>),(<span class="number">24</span>,<span class="string">'2015-06-16'</span>),(<span class="number">25</span>,<span class="string">'2015-06-17'</span>),(<span class="number">26</span>,<span class="string">'2015-06-16'</span>),(<span class="number">27</span>,<span class="string">'2015-06-17'</span>),(<span class="number">28</span>,<span class="string">'2015-06-16'</span>),(<span class="number">29</span>,<span class="string">'2015-06-17'</span>),(<span class="number">30</span>,<span class="string">'2015-06-16'</span>),(<span class="number">31</span>,<span class="string">'2015-06-17'</span>),(<span class="number">32</span>,<span class="string">'2015-06-16'</span>),(<span class="number">33</span>,<span class="string">'2015-06-17'</span>),(<span class="number">34</span>,<span class="string">'2015-06-16'</span>),(<span class="number">35</span>,<span class="string">'2015-06-17'</span>),(<span class="number">36</span>,<span class="string">'2015-06-16'</span>),(<span class="number">37</span>,<span class="string">'2015-06-17'</span>),(<span class="number">38</span>,<span class="string">'2015-06-16'</span>),(<span class="number">39</span>,<span class="string">'2015-06-17'</span>),(<span class="number">40</span>,<span class="string">'2015-06-16'</span>),(<span class="number">41</span>,<span class="string">'2015-06-17'</span>),(<span class="number">42</span>,<span class="string">'2015-06-16'</span>),(<span class="number">43</span>,<span class="string">'2015-06-17'</span>),(<span class="number">44</span>,<span class="string">'2015-06-16'</span>),(<span class="number">45</span>,<span class="string">'2015-06-17'</span>),(<span class="number">46</span>,<span class="string">'2015-06-16'</span>),(<span class="number">47</span>,<span class="string">'2015-06-17'</span>),(<span class="number">48</span>,<span class="string">'2015-06-16'</span>),(<span class="number">49</span>,<span class="string">'2015-06-17'</span>),(<span class="number">50</span>,<span class="string">'2015-06-16'</span>),(<span class="number">51</span>,<span class="string">'2015-06-17'</span>),(<span class="number">52</span>,<span class="string">'2015-06-16'</span>),(<span class="number">53</span>,<span class="string">'2015-06-17'</span>),(<span class="number">54</span>,<span class="string">'2015-06-16'</span>),(<span class="number">55</span>,<span class="string">'2015-06-17'</span>),(<span class="number">56</span>,<span class="string">'2015-06-16'</span>),(<span class="number">57</span>,<span class="string">'2015-06-17'</span>),(<span class="number">58</span>,<span class="string">'2015-06-16'</span>),(<span class="number">59</span>,<span class="string">'2015-06-17'</span>),(<span class="number">60</span>,<span class="string">'2015-06-16'</span>),(<span class="number">61</span>,<span class="string">'2015-06-17'</span>),(<span class="number">62</span>,<span class="string">'2015-06-16'</span>),(<span class="number">63</span>,<span class="string">'2015-06-17'</span>),(<span class="number">64</span>,<span class="string">'2015-06-16'</span>),(<span class="number">65</span>,<span class="string">'2015-06-17'</span>),(<span class="number">66</span>,<span class="string">'2015-06-16'</span>),(<span class="number">67</span>,<span class="string">'2015-06-17'</span>),(<span class="number">68</span>,<span class="string">'2015-06-16'</span>),(<span class="number">69</span>,<span class="string">'2015-06-17'</span>),(<span class="number">70</span>,<span class="string">'2015-06-16'</span>),(<span class="number">71</span>,<span class="string">'2015-06-17'</span>),(<span class="number">72</span>,<span class="string">'2015-06-16'</span>),(<span class="number">73</span>,<span class="string">'2015-06-17'</span>),(<span class="number">74</span>,<span class="string">'2015-06-16'</span>),(<span class="number">75</span>,<span class="string">'2015-06-17'</span>),(<span class="number">76</span>,<span class="string">'2015-06-16'</span>),(<span class="number">77</span>,<span class="string">'2015-06-17'</span>),(<span class="number">78</span>,<span class="string">'2015-06-16'</span>),(<span class="number">79</span>,<span class="string">'2015-06-17'</span>),(<span class="number">80</span>,<span class="string">'2015-06-16'</span>),(<span class="number">81</span>,<span class="string">'2015-06-17'</span>),(<span class="number">82</span>,<span class="string">'2015-06-16'</span>),(<span class="number">83</span>,<span class="string">'2015-06-17'</span>),(<span class="number">84</span>,<span class="string">'2015-06-16'</span>),(<span class="number">85</span>,<span class="string">'2015-06-17'</span>),(<span class="number">86</span>,<span class="string">'2015-06-16'</span>),(<span class="number">87</span>,<span class="string">'2015-06-17'</span>),(<span class="number">88</span>,<span class="string">'2015-06-16'</span>),(<span class="number">89</span>,<span class="string">'2015-06-17'</span>),(<span class="number">90</span>,<span class="string">'2015-06-16'</span>),(<span class="number">91</span>,<span class="string">'2015-06-17'</span>),(<span class="number">92</span>,<span class="string">'2015-06-16'</span>),(<span class="number">93</span>,<span class="string">'2015-06-17'</span>),(<span class="number">94</span>,<span class="string">'2015-06-16'</span>),(<span class="number">95</span>,<span class="string">'2015-06-17'</span>),(<span class="number">96</span>,<span class="string">'2015-06-16'</span>),(<span class="number">97</span>,<span class="string">'2015-06-17'</span>),(<span class="number">98</span>,<span class="string">'2015-06-16'</span>),(<span class="number">99</span>,<span class="string">'2015-06-17'</span>)</span></span><br></pre></td></tr></table></figure>
-<p>3.验证<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">EXPLAIN</span> PARTITIONS <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> test_sub_partition <span class="keyword">WHERE</span> test_time= <span class="string">'2015-06-16'</span> <span class="keyword">AND</span> other_key <span class="keyword">IN</span> (<span class="number">1</span>,<span class="number">11</span>,<span class="number">21</span>,<span class="number">31</span>,<span class="number">41</span>,<span class="number">51</span>,<span class="number">61</span>,<span class="number">71</span>,<span class="number">81</span>,<span class="number">91</span>)</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="http://7xawio.com1.z0.glb.clouddn.com/mysql_subpartitions_result_01.png" alt="img"><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">EXPLAIN</span> PARTITIONS <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> test_sub_partition <span class="keyword">WHERE</span> test_time= <span class="string">'2015-06-16'</span> <span class="keyword">AND</span> other_key <span class="keyword">IN</span> (<span class="number">2</span>,<span class="number">12</span>,<span class="number">22</span>,<span class="number">32</span>,<span class="number">42</span>,<span class="number">52</span>,<span class="number">62</span>,<span class="number">72</span>,<span class="number">82</span>,<span class="number">92</span>)</span></span><br></pre></td></tr></table></figure></p>
+<p>3.验证<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">EXPLAIN</span> <span class="keyword">PARTITIONS</span> <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> test_sub_partition <span class="keyword">WHERE</span> test_time= <span class="string">'2015-06-16'</span> <span class="keyword">AND</span> other_key <span class="keyword">IN</span> (<span class="number">1</span>,<span class="number">11</span>,<span class="number">21</span>,<span class="number">31</span>,<span class="number">41</span>,<span class="number">51</span>,<span class="number">61</span>,<span class="number">71</span>,<span class="number">81</span>,<span class="number">91</span>)</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://7xawio.com1.z0.glb.clouddn.com/mysql_subpartitions_result_01.png" alt="img"><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">EXPLAIN</span> <span class="keyword">PARTITIONS</span> <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> test_sub_partition <span class="keyword">WHERE</span> test_time= <span class="string">'2015-06-16'</span> <span class="keyword">AND</span> other_key <span class="keyword">IN</span> (<span class="number">2</span>,<span class="number">12</span>,<span class="number">22</span>,<span class="number">32</span>,<span class="number">42</span>,<span class="number">52</span>,<span class="number">62</span>,<span class="number">72</span>,<span class="number">82</span>,<span class="number">92</span>)</span></span><br></pre></td></tr></table></figure></p>
 <p><img src="http://7xawio.com1.z0.glb.clouddn.com/mysql_subpartitions_result_02.png" alt="img"> </p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/06/21/mysql-partitions/" data-id="ciiyiwyfs000cl4pr6d44c79a" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-reverseList" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/06/21/reverseList/" class="article-date">
-  <time datetime="2015-06-21T15:17:52.000Z" itemprop="datePublished">2015-06-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-21T15:17:52.000Z"><a href="/2015/06/21/reverseList/">2015-06-21</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/06/21/reverseList/">单向链表的反转</a>
-    </h1>
+    <h1 class="title"><a href="/2015/06/21/reverseList/">单向链表的反转</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
-        <h4 id="单向链表的反转">单向链表的反转</h4><p>今天偶尔看到一个关于单链表反转的问题，说是用递归实现，提起了我的兴趣，记得当初校招找工作的时候，笔试经常会考，不过当时都是用迭代来做的，没有想过用递归来实现。以下是我的两种实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListReverse</span> </span>&#123;</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * 递归实现</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Node <span class="title">reverseByRecursive</span><span class="params">(Node h)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(h == <span class="keyword">null</span> || h.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> h;</span><br><span class="line">		&#125;</span><br><span class="line">		Node nh = reverseByRecursive(h.next);</span><br><span class="line">		h.next.next = h;</span><br><span class="line">		h.next = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">return</span> nh;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * 迭代实现</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Node <span class="title">reverseByIteration</span><span class="params">(Node h)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(h == <span class="keyword">null</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Node preNode = <span class="keyword">null</span>;</span><br><span class="line">		Node curNode = h;</span><br><span class="line">		<span class="keyword">while</span>(curNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">			Node next = curNode.next;</span><br><span class="line">			curNode.next = preNode;</span><br><span class="line">			preNode = curNode;</span><br><span class="line">			curNode = next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> preNode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> len = <span class="number">10</span>;</span><br><span class="line">		Node h = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">		Node curNode = h;</span><br><span class="line">		<span class="keyword">while</span>(curNode != <span class="keyword">null</span> &amp;&amp; i &lt; len)&#123;</span><br><span class="line">			curNode.id = i;</span><br><span class="line">			curNode.next = i == len - <span class="number">1</span>?<span class="keyword">null</span>:<span class="keyword">new</span> Node();</span><br><span class="line">			curNode = curNode.next;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line">		h.printNodes();</span><br><span class="line">		ListReverse listReverse = <span class="keyword">new</span> ListReverse();</span><br><span class="line">		System.out.println();</span><br><span class="line">		Node retNode = <span class="keyword">null</span>;</span><br><span class="line">		<span class="comment">//迭代实现</span></span><br><span class="line">		<span class="comment">//retNode = listReverse.reverseByIteration(h);</span></span><br><span class="line">		<span class="comment">//递归实现</span></span><br><span class="line">		retNode = listReverse.reverseByRecursive(h);</span><br><span class="line">		<span class="keyword">if</span>(retNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">			retNode.printNodes();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="javadoc">/**</span><br><span class="line">*链表节点</span><br><span class="line">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	Node next;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printNodes</span><span class="params">()</span></span>&#123;</span><br><span class="line">		Node curNode = <span class="keyword">this</span>;</span><br><span class="line">		<span class="keyword">while</span>(curNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">			System.out.print(curNode.id + <span class="string">"\t"</span>);</span><br><span class="line">			curNode = curNode.next;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Node [id="</span> + id + <span class="string">", next="</span> + next + <span class="string">"]"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <h4 id="单向链表的反转">单向链表的反转</h4><p>今天偶尔看到一个关于单链表反转的问题，说是用递归实现，提起了我的兴趣，记得当初校招找工作的时候，笔试经常会考，不过当时都是用迭代来做的，没有想过用递归来实现。以下是我的两种实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListReverse</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 递归实现</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Node <span class="title">reverseByRecursive</span><span class="params">(Node h)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(h == <span class="keyword">null</span> || h.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> h;</span><br><span class="line">		&#125;</span><br><span class="line">		Node nh = reverseByRecursive(h.next);</span><br><span class="line">		h.next.next = h;</span><br><span class="line">		h.next = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">return</span> nh;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 迭代实现</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Node <span class="title">reverseByIteration</span><span class="params">(Node h)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(h == <span class="keyword">null</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Node preNode = <span class="keyword">null</span>;</span><br><span class="line">		Node curNode = h;</span><br><span class="line">		<span class="keyword">while</span>(curNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">			Node next = curNode.next;</span><br><span class="line">			curNode.next = preNode;</span><br><span class="line">			preNode = curNode;</span><br><span class="line">			curNode = next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> preNode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> len = <span class="number">10</span>;</span><br><span class="line">		Node h = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">		Node curNode = h;</span><br><span class="line">		<span class="keyword">while</span>(curNode != <span class="keyword">null</span> &amp;&amp; i &lt; len)&#123;</span><br><span class="line">			curNode.id = i;</span><br><span class="line">			curNode.next = i == len - <span class="number">1</span>?<span class="keyword">null</span>:<span class="keyword">new</span> Node();</span><br><span class="line">			curNode = curNode.next;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line">		h.printNodes();</span><br><span class="line">		ListReverse listReverse = <span class="keyword">new</span> ListReverse();</span><br><span class="line">		System.out.println();</span><br><span class="line">		Node retNode = <span class="keyword">null</span>;</span><br><span class="line">		<span class="comment">//迭代实现</span></span><br><span class="line">		<span class="comment">//retNode = listReverse.reverseByIteration(h);</span></span><br><span class="line">		<span class="comment">//递归实现</span></span><br><span class="line">		retNode = listReverse.reverseByRecursive(h);</span><br><span class="line">		<span class="keyword">if</span>(retNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">			retNode.printNodes();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span><br><span class="line">*链表节点</span><br><span class="line">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	Node next;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printNodes</span><span class="params">()</span></span>&#123;</span><br><span class="line">		Node curNode = <span class="keyword">this</span>;</span><br><span class="line">		<span class="keyword">while</span>(curNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">			System.out.print(curNode.id + <span class="string">"\t"</span>);</span><br><span class="line">			curNode = curNode.next;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Node [id="</span> + id + <span class="string">", next="</span> + next + <span class="string">"]"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>上述递归实现的思路如下：<br>从当前节点依次递归反转下一个节点，<br>每次递归的出口条件是下个节点的next为null，<br>当前节点后面的所有节点都反转成功后，将此当前节点的next也设置为null，为上层递归做好出口。</p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/06/21/reverseList/" data-id="ciiyiwyey0001l4prh1tagke5" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-java-threadpool" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/03/14/java-threadpool/" class="article-date">
-  <time datetime="2015-03-14T12:28:00.000Z" itemprop="datePublished">2015-03-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-03-14T12:28:00.000Z"><a href="/2015/03/14/java-threadpool/">2015-03-14</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/14/java-threadpool/">java线程池详解</a>
-    </h1>
+    <h1 class="title"><a href="/2015/03/14/java-threadpool/">java线程池详解</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <h2 id="1-_为什么要引入线程池技术">1. 为什么要引入线程池技术</h2><p>在多线程环境下，线程的创建和销毁花费的时间和消耗的系统资源都是相当大的，如果有太多的线程创建，而不能对其加以控制，那么最终会导致系统资源不足，为了尽可能减少的创建和销毁线程的次数，充分利用已有资源来进行服务，因此引入了线程池。</p>
 <h2 id="2-_合理使用线程池的好处">2. 合理使用线程池的好处</h2><p>（1）降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗<br>（2）提高响应速度。当任务到达时，任务可以不需要等到线程创建就能立即执行。<br>（3）提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。但是要做到合理的利用线程池，必须对其原理了如指掌。</p>
 <h2 id="3-_线程池工作原理">3. 线程池工作原理</h2><p>一般来说一个线程池包括如下几个组成部分：<br>（1）线程管理器（ThreadPool）<br> &emsp;&emsp; 用于创建并管理线程池<br>（2）工作线程（PoolWorker）<br> &emsp;&emsp; 线程池中实际执行任务的线程<br>（3）任务接口（Task）<br> &emsp;&emsp; 每个任务必须实现的接口，以供工作线程调度任务的执行，它主要规定了任务的入口，任务执行完后的收尾工作，任务的执行状态等；<br>（4）任务队列（taskqueue）<br>  &emsp;&emsp; 用于存放没有处理的任务</p>
-<h2 id="4-_java中线程池的使用">4. java中线程池的使用</h2><p>（1）线程池创建的几个方式<br>  使用Executors提供的几个静态方法来创建<br> public static ExecutorService newSingleThreadExecutor()<br> public static ExecutorService newFixedThreadPool(int nThreads)<br> public static ExecutorService newCachedThreadPool()<br>public static ScheduledExecutorService    newScheduledThreadPool(int corePoolSize)<br> newSingleThreadExcutor():<br>返回一个包含单线程的线程池，该线程池只能含有一个线程，当该线程执行过程有异常或故障，将会启动一个新的线程继续执行该线程未完成的任务。<br>ExecutorService newFixedThreadPool(int nThreads)：<br>返回一个包含指定数目线程的线程池。<br> public static ExecutorService newCachedThreadPool()<br>创建一个可重用其中线程的线程池，即根据需要创建线程，若线程池中有可重用的线程将调用之前构造的线程，若没有则新建一个线程并将其添加到线程池u中。尚未使用超过60秒的线程将会从线程池中移除。<br>newScheduledThreadPool(int corePoolSize)：<br>创建一个可以进行定时或周期执行任务的线程池。<br>（2）使用线程池和不使用线程池的对比<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPoolDemo</span> </span>&#123;</span><br><span class="line">	<span class="comment">//要创建的线程数</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> count = <span class="number">1000</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String [] str)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"没有使用线程池前:"</span>);</span><br><span class="line">		System.out.println(count + <span class="string">" 个线程没有使用线程池花费 "</span> + withoutPool() + <span class="string">" 毫秒"</span>);</span><br><span class="line">		System.out.println(<span class="string">"使用线程池后:"</span>);</span><br><span class="line">		System.out.println(count + <span class="string">" 个线程使用线程池花费 "</span> + withPool() + <span class="string">" 毫秒"</span>);</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * 使用线程池</span><br><span class="line">	 *<span class="javadoctag"> @return</span></span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">withPool</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">		<span class="keyword">final</span> List&lt;Integer&gt; l = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">		ThreadPoolExecutor tp = <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">1</span>,<span class="number">1</span>,<span class="number">60</span>,TimeUnit.SECONDS,<span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;(count));</span><br><span class="line">		<span class="keyword">final</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++)&#123;</span><br><span class="line">			tp.execute(<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">				<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">					l.add(random.nextInt());</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">		tp.shutdown();</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			tp.awaitTermination(<span class="number">1</span>,TimeUnit.DAYS);</span><br><span class="line">		&#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> System.currentTimeMillis() - startTime;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * 没有使用线程池</span><br><span class="line">	 *<span class="javadoctag"> @return</span></span><br><span class="line">	 */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">withoutPool</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">    	<span class="keyword">final</span> List&lt;Integer&gt; l = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">    	<span class="keyword">final</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++)&#123;</span><br><span class="line">    		Thread thread = <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">    			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    				l.add(random.nextInt());</span><br><span class="line">    			&#125;</span><br><span class="line">    		&#125;;</span><br><span class="line">    		thread.start();</span><br><span class="line">    		<span class="keyword">try</span>&#123;</span><br><span class="line">    		 thread.join();</span><br><span class="line">    		&#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">    			e.printStackTrace();</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> System.currentTimeMillis() - startTime;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-_java中线程池的使用">4. java中线程池的使用</h2><p>（1）线程池创建的几个方式<br>  使用Executors提供的几个静态方法来创建<br> public static ExecutorService newSingleThreadExecutor()<br> public static ExecutorService newFixedThreadPool(int nThreads)<br> public static ExecutorService newCachedThreadPool()<br>public static ScheduledExecutorService    newScheduledThreadPool(int corePoolSize)<br> newSingleThreadExcutor():<br>返回一个包含单线程的线程池，该线程池只能含有一个线程，当该线程执行过程有异常或故障，将会启动一个新的线程继续执行该线程未完成的任务。<br>ExecutorService newFixedThreadPool(int nThreads)：<br>返回一个包含指定数目线程的线程池。<br> public static ExecutorService newCachedThreadPool()<br>创建一个可重用其中线程的线程池，即根据需要创建线程，若线程池中有可重用的线程将调用之前构造的线程，若没有则新建一个线程并将其添加到线程池u中。尚未使用超过60秒的线程将会从线程池中移除。<br>newScheduledThreadPool(int corePoolSize)：<br>创建一个可以进行定时或周期执行任务的线程池。<br>（2）使用线程池和不使用线程池的对比<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPoolDemo</span> </span>&#123;</span><br><span class="line">	<span class="comment">//要创建的线程数</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> count = <span class="number">1000</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String [] str)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"没有使用线程池前:"</span>);</span><br><span class="line">		System.out.println(count + <span class="string">" 个线程没有使用线程池花费 "</span> + withoutPool() + <span class="string">" 毫秒"</span>);</span><br><span class="line">		System.out.println(<span class="string">"使用线程池后:"</span>);</span><br><span class="line">		System.out.println(count + <span class="string">" 个线程使用线程池花费 "</span> + withPool() + <span class="string">" 毫秒"</span>);</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 使用线程池</span><br><span class="line">	 * <span class="doctag">@return</span></span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">withPool</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">		<span class="keyword">final</span> List&lt;Integer&gt; l = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">		ThreadPoolExecutor tp = <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">1</span>,<span class="number">1</span>,<span class="number">60</span>,TimeUnit.SECONDS,<span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;(count));</span><br><span class="line">		<span class="keyword">final</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++)&#123;</span><br><span class="line">			tp.execute(<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">				<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">					l.add(random.nextInt());</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">		tp.shutdown();</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			tp.awaitTermination(<span class="number">1</span>,TimeUnit.DAYS);</span><br><span class="line">		&#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> System.currentTimeMillis() - startTime;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 没有使用线程池</span><br><span class="line">	 * <span class="doctag">@return</span></span><br><span class="line">	 */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">withoutPool</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">    	<span class="keyword">final</span> List&lt;Integer&gt; l = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">    	<span class="keyword">final</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++)&#123;</span><br><span class="line">    		Thread thread = <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">    			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    				l.add(random.nextInt());</span><br><span class="line">    			&#125;</span><br><span class="line">    		&#125;;</span><br><span class="line">    		thread.start();</span><br><span class="line">    		<span class="keyword">try</span>&#123;</span><br><span class="line">    		 thread.join();</span><br><span class="line">    		&#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">    			e.printStackTrace();</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> System.currentTimeMillis() - startTime;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>  执行结果：<br>没有使用线程池前:<br>1000 个线程没有使用线程池花费 103 毫秒<br>使用线程池后:<br>1000 个线程使用线程池花费 18 毫秒</p>
 <p><strong>明显可以看出使用线程池后花费的时间更少</strong></p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/03/14/java-threadpool/" data-id="ciiyiwyg5000fl4prl8065lyz" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-nodeinstallpage" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/03/11/nodeinstallpage/" class="article-date">
-  <time datetime="2015-03-11T05:00:37.000Z" itemprop="datePublished">2015-03-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-03-11T05:00:37.000Z"><a href="/2015/03/11/nodeinstallpage/">2015-03-11</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/11/nodeinstallpage/">nodejs 服务器环境搭建</a>
-    </h1>
+    <h1 class="title"><a href="/2015/03/11/nodeinstallpage/">nodejs 服务器环境搭建</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <h2 id="1-通过apt-get方式安装">1.通过apt-get方式安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install nodejs</span><br><span class="line">$ sudo apt-get install nmp</span><br></pre></td></tr></table></figure>
 <h3 id="查看版本">查看版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br><span class="line">  v0.<span class="number">6.12</span></span><br><span class="line">$ npm -v</span><br><span class="line">  <span class="number">1.1</span>.<span class="number">4</span></span><br></pre></td></tr></table></figure>
@@ -335,38 +339,34 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/03/11/nodeinstallpage/" data-id="ciiyiwyfo000al4prb0lhw8jr" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-remarkable" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/03/09/remarkable/" class="article-date">
-  <time datetime="2015-03-09T15:56:23.000Z" itemprop="datePublished">2015-03-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-03-09T15:56:23.000Z"><a href="/2015/03/09/remarkable/">2015-03-09</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/09/remarkable/">ubuntu下remarkable的安装</a>
-    </h1>
+    <h1 class="title"><a href="/2015/03/09/remarkable/">ubuntu下remarkable的安装</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <ol>
 <li>到remarkable官网<a href="http://remarkableapp.net/" target="_blank" rel="external">http://remarkableapp.net/</a> 下载remarkable的deb的安装包remarkable_1.25_all.deb</li>
@@ -380,75 +380,67 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/03/09/remarkable/" data-id="ciiyiwyf10002l4prwgqpm8wy" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-music" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/03/08/music/" class="article-date">
-  <time datetime="2015-03-08T07:17:47.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-03-08T07:17:47.000Z"><a href="/2015/03/08/music/">2015-03-08</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/music/">music</a>
-    </h1>
+    <h1 class="title"><a href="/2015/03/08/music/">music</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <p><img src="http://7xawio.com1.z0.glb.clouddn.com/IMG_20141214_162918.jpg" alt=""> </p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/03/08/music/" data-id="ciiyiwyfv000dl4pra8z0e1d2" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/03/07/hello-world/" class="article-date">
-  <time datetime="2015-03-07T10:52:02.955Z" itemprop="datePublished">2015-03-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-03-07T10:52:02.955Z"><a href="/2015/03/07/hello-world/">2015-03-07</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/07/hello-world/">Hello World</a>
-    </h1>
+    <h1 class="title"><a href="/2015/03/07/hello-world/">Hello World</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
@@ -462,153 +454,94 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/03/07/hello-world/" data-id="ciiyiwygi000hl4pr3d0w5b5u" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
-  
-    <article id="post-fly" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/03/05/fly/" class="article-date">
-  <time datetime="2015-03-05T15:40:17.000Z" itemprop="datePublished">2015-03-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/05/fly/">fly</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/03/05/fly/" data-id="ciiyiwygq000il4pr4y2jkk58" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
 
 
+
+<nav id="pagination">
+  
+    <a href="/" class="alignleft prev">上一頁</a>
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+    <a href="/page/3/" class="alignright next">下一頁</a>
   
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">6</span></li></ul>
-    </div>
-  </div>
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
 
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/设计模式/" style="font-size: NaNpx;">设计模式</a>
-    </div>
-  </div>
 
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">6</span></li></ul>
-    </div>
-  </div>
-
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2016/01/03/redis-demo/">redis单机多实例使用</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/27/log4j-study/">log4j的使用</a>
-          </li>
-        
-          <li>
-            <a href="/2015/11/19/storm-kafka-demo/">storm-kafka使用</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/05/design-pattern-observer/">observer(观察者模式)-对象行为模式</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/29/design-pattern-memento/">memento（备忘录）-对象行为模式</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
+    <li><a href="/tags/SOA框架dubbo/">SOA框架dubbo</a><small>1</small></li>
   
+    <li><a href="/tags/java多线程/">java多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/jmeter/">jmeter</a><small>1</small></li>
+  
+    <li><a href="/tags/jvm监控/">jvm监控</a><small>1</small></li>
+  
+    <li><a href="/tags/markdown编辑器/">markdown编辑器</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql数据库/">mysql数据库</a><small>2</small></li>
+  
+    <li><a href="/tags/node/">node</a><small>1</small></li>
+  
+    <li><a href="/tags/redis/">redis</a><small>1</small></li>
+  
+    <li><a href="/tags/storm/">storm</a><small>1</small></li>
+  
+    <li><a href="/tags/日志工具/">日志工具</a><small>1</small></li>
+  
+    <li><a href="/tags/算法/">算法</a><small>1</small></li>
+  
+    <li><a href="/tags/设计模式/">设计模式</a><small>6</small></li>
+  
+  </ul>
+</div>
+
 </aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2016 difeng<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
+    <div class="clearfix"></div>
   </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
+  <footer id="footer" class="inner"><div class="alignleft">
   
-    <a href="/" class="mobile-nav-link">Home</a>
+  &copy; 2016 difeng
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
 
-  </div>
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
 </body>
 </html>

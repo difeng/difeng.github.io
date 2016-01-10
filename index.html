@@ -1,87 +1,126 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
   
   <title>difeng</title>
+  <meta name="author" content="difeng">
+  
+  
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="difeng">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="difeng">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="difeng">
-<meta name="twitter:description">
+
   
-    <link rel="alternative" href="/atom.xml" title="difeng" type="application/atom+xml">
+  <meta property="og:site_name" content="difeng"/>
+
   
+    <meta property="og:image" content="undefined"/>
   
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="difeng" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   
 
 </head>
+
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">difeng</a>
-      </h1>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">difeng</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="q" value="site:http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
+        <div class="icon"></div>
+        <time datetime="2016-01-10T12:15:03.000Z"><a href="/2016/01/10/jmeter-test/">2016-01-10</a></time>
+      
+      
   
-    <article id="post-redis-demo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/01/03/redis-demo/" class="article-date">
-  <time datetime="2016-01-03T12:36:16.000Z" itemprop="datePublished">2016-01-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/03/redis-demo/">redis单机多实例使用</a>
-    </h1>
+    <h1 class="title"><a href="/2016/01/10/jmeter-test/">jmeter使用</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
+      
+        <h3 id="1-简介：">1.简介：</h3><p>JMeter是Apache下开源的性能测试工具组织的开放源代码项目，它是功能和性能测试的工具，JMeter是Apache下开源的性能测试工具组织的开放源代码项目，它是功能和性能测试的工具，Jmeter可以用来测试性能静态和动态的资源（Web服务（SOAP/ REST），网页动态语言PHP，Java和ASP.NET，文件等，Java对象，数据库和查询，FTP服务器和更多）。它可以被用来模拟一个重负载作用于服务器，组服务器，网络或对象，以测试它的强度或以分析在不同负载类型的整体性能。并且可以用它做性能的图形分析或重并发负载下测试服务器/脚本/对象的行为。<br>官网地址<a href="http://jmeter.apache.org/" target="_blank" rel="external">http://jmeter.apache.org/</a></p>
+<h3 id="2-使用">2.使用</h3><h4 id="2-1-web性能测试，这里以静态web资源服务器为例进行测试。">2.1.web性能测试，这里以静态web资源服务器为例进行测试。</h4><h4 id="2-1-1_打开jmeter性能测试工具如下">2.1.1 打开jmeter性能测试工具如下</h4><p><img src="http://7xawio.com1.z0.glb.clouddn.com/jmeter_web_wecolme.png" alt="jmeter欢迎界面"></p>
+<h4 id="2-1-2_新建测试计划(Test_Plan)">2.1.2 新建测试计划(Test Plan)</h4><p>a.先建线程组<br><img src="http://7xawio.com1.z0.glb.clouddn.com/jmeter_web_thread_group.png" alt="新建线程组"><br>b.在线程组上可以添加<br>逻辑控制（Logic Controller）<br>配置元件（Config Elements）<br>实例产生控制器（Sample Generating Controllers）<br>监听器(Listener)<br>定时器（Timer）<br>前置处理器<br>后置处理器</p>
+<p>c.设置负载信息<br>线程属性信息设置</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>意思</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>线程数</td>
+<td>线程组中线程的个数</td>
+</tr>
+<tr>
+<td>Ramp-up period</td>
+<td>用于告知JMeter 要在多长时间内建立全部的线程。默认值是0。如果未指定ramp-up period ，也就是说ramp-up period 为零， JMeter 将立即建立所有线程，假设ramp-up period 设置成T 秒， 全部线程数设置成N个， JMeter 将每隔T/N秒建立一个线程。 </td>
+</tr>
+<tr>
+<td>循环次数</td>
+<td>请求发生的重复次数，若线程数为10,循环次数为10,则总的请求次数为10*10=100个</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-1-3_下面是以mina的SocketSever为例，简单介绍一下使用方法-">2.1.3 下面是以mina的SocketSever为例，简单介绍一下使用方法.</h4><p>a.先编写测试的代码<br>  jmeter提供了抽象的实例产生器AbstractJavaSamplerClient,我们只要新建自己的实例发生器并继承于AbstractJavaSamplerClient类,并实现其抽象方法<br>public SampleResult runTest(JavaSamplerContext arg0)，在此方法中实现我们实例发生器的调用，并返回结果对象SampleResult。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.jmeter.samplers.SampleResult;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * <span class="doctag">@Description</span>:TODO</span><br><span class="line"> * <span class="doctag">@author</span>:difeng</span><br><span class="line"> * <span class="doctag">@time</span>:2015年12月20日 下午11:16:39</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClient</span> <span class="keyword">extends</span> <span class="title">AbstractJavaSamplerClient</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> SampleResult <span class="title">runTest</span><span class="params">(JavaSamplerContext arg0)</span> </span>&#123;</span><br><span class="line">		SampleResult sr = <span class="keyword">new</span> SampleResult();</span><br><span class="line">		<span class="keyword">boolean</span> result = <span class="keyword">true</span>;</span><br><span class="line">		<span class="comment">//测试用例的核心逻辑</span></span><br><span class="line">		<span class="comment">//测试用例开始</span></span><br><span class="line">		sr.sampleStart();</span><br><span class="line">		<span class="comment">//测试用例执行</span></span><br><span class="line">		MinaClient minaClient = <span class="keyword">new</span> MinaClient();</span><br><span class="line">		result = minaClient.search();</span><br><span class="line">		<span class="comment">//测试用例结果</span></span><br><span class="line">		sr.setSuccessful(result);</span><br><span class="line">		<span class="comment">//测试用例结束</span></span><br><span class="line">		sr.sampleEnd();</span><br><span class="line">		<span class="keyword">return</span> sr;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 测试开始</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setupTest</span><span class="params">(JavaSamplerContext arg0)</span> </span>&#123;      </span><br><span class="line">		start = System.currentTimeMillis();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 测试结束</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">teardownTest</span><span class="params">(JavaSamplerContext arg0)</span> </span>&#123;</span><br><span class="line">		end = System.currentTimeMillis();</span><br><span class="line">		System.out.println(<span class="string">"[time:"</span> + (end - start) / <span class="number">1000</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>mina 的server代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.com.acsno.jmeter_data;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.InetSocketAddress;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.filter.codec.ProtocolCodecFilter;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.filter.codec.textline.TextLineCodecFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.transport.socket.nio.NioSocketAcceptor;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * <span class="doctag">@Description</span>:TODO</span><br><span class="line"> * <span class="doctag">@author</span>:difeng</span><br><span class="line"> * <span class="doctag">@time</span>:2016年1月7日 下午8:42:12</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MinaServer</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		NioSocketAcceptor acceptor = <span class="keyword">new</span> NioSocketAcceptor(); </span><br><span class="line">		MinaServerHandler handler = <span class="keyword">new</span> MinaServerHandler();</span><br><span class="line">		acceptor.setHandler(handler);  </span><br><span class="line">		<span class="comment">//创建接收数据的过滤器  </span></span><br><span class="line">        DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();  </span><br><span class="line">        <span class="comment">//设定这个过滤器将一行一行(/r/n)的读取数据  </span></span><br><span class="line">        chain.addLast(<span class="string">"myChin"</span>, <span class="keyword">new</span> ProtocolCodecFilter(<span class="keyword">new</span>  </span><br><span class="line">        TextLineCodecFactory()));  </span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			acceptor.bind(<span class="keyword">new</span> InetSocketAddress(<span class="number">8080</span>));</span><br><span class="line">			System.out.println(<span class="string">"mina socket server start success!"</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.mina.core.service.IoHandlerAdapter;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.core.session.IdleStatus;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.core.session.IoSession;</span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * <span class="doctag">@Description</span>:mina socket server </span><br><span class="line"> * <span class="doctag">@author</span>:difeng</span><br><span class="line"> * <span class="doctag">@time</span>:2016年1月7日 下午8:44:41</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MinaServerHandler</span>  <span class="keyword">extends</span> <span class="title">IoHandlerAdapter</span></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * recieve message</span><br><span class="line">     * </span><br><span class="line">     */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">messageReceived</span><span class="params">(IoSession session, Object message)</span></span><br><span class="line">			<span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		System.out.println(message);</span><br><span class="line">		<span class="keyword">if</span>(<span class="string">"hello"</span>.equals(message))&#123;</span><br><span class="line">		&#125;</span><br><span class="line">		session.write(<span class="string">"true"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionClosed</span><span class="params">(IoSession session)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"会话关闭"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exceptionCaught</span><span class="params">(IoSession session, Throwable cause)</span>  </span><br><span class="line">            <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"会话异常"</span>);  </span><br><span class="line">        <span class="keyword">super</span>.exceptionCaught(session, cause);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">messageSent</span><span class="params">(IoSession iosession, Object obj)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"服务端消息发送"</span>);  </span><br><span class="line">        <span class="keyword">super</span>.messageSent(iosession, obj);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionCreated</span><span class="params">(IoSession iosession)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"会话创建"</span>);  </span><br><span class="line">        <span class="keyword">super</span>.sessionCreated(iosession);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionIdle</span><span class="params">(IoSession iosession, IdleStatus idlestatus)</span>  </span><br><span class="line">            <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"会话休眠"</span>);  </span><br><span class="line">        <span class="keyword">super</span>.sessionIdle(iosession, idlestatus);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionOpened</span><span class="params">(IoSession iosession)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"会话打开"</span>);  </span><br><span class="line">        <span class="keyword">super</span>.sessionOpened(iosession);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>mina client端的代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.net.InetSocketAddress;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.core.future.ConnectFuture;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.core.service.IoConnector;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.filter.codec.ProtocolCodecFilter;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.filter.codec.textline.TextLineCodecFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.transport.socket.nio.NioSocketConnector;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@Description</span>:mina socket client</span><br><span class="line"> * <span class="doctag">@author</span>:difeng</span><br><span class="line"> * <span class="doctag">@time</span>:2016年1月7日 下午8:45:30</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MinaClient</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> IoConnector connector;  </span><br><span class="line">	<span class="keyword">private</span> MinaClientHandler minaClientHandler;</span><br><span class="line">	<span class="keyword">private</span> ConnectFuture connFuture;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MinaClient</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">		connector = <span class="keyword">new</span> NioSocketConnector();  </span><br><span class="line">		minaClientHandler = <span class="keyword">new</span> MinaClientHandler();</span><br><span class="line">		connector.setHandler(minaClientHandler);  </span><br><span class="line">		 <span class="comment">// 创建接收数据的过滤器  </span></span><br><span class="line">        DefaultIoFilterChainBuilder chain = connector.getFilterChain();  </span><br><span class="line">        <span class="comment">//设定这个过滤器将一行一行(/r/n)的读取数据  </span></span><br><span class="line">        chain.addLast(<span class="string">"myChin"</span>, <span class="keyword">new</span> ProtocolCodecFilter(<span class="keyword">new</span>  </span><br><span class="line">        TextLineCodecFactory()));  </span><br><span class="line">        <span class="comment">// 设置链接超时时间       </span></span><br><span class="line"><span class="comment">//	    connector.setConnectTimeoutMillis(60*1000); </span></span><br><span class="line">		System.out.println(<span class="string">"TCP 客户端启动"</span>);  </span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> MinaClientHandler <span class="title">getMinaClientHandler</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> minaClientHandler;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMinaClientHandler</span><span class="params">(MinaClientHandler minaClientHandler)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.minaClientHandler = minaClientHandler;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendMessage</span><span class="params">(String message)</span></span>&#123;</span><br><span class="line">		connFuture = connector.connect(<span class="keyword">new</span> InetSocketAddress(<span class="string">"localhost"</span>,<span class="number">8080</span>));  </span><br><span class="line">		connFuture.awaitUninterruptibly(<span class="number">5</span>*<span class="number">60</span>*<span class="number">1000</span>);</span><br><span class="line">		connFuture.getSession().write(message);</span><br><span class="line">		System.out.println(<span class="string">"send message :"</span>+message);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.connector.dispose();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.mina.core.service.IoHandlerAdapter;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.core.session.IdleStatus;</span><br><span class="line"><span class="keyword">import</span> org.apache.mina.core.session.IoSession;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MinaClientHandler</span> <span class="keyword">extends</span> <span class="title">IoHandlerAdapter</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String result;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MinaClientHandler</span><span class="params">()</span></span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="annotation">@Override</span>  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">messageReceived</span><span class="params">(IoSession iosession, Object message)</span>  </span><br><span class="line">			<span class="keyword">throws</span> Exception </span>&#123;   </span><br><span class="line">		System.out.println(<span class="string">"客户端收到消息"</span> + message); </span><br><span class="line">		result = (String) message;</span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getResult</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setResult</span><span class="params">(String result)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.result = result;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="annotation">@Override</span>  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exceptionCaught</span><span class="params">(IoSession session, Throwable cause)</span>  </span><br><span class="line">			<span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">		System.out.println(<span class="string">"客户端异常"</span>);  </span><br><span class="line">		<span class="keyword">super</span>.exceptionCaught(session, cause);  </span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="annotation">@Override</span>  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">messageSent</span><span class="params">(IoSession iosession, Object obj)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">		System.out.println(<span class="string">"客户端消息发送"</span>);  </span><br><span class="line">		<span class="keyword">super</span>.messageSent(iosession, obj);  </span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="annotation">@Override</span>  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionClosed</span><span class="params">(IoSession iosession)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">		System.out.println(<span class="string">"客户端会话关闭"</span>);  </span><br><span class="line">		<span class="keyword">super</span>.sessionClosed(iosession);  </span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="annotation">@Override</span>  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionCreated</span><span class="params">(IoSession iosession)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">		System.out.println(<span class="string">"客户端会话创建"</span>);  </span><br><span class="line">		<span class="keyword">super</span>.sessionCreated(iosession);  </span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="annotation">@Override</span>  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionIdle</span><span class="params">(IoSession iosession, IdleStatus idlestatus)</span>  </span><br><span class="line">			<span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">		System.out.println(<span class="string">"客户端会话休眠"</span>);  </span><br><span class="line">		<span class="keyword">super</span>.sessionIdle(iosession, idlestatus);  </span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="annotation">@Override</span>  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionOpened</span><span class="params">(IoSession iosession)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">		System.out.println(<span class="string">"客户端会话打开"</span>);  </span><br><span class="line">		<span class="keyword">super</span>.sessionOpened(iosession);  </span><br><span class="line">	&#125;  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.将编写好的代码编译完打成jar包,并且将其放到jmeter的\lib\ext目录中，依赖的jar包可以单独全都导出来放到本地的一个目录中，测试计划页面的右下方添加相应的依赖包就可以。如下图所示：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/jmeter_dependency.png" alt="加载依赖jar包"><br>3.将mina的socket server启动起来，在线程组里添加的java请求并选择类名称如下图所示：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/jmeter_mina_choose_request.png" alt="选择测试类"></p>
+<p>4.添加聚合报告完后，就开以开始测试了。<br>测试过程截图如下：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/jmeter_mina_test.png" alt="测试实例图"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-03T12:36:16.000Z"><a href="/2016/01/03/redis-demo/">2016-01-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/03/redis-demo/">redis单机多实例使用</a></h1>
+  
+
+    </header>
+    <div class="entry">
       
         <p>redis单机多实例的配置,其实也就是在多个端口上启动redis实例，学要注意以下问题。<br>1.不同端口写不同配置文件<br>   如下：<br>   redis_6377.conf<br>   redis_6378.conf<br>   redis_6379.conf<br>2.在不同的配置文件中配置各自的策略<br>  注意以下几点<br>  1.端口配置<br>  2.pid文件的配置，不同端口配不同名字，最好加端口号，以便区分。<br>  3.log文件路径的配置<br>  4.持久化的文件配置，不可重复<br>    这里选择rbd<br>启动的时候<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-server /path/to/redis.conf</span><br></pre></td></tr></table></figure></p>
 <p>顺便说一下redis的持久化方式<br>分两种<br>1.rdb模式<br> 其实就是对内存中的东西按一些策略定期做snapshot,也就是快照<br>rdb保存的是二进制文件，是redis的默认方式。<br>配置如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">save &#60;seconds&#62; &#60;changes&#62;&#10;#100&#31186;&#20869;&#33267;&#23569;&#26377;10&#20010;key&#20540;&#21457;&#29983;&#25913;&#21464;&#25165;&#20570;&#25345;&#20037;&#21270;&#10;save 100  10 &#10;#&#26368;&#26032;&#30340;&#24555;&#29031;&#20445;&#23384;&#22833;&#36133;&#26102;&#20572;&#27490;&#20889;&#25805;&#20316;&#10;stop-writes-on-bgsave-error yes&#10;#&#20570;&#24555;&#29031;&#26102;&#26159;&#19981;&#26159;&#38656;&#35201;&#20570;&#21387;&#32553;&#10;rdbcompression yes&#10;#&#25968;&#25454;&#26657;&#39564;&#65292;&#20445;&#35777;&#25968;&#25454;&#27491;&#30830;&#24615;&#10;rdbchecksum yes&#10;#&#24555;&#29031;&#30340;&#25991;&#20214;&#21517;&#10;dbfilename dump.rdb&#10;#&#23384;&#25918;&#24555;&#29031;&#30340;&#30446;&#24405;&#10;dir /var/lib/redis</span><br></pre></td></tr></table></figure></p>
@@ -90,123 +129,111 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/03/redis-demo/" data-id="ciiyiyfp90000lfpr4mslp9ej" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-log4j-study" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/27/log4j-study/" class="article-date">
-  <time datetime="2015-12-27T14:32:36.000Z" itemprop="datePublished">2015-12-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-27T14:32:36.000Z"><a href="/2015/12/27/log4j-study/">2015-12-27</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/27/log4j-study/">log4j的使用</a>
-    </h1>
+    <h1 class="title"><a href="/2015/12/27/log4j-study/">log4j的使用</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <p>log4j作为日志工具，想必大家已经非常熟悉，我们在日常的项目开发中经常会用到，它的功能很强大，我就不一一熬述了，把我觉得比较常用的功能总结一下。</p>
 <h4 id="1-根日志属性项">1.根日志属性项</h4><pre><code><span class="title">level</span> 日志最低级别
 后面可跟多个appender
 </code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">log4j.rootLogger  =   [ level ],appenderName1,appenderName2,...</span><br></pre></td></tr></table></figure>
-<p>如下配置意思：定义输出源A1，它的最低日志级别为DEBUG，然后将它附到根日志的属性后面去，A1的日志文件的路径为E:\debug.log<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#### 日志级别 </span><br><span class="line">log4j.rootLogger=DEBUG,A1</span><br><span class="line">#### 日志文件按天产生</span><br><span class="line">log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">#### 指定日志消息的输出最低层次</span><br><span class="line">log4j.appender.A1.Threshold=DEBUG</span><br><span class="line">#### 日志文件位置</span><br><span class="line">log4j.appender.A1.File=E:\\debug.log</span><br><span class="line">log4j.appender.A1.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.A1.Encoding=utf-<span class="number">8</span></span><br><span class="line">log4j.appender.A1.layout.ConversionPattern=[demo] %d %-<span class="number">5</span>p %c %x - %m%n</span><br></pre></td></tr></table></figure></p>
+<p>如下配置意思：定义输出源A1，它的最低日志级别为DEBUG，然后将它附到根日志的属性后面去，A1的日志文件的路径为E:\debug.log<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#### 日志级别 </span><br><span class="line">log4j.rootLogger=DEBUG,A1</span><br><span class="line">#### 日志文件按天产生</span><br><span class="line">log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">#### 指定日志消息的输出最低层次</span><br><span class="line">log4j.appender.A1.Threshold=DEBUG</span><br><span class="line">#### 日志文件位置</span><br><span class="line">log4j.appender.A1.File=E:\\debug.log</span><br><span class="line">log4j.appender.A1.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.A1.Encoding=utf-8</span><br><span class="line">log4j.appender.A1.layout.ConversionPattern=[demo] %d %-5p %c %x - %m%n</span><br></pre></td></tr></table></figure></p>
 <h4 id="2-按包或类单独打日志文件">2.按包或类单独打日志文件</h4><pre><code>定义单独包或类的日志输出源
 设置子日志是否继承父日志,设置log4j.additivity的值设置规则如下：
 log4j<span class="class">.additivity</span><span class="class">.cn</span><span class="class">.com</span><span class="class">.a1</span><span class="class">.TestB</span> = false
 log4j.additivity后面跟上据体要设置的包或类，类得带完整的包路径
-</code></pre><h4 id="以下是一个配置的demo">以下是一个配置的demo</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 日志级别 </span><br><span class="line">log4j.rootLogger=DEBUG,A1</span><br><span class="line">#### 日志文件按天产生</span><br><span class="line">log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">#### 指定日志消息的输出最低层次</span><br><span class="line">log4j.appender.A1.Threshold=DEBUG</span><br><span class="line">#### 日志文件位置</span><br><span class="line">log4j.appender.A1.File=E:\\debug.log</span><br><span class="line">log4j.appender.A1.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.A1.Encoding=utf-<span class="number">8</span></span><br><span class="line">log4j.appender.A1.layout.ConversionPattern=[demo] %d %-<span class="number">5</span>p %c %x - %m%n</span><br><span class="line"></span><br><span class="line">####<span class="keyword">false</span> 子Logger只会在自己的appender里输出，而不会在父Logger的appender里输出。####</span><br><span class="line">#### 类cn.com.a1.TestB的日志只会打在自己的appender里而不会打到父appender里</span><br><span class="line">log4j.additivity.cn.com.a1.TestB = <span class="keyword">false</span> </span><br><span class="line"></span><br><span class="line">log4j.appender.testb=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">log4j.appender.testb.Threshold=DEBUG</span><br><span class="line">#### 类TestB的日志文件位置</span><br><span class="line">log4j.appender.testb.File=E:\\testb.log</span><br><span class="line">log4j.appender.testb.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.testb.Encoding=utf-<span class="number">8</span></span><br><span class="line">log4j.appender.testb.layout.ConversionPattern=[QiConsoleDaemon] %d %-<span class="number">5</span>p %c %x - %m%n</span><br><span class="line">####单独定义某个包或类的日志输出级别和输出源，输出源可有多个，以逗号分隔，具体格式如下</span><br><span class="line">####日志级别，文件输出源</span><br><span class="line">log4j.logger.cn.com.a1.TestB=DEBUG,testb</span><br></pre></td></tr></table></figure>
+</code></pre><h4 id="以下是一个配置的demo">以下是一个配置的demo</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 日志级别 </span><br><span class="line">log4j.rootLogger=DEBUG,A1</span><br><span class="line">#### 日志文件按天产生</span><br><span class="line">log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">#### 指定日志消息的输出最低层次</span><br><span class="line">log4j.appender.A1.Threshold=DEBUG</span><br><span class="line">#### 日志文件位置</span><br><span class="line">log4j.appender.A1.File=E:\\debug.log</span><br><span class="line">log4j.appender.A1.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.A1.Encoding=utf-8</span><br><span class="line">log4j.appender.A1.layout.ConversionPattern=[demo] %d %-5p %c %x - %m%n</span><br><span class="line"></span><br><span class="line">####false 子Logger只会在自己的appender里输出，而不会在父Logger的appender里输出。####</span><br><span class="line">#### 类cn.com.a1.TestB的日志只会打在自己的appender里而不会打到父appender里</span><br><span class="line">log4j.additivity.cn.com.a1.TestB = false </span><br><span class="line"></span><br><span class="line">log4j.appender.testb=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">log4j.appender.testb.Threshold=DEBUG</span><br><span class="line">#### 类TestB的日志文件位置</span><br><span class="line">log4j.appender.testb.File=E:\\testb.log</span><br><span class="line">log4j.appender.testb.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.testb.Encoding=utf-8</span><br><span class="line">log4j.appender.testb.layout.ConversionPattern=[QiConsoleDaemon] %d %-5p %c %x - %m%n</span><br><span class="line">####单独定义某个包或类的日志输出级别和输出源，输出源可有多个，以逗号分隔，具体格式如下</span><br><span class="line">####日志级别，文件输出源</span><br><span class="line">log4j.logger.cn.com.a1.TestB=DEBUG,testb</span><br></pre></td></tr></table></figure>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/27/log4j-study/" data-id="ciiyiwyg0000el4prf84s9p72" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-storm-kafka-demo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/11/19/storm-kafka-demo/" class="article-date">
-  <time datetime="2015-11-19T13:22:31.000Z" itemprop="datePublished">2015-11-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-19T13:22:31.000Z"><a href="/2015/11/19/storm-kafka-demo/">2015-11-19</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/19/storm-kafka-demo/">storm-kafka使用</a>
-    </h1>
+    <h1 class="title"><a href="/2015/11/19/storm-kafka-demo/">storm-kafka使用</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <h3 id="1-storm-kafka介绍">1.storm-kafka介绍</h3><p>storm-kafka是storm自带的从kafka上获取消息的kafka客户端程序。<br>提供kafka和Trident的spout实现从kafka消费数据。</p>
 <h3 id="2-storm-kafka的使用实例">2.storm-kafka的使用实例</h3><p>maven的依赖配置文件,要注意strom-kafka是使用的kafka的低级api，因此也要引用kafka的包。如果不引，虽然编译不报错，但运行时会报错，我在初次使用时就是因为这个原因一直有问题。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.storm<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>storm-core<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">version</span>&gt;</span>0.9.5<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.storm<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>storm-kafka<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">version</span>&gt;</span>0.9.5<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.kafka<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>kafka_2.10<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">version</span>&gt;</span>0.8.1.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">exclusions</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">exclusion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.zookeeper<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>zookeeper<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">exclusion</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">exclusion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">exclusion</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>下面是我写的一个demo<br>具体步骤如下<br>1.new BrokerHosts<br>  需要的参数zookeeper的地址<br>2.new SpoutConfig<br> 构建SpoutConfig，需要设置BrokerHosts，kafka的topic，strom在zookeeper上的根等相关的参数。<br>3.new TopologyBuilder<br> 给TopologyBuilder设置Soupt和Boult用于构建一个Topology<br>4.配置Config并设置参数，启动LocalCluster，提交topology任务。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.BrokerHosts;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.KafkaSpout;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.SpoutConfig;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.StringScheme;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.ZkHosts;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.Config;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.LocalCluster;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.spout.SchemeAsMultiScheme;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.task.OutputCollector;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.task.TopologyContext;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.topology.OutputFieldsDeclarer;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.topology.TopologyBuilder;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.topology.base.BaseRichBolt;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.tuple.Tuple;</span><br><span class="line"></span><br><span class="line"><span class="javadoc">/**</span><br><span class="line"> *<span class="javadoctag"> @Description</span>:strom-kafka 使用</span><br><span class="line"> *<span class="javadoctag"> @author</span>:duyongfeng</span><br><span class="line"> *<span class="javadoctag"> @time</span>:2015年11月18日 上午10:18:31</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StormKafkaConsumer</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PingCounter</span> <span class="keyword">extends</span> <span class="title">BaseRichBolt</span></span>&#123;</span><br><span class="line">		<span class="javadoc">/**</span><br><span class="line">		 * </span><br><span class="line">		 */</span></span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">		<span class="keyword">private</span> OutputCollector collector;</span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Tuple input)</span> </span>&#123;</span><br><span class="line">			String msg = input.getString(<span class="number">0</span>);</span><br><span class="line">			System.out.println(<span class="string">"---------------------"</span> + msg + <span class="string">"-----------------"</span>);</span><br><span class="line">			collector.ack(input);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(Map arg0, TopologyContext arg1, OutputCollector arg2)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.collector = arg2;</span><br><span class="line">            System.out.println(<span class="string">"++++++++++++++++++++prepare++++++++++++++++++++++++++++++++++"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">declareOutputFields</span><span class="params">(OutputFieldsDeclarer arg0)</span> </span>&#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">			 System.out.println(<span class="string">"++++++++++++++++++++declareOutputFields+++++++++++++++++++++"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	    <span class="comment">//zookeeper的服务器地址</span></span><br><span class="line">		String zks = <span class="string">"192.168.1.50:2181,192.168.1.57:2181,192.168.1.58:2181"</span>;</span><br><span class="line">	    <span class="comment">//消息的topic</span></span><br><span class="line">		String topic = <span class="string">"data_icmp_ping"</span>;</span><br><span class="line">		<span class="comment">//strom在zookeeper上的根</span></span><br><span class="line">		String zkRoot = <span class="string">"/storm"</span>; </span><br><span class="line">		String id = <span class="string">"data_icmp_ping"</span>;</span><br><span class="line">		BrokerHosts brokerHosts = <span class="keyword">new</span> ZkHosts(zks);</span><br><span class="line">		SpoutConfig spoutConf = <span class="keyword">new</span> SpoutConfig(brokerHosts, topic, zkRoot, id);</span><br><span class="line">		spoutConf.scheme = <span class="keyword">new</span> SchemeAsMultiScheme(<span class="keyword">new</span> StringScheme());</span><br><span class="line">		spoutConf.forceFromStart = <span class="keyword">true</span>;</span><br><span class="line">		spoutConf.zkServers = Arrays.asList(<span class="keyword">new</span> String[] &#123;<span class="string">"192.168.1.50,192.168.1.57,192.168.1.58"</span>&#125;);</span><br><span class="line">		spoutConf.zkPort = <span class="number">2181</span>;</span><br><span class="line">		</span><br><span class="line">		TopologyBuilder builder = <span class="keyword">new</span> TopologyBuilder();</span><br><span class="line">		builder.setSpout(<span class="string">"kafka-reader"</span>, <span class="keyword">new</span> KafkaSpout(spoutConf),<span class="number">3</span>); </span><br><span class="line">		builder.setBolt(<span class="string">"ping-counter"</span>, <span class="keyword">new</span> PingCounter(),<span class="number">3</span>).shuffleGrouping(<span class="string">"kafka-reader"</span>);</span><br><span class="line">		Config conf = <span class="keyword">new</span> Config();</span><br><span class="line">        conf.setDebug(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//设置任务线程数</span></span><br><span class="line">        conf.setMaxTaskParallelism(<span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">        LocalCluster cluster = <span class="keyword">new</span> LocalCluster();</span><br><span class="line">		cluster.submitTopology(<span class="string">"test"</span>, conf, builder.createTopology());</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Thread.sleep(<span class="number">60000</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		cluster.shutdown();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是我写的一个demo<br>具体步骤如下<br>1.new BrokerHosts<br>  需要的参数zookeeper的地址<br>2.new SpoutConfig<br> 构建SpoutConfig，需要设置BrokerHosts，kafka的topic，strom在zookeeper上的根等相关的参数。<br>3.new TopologyBuilder<br> 给TopologyBuilder设置Soupt和Boult用于构建一个Topology<br>4.配置Config并设置参数，启动LocalCluster，提交topology任务。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.BrokerHosts;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.KafkaSpout;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.SpoutConfig;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.StringScheme;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.ZkHosts;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.Config;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.LocalCluster;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.spout.SchemeAsMultiScheme;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.task.OutputCollector;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.task.TopologyContext;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.topology.OutputFieldsDeclarer;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.topology.TopologyBuilder;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.topology.base.BaseRichBolt;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.tuple.Tuple;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * <span class="doctag">@Description</span>:strom-kafka 使用</span><br><span class="line"> * <span class="doctag">@author</span>:duyongfeng</span><br><span class="line"> * <span class="doctag">@time</span>:2015年11月18日 上午10:18:31</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StormKafkaConsumer</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PingCounter</span> <span class="keyword">extends</span> <span class="title">BaseRichBolt</span></span>&#123;</span><br><span class="line">		<span class="comment">/**</span><br><span class="line">		 * </span><br><span class="line">		 */</span></span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">		<span class="keyword">private</span> OutputCollector collector;</span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Tuple input)</span> </span>&#123;</span><br><span class="line">			String msg = input.getString(<span class="number">0</span>);</span><br><span class="line">			System.out.println(<span class="string">"---------------------"</span> + msg + <span class="string">"-----------------"</span>);</span><br><span class="line">			collector.ack(input);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(Map arg0, TopologyContext arg1, OutputCollector arg2)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.collector = arg2;</span><br><span class="line">            System.out.println(<span class="string">"++++++++++++++++++++prepare++++++++++++++++++++++++++++++++++"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">declareOutputFields</span><span class="params">(OutputFieldsDeclarer arg0)</span> </span>&#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">			 System.out.println(<span class="string">"++++++++++++++++++++declareOutputFields+++++++++++++++++++++"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	    <span class="comment">//zookeeper的服务器地址</span></span><br><span class="line">		String zks = <span class="string">"192.168.1.50:2181,192.168.1.57:2181,192.168.1.58:2181"</span>;</span><br><span class="line">	    <span class="comment">//消息的topic</span></span><br><span class="line">		String topic = <span class="string">"data_icmp_ping"</span>;</span><br><span class="line">		<span class="comment">//strom在zookeeper上的根</span></span><br><span class="line">		String zkRoot = <span class="string">"/storm"</span>; </span><br><span class="line">		String id = <span class="string">"data_icmp_ping"</span>;</span><br><span class="line">		BrokerHosts brokerHosts = <span class="keyword">new</span> ZkHosts(zks);</span><br><span class="line">		SpoutConfig spoutConf = <span class="keyword">new</span> SpoutConfig(brokerHosts, topic, zkRoot, id);</span><br><span class="line">		spoutConf.scheme = <span class="keyword">new</span> SchemeAsMultiScheme(<span class="keyword">new</span> StringScheme());</span><br><span class="line">		spoutConf.forceFromStart = <span class="keyword">true</span>;</span><br><span class="line">		spoutConf.zkServers = Arrays.asList(<span class="keyword">new</span> String[] &#123;<span class="string">"192.168.1.50,192.168.1.57,192.168.1.58"</span>&#125;);</span><br><span class="line">		spoutConf.zkPort = <span class="number">2181</span>;</span><br><span class="line">		</span><br><span class="line">		TopologyBuilder builder = <span class="keyword">new</span> TopologyBuilder();</span><br><span class="line">		builder.setSpout(<span class="string">"kafka-reader"</span>, <span class="keyword">new</span> KafkaSpout(spoutConf),<span class="number">3</span>); </span><br><span class="line">		builder.setBolt(<span class="string">"ping-counter"</span>, <span class="keyword">new</span> PingCounter(),<span class="number">3</span>).shuffleGrouping(<span class="string">"kafka-reader"</span>);</span><br><span class="line">		Config conf = <span class="keyword">new</span> Config();</span><br><span class="line">        conf.setDebug(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//设置任务线程数</span></span><br><span class="line">        conf.setMaxTaskParallelism(<span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">        LocalCluster cluster = <span class="keyword">new</span> LocalCluster();</span><br><span class="line">		cluster.submitTopology(<span class="string">"test"</span>, conf, builder.createTopology());</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Thread.sleep(<span class="number">60000</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		cluster.shutdown();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/19/storm-kafka-demo/" data-id="ciiyiwydq0000l4prfqbw60pg" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-design-pattern-observer" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/05/design-pattern-observer/" class="article-date">
-  <time datetime="2015-10-05T08:25:44.000Z" itemprop="datePublished">2015-10-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-05T08:25:44.000Z"><a href="/2015/10/05/design-pattern-observer/">2015-10-05</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/05/design-pattern-observer/">observer(观察者模式)-对象行为模式</a>
-    </h1>
+    <h1 class="title"><a href="/2015/10/05/design-pattern-observer/">observer(观察者模式)-对象行为模式</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <h4 id="意图：">意图：</h4><p>定义对象之间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到该状态通知并自动更新。</p>
 <h5 id="适用性：">适用性：</h5><blockquote>
@@ -217,7 +244,7 @@ log4j.additivity后面跟上据体要设置的包或类，类得带完整的包�
 </ul>
 </blockquote>
 <h5 id="结构图：">结构图：</h5><p><img src="http://7xawio.com1.z0.glb.clouddn.com/design_pattern_observer.png" alt="img"></p>
-<h4 id="抽象的主题">抽象的主题</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	List&lt;Observer&gt; observerList = <span class="keyword">new</span> ArrayList&lt;Observer&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * </span><br><span class="line">	 * add the observer</span><br><span class="line">	 *<span class="javadoctag"> @param</span> observer</span><br><span class="line">	 * </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Attach</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">		observerList.add(observer);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * </span><br><span class="line">	 *delete the observer</span><br><span class="line">	 *<span class="javadoctag"> @param</span> observer</span><br><span class="line">	 * </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Detach</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span>(Observer curObserver:observerList)&#123;</span><br><span class="line">			<span class="keyword">if</span>(curObserver == observer)&#123;</span><br><span class="line">				observerList.remove(observerList.indexOf(observer));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * </span><br><span class="line">	 * notify observer</span><br><span class="line">	 * </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObserver</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(Observer curObserver:observerList)&#123;</span><br><span class="line">			curObserver.update();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="抽象的主题">抽象的主题</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	List&lt;Observer&gt; observerList = <span class="keyword">new</span> ArrayList&lt;Observer&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * </span><br><span class="line">	 * add the observer</span><br><span class="line">	 * <span class="doctag">@param</span> observer</span><br><span class="line">	 * </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Attach</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">		observerList.add(observer);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * </span><br><span class="line">	 *delete the observer</span><br><span class="line">	 * <span class="doctag">@param</span> observer</span><br><span class="line">	 * </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Detach</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span>(Observer curObserver:observerList)&#123;</span><br><span class="line">			<span class="keyword">if</span>(curObserver == observer)&#123;</span><br><span class="line">				observerList.remove(observerList.indexOf(observer));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * </span><br><span class="line">	 * notify observer</span><br><span class="line">	 * </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObserver</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(Observer curObserver:observerList)&#123;</span><br><span class="line">			curObserver.update();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="具体的主题">具体的主题</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteSubject</span> <span class="keyword">extends</span> <span class="title">Subject</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String subjectState;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> subjectState;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(String subjectState)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.subjectState = subjectState;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="抽象的观察者：">抽象的观察者：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">	   <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="具体的观察者：">具体的观察者：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver</span> <span class="keyword">extends</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String observerName;</span><br><span class="line">    <span class="keyword">private</span> String observerState;</span><br><span class="line">	<span class="keyword">private</span> ConcreteSubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getObserverName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> observerName;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setObserverName</span><span class="params">(String observerName)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.observerName = observerName;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getObserverState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> observerState;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setObserverState</span><span class="params">(String observerState)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.observerState = observerState;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteObserver</span><span class="params">(ConcreteSubject subject,String observerName)</span></span>&#123;</span><br><span class="line">    	<span class="keyword">this</span>.subject = subject;</span><br><span class="line">    	<span class="keyword">this</span>.observerName = observerName;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		observerState = subject.getState();</span><br><span class="line">	    System.out.println(<span class="string">"I'am "</span> + observerName + <span class="string">",I see  concreteSubject has a state change:"</span> + observerState);</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -225,40 +252,34 @@ log4j.additivity后面跟上据体要设置的包或类，类得带完整的包�
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/05/design-pattern-observer/" data-id="ciiyiwygv000kl4prk49w1ngo" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-design-pattern-memento" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/29/design-pattern-memento/" class="article-date">
-  <time datetime="2015-09-29T15:05:55.000Z" itemprop="datePublished">2015-09-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-29T15:05:55.000Z"><a href="/2015/09/29/design-pattern-memento/">2015-09-29</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/29/design-pattern-memento/">memento（备忘录）-对象行为模式</a>
-    </h1>
+    <h1 class="title"><a href="/2015/09/29/design-pattern-memento/">memento（备忘录）-对象行为模式</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <h4 id="意图：">意图：</h4><p>在不破坏分装性的前提下，捕获一个对象的内部状态，并在改对象的外部保存。</p>
 <h4 id="适用性：">适用性：</h4><blockquote>
@@ -275,40 +296,34 @@ log4j.additivity后面跟上据体要设置的包或类，类得带完整的包�
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/29/design-pattern-memento/" data-id="ciiyiwygz000ml4prca5pga3a" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-design-pattern-builder" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/05/design-pattern-builder/" class="article-date">
-  <time datetime="2015-09-05T09:39:50.000Z" itemprop="datePublished">2015-09-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-05T09:39:50.000Z"><a href="/2015/09/05/design-pattern-builder/">2015-09-05</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/05/design-pattern-builder/">Builder(生成器)-对象创建型模式</a>
-    </h1>
+    <h1 class="title"><a href="/2015/09/05/design-pattern-builder/">Builder(生成器)-对象创建型模式</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <h4 id="意图：">意图：</h4><p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示</p>
 <h4 id="适用性：">适用性：</h4><blockquote>
@@ -327,40 +342,34 @@ log4j.additivity后面跟上据体要设置的包或类，类得带完整的包�
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/design-pattern-builder/" data-id="ciiyiwyh4000ol4prhjtrnfbe" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-pattern-chainOfResponsibility" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/04/pattern-chainOfResponsibility/" class="article-date">
-  <time datetime="2015-09-04T09:14:22.000Z" itemprop="datePublished">2015-09-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-04T09:14:22.000Z"><a href="/2015/09/04/pattern-chainOfResponsibility/">2015-09-04</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/04/pattern-chainOfResponsibility/">Chain of Responsibility(责任连模式)-行为模式</a>
-    </h1>
+    <h1 class="title"><a href="/2015/09/04/pattern-chainOfResponsibility/">Chain of Responsibility(责任连模式)-行为模式</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <p>意图：<br>使多个对象都有机会处理请求，避免请求发送者和请求接受这之间的耦合。把接收对象连成一条链，请求沿着链条传递，直到一个对象处理它。<br>适用场景：</p>
 <blockquote>
@@ -375,91 +384,79 @@ log4j.additivity后面跟上据体要设置的包或类，类得带完整的包�
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteHandler1</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">HandleRequest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(getHandlerSuccessor() != <span class="keyword">null</span>)&#123;</span><br><span class="line">			System.out.println(<span class="string">"ConcreteHandler1处理请求完毕，转发到下一个责任对象处理"</span>);</span><br><span class="line">			getHandlerSuccessor().HandleRequest();</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"ConcreteHandler1处理请求"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteHandler2</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">HandleRequest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(getHandlerSuccessor() != <span class="keyword">null</span>)&#123;</span><br><span class="line">			System.out.println(<span class="string">"ConcreteHandler2处理请求完毕，转发到下一个责任对象处理"</span>);</span><br><span class="line">			getHandlerSuccessor().HandleRequest();</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"ConcreteHandler2处理请求"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String [] args)</span></span>&#123;</span><br><span class="line">    	   Handler handler1 = <span class="keyword">new</span> ConcreteHandler1();</span><br><span class="line">    	   Handler handler2 = <span class="keyword">new</span> ConcreteHandler2();</span><br><span class="line">    	   <span class="comment">//设置handler1的下个责任对象为handler2</span></span><br><span class="line">    	   handler1.setHandlerSuccessor(handler2);</span><br><span class="line">    	   <span class="comment">//提交请求</span></span><br><span class="line">    	   handler1.HandleRequest();</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>demo1：<br>uml图:<br><img src="http://7xawio.com1.z0.glb.clouddn.com/design_pattern_chainOfResponsibilitydemo1.png" alt="img"><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">*定义过滤器的接口</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(Object request)</span></span>;</span><br><span class="line">       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">* 具体过滤器1</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFilter1</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(Object request)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"请求经过ConcreteFilter1"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">* 具体过滤器2</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFilter2</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(Object request)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"请求经过ConcreteFilter1"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">* 具体过滤器链</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FilterChain</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> List&lt;Filter&gt; filterChain = <span class="keyword">new</span> ArrayList&lt;Filter&gt;();</span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * </span><br><span class="line">     */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(Object request)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(Filter filter:filterChain)&#123;</span><br><span class="line">			filter.doFilter(request);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * add filter</span><br><span class="line">	 *<span class="javadoctag"> @param</span> filter</span><br><span class="line">	 *<span class="javadoctag"> @return</span> current FilterChain instance </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> FilterChain <span class="title">addFilter</span><span class="params">(Filter filter)</span></span>&#123;</span><br><span class="line">		filterChain.add(filter);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>demo1：<br>uml图:<br><img src="http://7xawio.com1.z0.glb.clouddn.com/design_pattern_chainOfResponsibilitydemo1.png" alt="img"><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">*定义过滤器的接口</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(Object request)</span></span>;</span><br><span class="line">       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">* 具体过滤器1</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFilter1</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(Object request)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"请求经过ConcreteFilter1"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">* 具体过滤器2</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFilter2</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(Object request)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"请求经过ConcreteFilter1"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">* 具体过滤器链</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FilterChain</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> List&lt;Filter&gt; filterChain = <span class="keyword">new</span> ArrayList&lt;Filter&gt;();</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * </span><br><span class="line">     */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(Object request)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(Filter filter:filterChain)&#123;</span><br><span class="line">			filter.doFilter(request);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * add filter</span><br><span class="line">	 * <span class="doctag">@param</span> filter</span><br><span class="line">	 * <span class="doctag">@return</span> current FilterChain instance </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> FilterChain <span class="title">addFilter</span><span class="params">(Filter filter)</span></span>&#123;</span><br><span class="line">		filterChain.add(filter);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/04/pattern-chainOfResponsibility/" data-id="ciiyiwyfg0006l4prx41vef43" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-pattern-proxy" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/01/pattern-proxy/" class="article-date">
-  <time datetime="2015-09-01T15:33:06.000Z" itemprop="datePublished">2015-09-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-01T15:33:06.000Z"><a href="/2015/09/01/pattern-proxy/">2015-09-01</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/01/pattern-proxy/">proxy(代理模式)</a>
-    </h1>
+    <h1 class="title"><a href="/2015/09/01/pattern-proxy/">proxy(代理模式)</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <h3 id="意图：">意图：</h3><p>提供一个供其他对象使用的代理对象</p>
 <h3 id="适用场景：">适用场景：</h3><p>1.远程代理<br>2.虚拟代理<br>3.保护代理<br>4.智能指针</p>
-<p>结构图：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/design_pattern_proxy.png" alt="img"><br>实现:<br>Proxy和Realsubject定义的公共接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/***</span><br><span class="line"> * 为 Proxy和Realsubject定义的公共接口</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>实际服类RealSubject<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/***</span><br><span class="line"> * 实际服务的类</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RealSubject</span> <span class="keyword">extends</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"I am RealSubject,request is ok"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>代理类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/***</span><br><span class="line"> * 代理类</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Proxy</span> <span class="keyword">extends</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span>  RealSubject realSubject = <span class="keyword">new</span> RealSubject();</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"I am Proxy,resquest is Ok!"</span>);</span><br><span class="line">		realSubject.request();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>结构图：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/design_pattern_proxy.png" alt="img"><br>实现:<br>Proxy和Realsubject定义的公共接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***</span><br><span class="line"> * 为 Proxy和Realsubject定义的公共接口</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>实际服类RealSubject<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***</span><br><span class="line"> * 实际服务的类</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RealSubject</span> <span class="keyword">extends</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"I am RealSubject,request is ok"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代理类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***</span><br><span class="line"> * 代理类</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Proxy</span> <span class="keyword">extends</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span>  RealSubject realSubject = <span class="keyword">new</span> RealSubject();</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"I am Proxy,resquest is Ok!"</span>);</span><br><span class="line">		realSubject.request();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>客户端调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String [] args)</span></span>&#123;</span><br><span class="line">		Proxy proxy = <span class="keyword">new</span> Proxy();</span><br><span class="line">		proxy.request();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/pattern-proxy/" data-id="ciiyiwyfa0003l4prm88j23l1" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
+
+
+  <article class="post">
   
-    <article id="post-pattern-abstractFactry" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/01/pattern-abstractFactry/" class="article-date">
-  <time datetime="2015-09-01T15:32:53.000Z" itemprop="datePublished">2015-09-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-01T15:32:53.000Z"><a href="/2015/09/01/pattern-abstractFactry/">2015-09-01</a></time>
+      
+      
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/01/pattern-abstractFactry/">抽象工厂模式</a>
-    </h1>
+    <h1 class="title"><a href="/2015/09/01/pattern-abstractFactry/">抽象工厂模式</a></h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    </header>
+    <div class="entry">
       
         <h4 id="意图：">意图：</h4><p>提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们的具体类</p>
 <h4 id="适用性：">适用性：</h4><blockquote>
@@ -470,183 +467,104 @@ log4j.additivity后面跟上据体要设置的包或类，类得带完整的包�
 <li>当你提供一个产品类库，而只想显示它们的接口而不是实现时</li>
 </ul>
 </blockquote>
-<h4 id="结构图实现：">结构图实现：</h4><h2 id=""><img src="http://7xawio.com1.z0.glb.clouddn.com/design_pattern_abstractFactory.png" alt="img"></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">* 声明一个创建抽象产品对象的操作接口</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">       <span class="function"><span class="keyword">public</span>  <span class="keyword">abstract</span> AbstractProductA <span class="title">createProductA</span><span class="params">()</span></span>;</span><br><span class="line">       </span><br><span class="line">       <span class="function"><span class="keyword">public</span>  <span class="keyword">abstract</span> AbstractProductB <span class="title">createProductB</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">*具体工厂1</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory1</span> <span class="keyword">extends</span> <span class="title">AbstractFactory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> AbstractProductA <span class="title">createProductA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ProductA1();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> AbstractProductB <span class="title">createProductB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ProductB1();</span><br><span class="line">	&#125;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">*具体工厂2</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory2</span> <span class="keyword">extends</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> AbstractProductA <span class="title">createProductA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ProductA2();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> AbstractProductB <span class="title">createProductB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ProductB2();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">*产品族AbstractProductA</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractProductA</span> </span>&#123;</span><br><span class="line">       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">*产品族AbstractProductB</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractProductB</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">*产品族AbstractProductA的具体产品ProductA1</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductA1</span> <span class="keyword">extends</span> <span class="title">AbstractProductA</span> </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="title">ProductA1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	   System.out.println(<span class="string">"this is ProductA1"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">*产品族AbstractProductA的具体产品ProductA2</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductA2</span> <span class="keyword">extends</span> <span class="title">AbstractProductA</span> </span>&#123;</span><br><span class="line">	 <span class="function"><span class="keyword">public</span> <span class="title">ProductA2</span><span class="params">()</span></span>&#123;</span><br><span class="line">  	   System.out.println(<span class="string">"this is ProductA2"</span>);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">*产品族AbstractProductB的具体产品ProductB1</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductB1</span> <span class="keyword">extends</span> <span class="title">AbstractProductB</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ProductB1</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"this is ProductB1"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line">*产品族AbstractProductB的具体产品ProductB2</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductB2</span> <span class="keyword">extends</span> <span class="title">AbstractProductB</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ProductB2</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"this is ProductB2"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="结构图实现：">结构图实现：</h4><h2 id=""><img src="http://7xawio.com1.z0.glb.clouddn.com/design_pattern_abstractFactory.png" alt="img"></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">* 声明一个创建抽象产品对象的操作接口</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">       <span class="function"><span class="keyword">public</span>  <span class="keyword">abstract</span> AbstractProductA <span class="title">createProductA</span><span class="params">()</span></span>;</span><br><span class="line">       </span><br><span class="line">       <span class="function"><span class="keyword">public</span>  <span class="keyword">abstract</span> AbstractProductB <span class="title">createProductB</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">*具体工厂1</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory1</span> <span class="keyword">extends</span> <span class="title">AbstractFactory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> AbstractProductA <span class="title">createProductA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ProductA1();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> AbstractProductB <span class="title">createProductB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ProductB1();</span><br><span class="line">	&#125;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">*具体工厂2</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory2</span> <span class="keyword">extends</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> AbstractProductA <span class="title">createProductA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ProductA2();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> AbstractProductB <span class="title">createProductB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ProductB2();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">*产品族AbstractProductA</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractProductA</span> </span>&#123;</span><br><span class="line">       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">*产品族AbstractProductB</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractProductB</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">*产品族AbstractProductA的具体产品ProductA1</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductA1</span> <span class="keyword">extends</span> <span class="title">AbstractProductA</span> </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="title">ProductA1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	   System.out.println(<span class="string">"this is ProductA1"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">*产品族AbstractProductA的具体产品ProductA2</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductA2</span> <span class="keyword">extends</span> <span class="title">AbstractProductA</span> </span>&#123;</span><br><span class="line">	 <span class="function"><span class="keyword">public</span> <span class="title">ProductA2</span><span class="params">()</span></span>&#123;</span><br><span class="line">  	   System.out.println(<span class="string">"this is ProductA2"</span>);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">*产品族AbstractProductB的具体产品ProductB1</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductB1</span> <span class="keyword">extends</span> <span class="title">AbstractProductB</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ProductB1</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"this is ProductB1"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">*产品族AbstractProductB的具体产品ProductB2</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductB2</span> <span class="keyword">extends</span> <span class="title">AbstractProductB</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ProductB2</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"this is ProductB2"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/pattern-abstractFactry/" data-id="ciiyiwyfm0008l4prh6q3kun8" class="article-share-link">Share</a>
+    <footer>
       
+        
+        
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
+      <div class="clearfix"></div>
     </footer>
   </div>
-  
 </article>
 
 
-  
-    <article id="post-java-btrace" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/07/28/java-btrace/" class="article-date">
-  <time datetime="2015-07-28T10:06:39.000Z" itemprop="datePublished">2015-07-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/28/java-btrace/">java性能监控工具Btrace的使用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-btrace的简介">1.btrace的简介</h3><p>BTrace是java平台上一种安全的，动态的跟踪工具。BTrace可用于动态跟踪运行中的Java程序。Btrace可以在目标程序的字节码中中注入跟踪代码(字节码跟踪)。</p>
-<h3 id="2-btrace的安装（以linux平台为例）">2.btrace的安装（以linux平台为例）</h3><p>去Btrace的官网下载Btrace安装包btrace-bin.tar.gz，这里下的是1.2.5.1的版本<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# wget https://kenai.com/projects/btrace/downloads/download/releases/release-1.2.5.1/btrace-bin.tar.gz</span><br></pre></td></tr></table></figure></p>
-<p>将下载下来的btrace解压到目标文件夹。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mkdir /usr/local/btrace&#10;[root@localhost ~]# tar -zxvf btrace-bin.tar.gz -C /usr/local/btrace</span><br></pre></td></tr></table></figure></p>
-<p>然后配置BTRACE_HOME，编辑/etc/profile文件，在path中加入btrace。<br>BTRACE_HOME的值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> BTRACE_HOME=/usr/<span class="built_in">local</span>/btrace</span><br></pre></td></tr></table></figure></p>
-<p>将btrace加入到path中。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$BTRACE_HOME/bin</span><br></pre></td></tr></table></figure></p>
-<p>配置完成后在命令行输入btrace，即可看到如下信息。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># btrace</span></span><br><span class="line">Usage: btrace &lt;options&gt; &lt;pid&gt; &lt;btrace <span class="built_in">source</span> or .class file&gt; &lt;btrace arguments&gt;</span><br><span class="line"><span class="built_in">where</span> possible options include:</span><br><span class="line">  -classpath &lt;path&gt; Specify <span class="built_in">where</span> to find user class files and annotation processors</span><br><span class="line">  -cp &lt;path&gt;        Specify <span class="built_in">where</span> to find user class files and annotation processors</span><br><span class="line">  -I &lt;path&gt;         Specify <span class="built_in">where</span> to find include files</span><br><span class="line">  -p &lt;port&gt;         Specify port to <span class="built_in">which</span> the btrace agent listens <span class="keyword">for</span> clients</span><br></pre></td></tr></table></figure></p>
-<p>3.编写待监控的程序。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Case1</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		CaseObject caseObject = <span class="keyword">new</span> CaseObject();</span><br><span class="line">		Random random = <span class="keyword">new</span> Random();</span><br><span class="line">		<span class="keyword">boolean</span> ret = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">while</span>(ret)&#123;</span><br><span class="line">        	caseObject.execute(random.nextInt(<span class="number">1000</span>));</span><br><span class="line">        	Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CaseObject</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">execute</span><span class="params">(<span class="keyword">int</span> sleepTime)</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"sleep:"</span> + sleepTime);</span><br><span class="line">		Thread.sleep(sleepTime);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="4-写监控脚本">4.写监控脚本</h3><p>a.获取类CaseObject的方法exute调用时传的参数，返回值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="annotation">@BTrace</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CaseTraceMethodArgsAndReturn</span></span>&#123;</span><br><span class="line"><span class="annotation">@OnMethod</span>(</span><br><span class="line">clazz=<span class="string">"com.CaseObject"</span>,</span><br><span class="line">method=<span class="string">"execute"</span>,</span><br><span class="line">location=<span class="annotation">@Location</span>(Kind.RETURN)</span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traceExecute</span><span class="params">(<span class="keyword">int</span>     sleepTime,@Return <span class="keyword">boolean</span> result)</span></span>&#123;</span><br><span class="line">   println(<span class="string">"call CaseObject.execute"</span>);</span><br><span class="line">   println(strcat(<span class="string">"sleepTime is:"</span>,str(sleepTime)));</span><br><span class="line">   println(strcat(<span class="string">"return value is:"</span>,str(result)));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>b.获取excute执行耗时<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"><span class="annotation">@BTrace</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span>  <span class="title">CaseTraceMethodExcuteTime</span></span>&#123;</span><br><span class="line">   <span class="annotation">@OnMethod</span>(clazz = <span class="string">"com.CaseObject"</span>, method = <span class="string">"execute"</span>,location =       <span class="annotation">@Location</span>(Kind.RETURN))</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">onExecuteReturn</span><span class="params">(@Duration <span class="keyword">long</span> durationL)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> duration = (<span class="keyword">int</span>) durationL / <span class="number">1000000</span>;</span><br><span class="line">        println(strcat(<span class="string">"excute method time is "</span>,strcat(str(duration),<span class="string">" ms "</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>c.获取方法的调用者<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"><span class="annotation">@BTrace</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CaseTraceMethodInvoker</span></span>&#123;</span><br><span class="line">   <span class="annotation">@OnMethod</span>(clazz = <span class="string">"com.CaseObject"</span>, method = <span class="string">"execute"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getInvoker</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       println(<span class="string">"who call CaseObject.execute :"</span>);</span><br><span class="line">       jstack();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="5-运行监控脚本">5.运行监控脚本</h3><p>a.编译被监测程序<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost demo]# javac com/Case1.java</span><br></pre></td></tr></table></figure></p>
-<p>b.监控程序启动<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost demo]# java com/Case1&#10;[root@localhost demo]# java com/Case1&#10;sleep:426&#10;sleep:160&#10;sleep:515</span><br></pre></td></tr></table></figure></p>
-<p>c.通过jps获取被监控程序的进程号<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# jps&#10;19354 Jps&#10;19272 Case1</span><br></pre></td></tr></table></figure></p>
-<p>d.执行监控脚本<br>获取方法执行参数和返回值<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# btrace -cp build/ -p 2021 19272 CaseTraceMethodArgsAndReturn.java  &#10;call CaseObject.execute&#10;sleepTime is:578&#10;return value is:true</span><br></pre></td></tr></table></figure></p>
-<p>获取方法的执行时间<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# btrace -cp build/ -p 2021 19272 CaseTraceMethodExcuteTime.java &#10;excute method time is 282 ms &#10;excute method time is 81 ms</span><br></pre></td></tr></table></figure></p>
-<p>获取方法的调用者<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# btrace -cp build/ -p 2021 19272 CaseTraceMethodInvoker.java &#10;who call CaseObject.execute :&#10;com.CaseObject.execute(Case1.java)&#10;com.Case1.main(Case1.java:11)</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/07/28/java-btrace/" data-id="ciiyiwygd000gl4prsix5354n" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
 
 
+
+<nav id="pagination">
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+    <a href="/page/2/" class="alignright next">下一頁</a>
   
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">6</span></li></ul>
-    </div>
-  </div>
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
 
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/设计模式/" style="font-size: NaNpx;">设计模式</a>
-    </div>
-  </div>
 
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">6</span></li></ul>
-    </div>
-  </div>
-
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2016/01/03/redis-demo/">redis单机多实例使用</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/27/log4j-study/">log4j的使用</a>
-          </li>
-        
-          <li>
-            <a href="/2015/11/19/storm-kafka-demo/">storm-kafka使用</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/05/design-pattern-observer/">observer(观察者模式)-对象行为模式</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/29/design-pattern-memento/">memento（备忘录）-对象行为模式</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
+    <li><a href="/tags/SOA框架dubbo/">SOA框架dubbo</a><small>1</small></li>
   
+    <li><a href="/tags/java多线程/">java多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/jmeter/">jmeter</a><small>1</small></li>
+  
+    <li><a href="/tags/jvm监控/">jvm监控</a><small>1</small></li>
+  
+    <li><a href="/tags/markdown编辑器/">markdown编辑器</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql数据库/">mysql数据库</a><small>2</small></li>
+  
+    <li><a href="/tags/node/">node</a><small>1</small></li>
+  
+    <li><a href="/tags/redis/">redis</a><small>1</small></li>
+  
+    <li><a href="/tags/storm/">storm</a><small>1</small></li>
+  
+    <li><a href="/tags/日志工具/">日志工具</a><small>1</small></li>
+  
+    <li><a href="/tags/算法/">算法</a><small>1</small></li>
+  
+    <li><a href="/tags/设计模式/">设计模式</a><small>6</small></li>
+  
+  </ul>
+</div>
+
 </aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2016 difeng<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
+    <div class="clearfix"></div>
   </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
+  <footer id="footer" class="inner"><div class="alignleft">
   
-    <a href="/" class="mobile-nav-link">Home</a>
+  &copy; 2016 difeng
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
 
-  </div>
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
 </body>
 </html>
