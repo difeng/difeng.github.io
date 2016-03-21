@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>构建之法(笔记)-软件测试 | difeng</title>
+  <meta name="author" content="difeng">
+  
+  <meta name="description" content="有关软件测试的整理
+软件 = 程序 + 软件工程软件(质量) = 程序(质量) + 软件工程(质量)
+软件测试测试设计的方法分类：
+
+黑箱：从软件行为来设计软件测试
+
+白箱： 从软件内部结构出发，使用软件内部结构及知识选择选择测试数据及具体的测试方法
+
+
+按测试目的的分类：
+功能性测试：
+
+
+
+
+项">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="构建之法(笔记)-软件测试"/>
+  <meta property="og:site_name" content="difeng"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="difeng" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">difeng</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-20T06:42:58.000Z"><a href="/2016/03/20/Construction-method-note/">2016-03-20</a></time>
+      
+      
+  
+    <h1 class="title">构建之法(笔记)-软件测试</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>有关软件测试的整理</p>
+<p>软件 = 程序 + 软件工程<br>软件(质量) = 程序(质量) + 软件工程(质量)</p>
+<h2 id="软件测试">软件测试</h2><p>测试设计的方法分类：</p>
+<ul>
+<li><p>黑箱：从软件行为来设计软件测试</p>
+</li>
+<li><p>白箱： 从软件内部结构出发，使用软件内部结构及知识选择选择测试数据及具体的测试方法</p>
+</li>
+</ul>
+<h2 id="按测试目的的分类：">按测试目的的分类：</h2><ul>
+<li>功能性测试：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align:left">价格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit Test</td>
+<td style="text-align:left">单元测试-在最基本的功能/参数上验证程序的正确性</td>
+</tr>
+<tr>
+<td>functional Test</td>
+<td style="text-align:left">功能测试-验证模块的功能</td>
+</tr>
+<tr>
+<td>Integrational Test</td>
+<td style="text-align:left">集成测试-验证几个相互有依赖关系的模块的功能</td>
+</tr>
+<tr>
+<td>Scenario Test</td>
+<td style="text-align:left">场景测试-验证几个模块是否能够完成一个用户场景</td>
+</tr>
+<tr>
+<td>System Test</td>
+<td style="text-align:left">系统测试-对于整个系统功能的测试</td>
+</tr>
+<tr>
+<td>Alpha/Beta Test</td>
+<td style="text-align:left">外部软件测试人员在实际的用户环境中对软件进行全面的测试</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>非功能性测试</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>测试名称</th>
+<th>测试内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stress/Load Test</td>
+<td>压力测试-测试软件在负载情况下能否正常工作</td>
+</tr>
+<tr>
+<td>Preformance Test</td>
+<td>效能测试-测试软件的效能</td>
+</tr>
+<tr>
+<td>Accessiblity Test</td>
+<td>可访问性测试-测试软件是否向残疾用户提供了足够的辅助功能</td>
+</tr>
+<tr>
+<td>Localization/Globalization Test</td>
+<td>本地化/全球化测试</td>
+</tr>
+<tr>
+<td>Compatibility Test</td>
+<td>兼容性测试</td>
+</tr>
+<tr>
+<td>Configuration Test</td>
+<td>配置测试-测试软件在各种配置下能否正常运行</td>
+</tr>
+<tr>
+<td>Usablity Test</td>
+<td>测试软件是否好用</td>
+</tr>
+<tr>
+<td>Security Test</td>
+<td>软件安全性测试</td>
+</tr>
+</tbody>
+</table>
+<h2 id="按软件测试时机分类">按软件测试时机分类</h2><h3 id="测试烽火台">测试烽火台</h3><table>
+<thead>
+<tr>
+<th>测试名称</th>
+<th>测试内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Smoke Test</td>
+<td>冒烟测试-测试不通过，则不能进行下一步工作</td>
+</tr>
+<tr>
+<td>Build Vertification Test</td>
+<td>验证构建是否通过测试</td>
+</tr>
+<tr>
+<td>Acceptance Test</td>
+<td>验收测试-全面考核某方面的功能/特性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="不同的测试方法">不同的测试方法</h3><p>| 测试名称 | 测试内容 |<br>| Regression Test | 回归测试-对一个新的版本，重新运行以往的测试用例，确认新版本相比 已知版本有无“退化”|<br>| Ad hoc(Exploratory) Test | 随机测试的、探索性的测试<br>| Bug Bash | Bug大扫荡-全体成员参加的找“小强”活动<br>| Buddy Test | 伙伴测试-开发人员(伙伴)作为测试人员测试特定模块 |</p>
+<h2 id="具体的各种测试方法">具体的各种测试方法</h2><p>1.单元测试(Unit Test)</p>
+<p>2.代码覆盖率测试(Code Coverage Analysis)<br>顺便记录一下相关的文章，下边的链接是infoQ上一篇关于代码覆盖率的文章<br><a href="http://www.infoq.com/cn/articles/code-coverage" target="_blank" rel="external">http://www.infoq.com/cn/articles/code-coverage</a></p>
+<p>相关工具：<br>EMMA<br>EMMA 是一个用于检测和报告 JAVA 代码覆盖率的开源工具。它不但能很好的用于小型项目，很方便得得出覆盖率报告，而且适用于大型企业级别的项目。</p>
+<p>使用ant脚本来生成emma的代码覆盖率的文章：<br><a href="https://www.ibm.com/developerworks/cn/java/j-lo-emma/" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/java/j-lo-emma/</a></p>
+<p>使用maven脚本来生成emma的代码覆盖率的文章：<br><a href="http://tech.meituan.com/emma.html" target="_blank" rel="external">http://tech.meituan.com/emma.html</a></p>
+<p>3.构建验证性测试(BVT)</p>
+<p>4.验收测试(Acceptance Test)</p>
+<p>5.”探索式“的测试(Ad hoc Test)</p>
+<p>6.回归测试(Regression Test)</p>
+<p>7.场景/集成/系统测试(Scenario/Integration/System Test)</p>
+<p>8.伙伴测试(Buddy Test)</p>
+<p>9.效能测试(Performance Test)<br>  设计负载<br>  另用户满意测服务质量</p>
+<p>10.压力测试(Stress Test)</p>
+<p>11.易用性的测试(Usability Test)</p>
+<p>12.“小强”大扫荡(Bug Bash)</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2016/03/20/Construction-method-note/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/SOA框架dubbo/">SOA框架dubbo</a><small>1</small></li>
+  
+    <li><a href="/tags/java多线程/">java多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/java并发编程/">java并发编程</a><small>1</small></li>
+  
+    <li><a href="/tags/jmeter/">jmeter</a><small>1</small></li>
+  
+    <li><a href="/tags/jvm监控/">jvm监控</a><small>1</small></li>
+  
+    <li><a href="/tags/markdown编辑器/">markdown编辑器</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql数据库/">mysql数据库</a><small>2</small></li>
+  
+    <li><a href="/tags/node/">node</a><small>1</small></li>
+  
+    <li><a href="/tags/redis/">redis</a><small>1</small></li>
+  
+    <li><a href="/tags/spring/">spring</a><small>1</small></li>
+  
+    <li><a href="/tags/storm/">storm</a><small>1</small></li>
+  
+    <li><a href="/tags/分形学/">分形学</a><small>1</small></li>
+  
+    <li><a href="/tags/日志工具/">日志工具</a><small>1</small></li>
+  
+    <li><a href="/tags/算法/">算法</a><small>1</small></li>
+  
+    <li><a href="/tags/设计模式/">设计模式</a><small>6</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 difeng
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
