@@ -114,7 +114,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/SOA框架dubbo/" style="font-size: 10px;">SOA框架dubbo</a> <a href="/tags/java多线程/" style="font-size: 10px;">java多线程</a> <a href="/tags/java并发编程/" style="font-size: 10px;">java并发编程</a> <a href="/tags/jmeter/" style="font-size: 10px;">jmeter</a> <a href="/tags/jvm监控/" style="font-size: 10px;">jvm监控</a> <a href="/tags/markdown编辑器/" style="font-size: 10px;">markdown编辑器</a> <a href="/tags/mysql数据库/" style="font-size: 15px;">mysql数据库</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/storm/" style="font-size: 10px;">storm</a> <a href="/tags/分形学/" style="font-size: 10px;">分形学</a> <a href="/tags/日志工具/" style="font-size: 10px;">日志工具</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+						<a href="/tags/SOA框架dubbo/" style="font-size: 10px;">SOA框架dubbo</a> <a href="/tags/java多线程/" style="font-size: 10px;">java多线程</a> <a href="/tags/java并发编程/" style="font-size: 10px;">java并发编程</a> <a href="/tags/jmeter/" style="font-size: 10px;">jmeter</a> <a href="/tags/jvm监控/" style="font-size: 10px;">jvm监控</a> <a href="/tags/markdown编辑器/" style="font-size: 10px;">markdown编辑器</a> <a href="/tags/mysql数据库/" style="font-size: 15px;">mysql数据库</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 15px;">spring</a> <a href="/tags/storm/" style="font-size: 10px;">storm</a> <a href="/tags/分形学/" style="font-size: 10px;">分形学</a> <a href="/tags/日志工具/" style="font-size: 10px;">日志工具</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
 					</div>
 				</section>
 				
@@ -198,6 +198,78 @@
 
       <div class="body-wrap">
   
+    <article id="post-pring-boot集成mina" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/10/pring-boot集成mina/" class="article-date">
+  	<time datetime="2016-06-10T14:35:00.000Z" itemprop="datePublished">2016-06-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/10/pring-boot集成mina/">spring集成mina</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>spring 和mina集成总结，spring 的配置就不做过多的介绍了，主要将mina如何配置到spring中做个介绍</p>
+<ol>
+<li><p>配置思路：<br> 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给mina来管理。</p>
+</li>
+<li><p>配置样例<br>比如以下mina的server初始化代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//创建socket套接字</span></span><br><span class="line">SocketAcceptor acceptor = <span class="keyword">new</span> NioSocketAcceptor();</span><br><span class="line"><span class="comment">//创建IO过滤器链</span></span><br><span class="line">DefaultIoFilterChainBuilder chain = <span class="keyword">new</span> DefaultIoFilterChainBuilder();</span><br><span class="line"><span class="comment">//序列化编解码工厂对象</span></span><br><span class="line">ObjectSerializationCodecFactory codec = <span class="keyword">new</span> ObjectSerializationCodecFactory();</span><br><span class="line"><span class="comment">//心跳工厂类</span></span><br><span class="line">KeepAliveMessageFactoryImpl kamfi = <span class="keyword">new</span> KeepAliveMessageFactoryImpl();</span><br><span class="line"><span class="comment">//心跳过滤器</span></span><br><span class="line">KeepAliveFilter kaf = <span class="keyword">new</span> KeepAliveFilter(kamfi);</span><br><span class="line">kaf.setForwardEvent(<span class="keyword">false</span>);</span><br><span class="line"><span class="comment">//设置接收心跳的频率</span></span><br><span class="line">kaf.setRequestInterval(<span class="number">30</span>);</span><br><span class="line"><span class="comment">//添加编解码过滤器</span></span><br><span class="line">chain.addLast(<span class="string">"chain"</span>, <span class="keyword">new</span> ProtocolCodecFilter(codec));</span><br><span class="line"><span class="comment">//添加心跳过滤器</span></span><br><span class="line">chain.addLast(<span class="string">"heart"</span>, kaf);</span><br><span class="line"><span class="comment">//设置服务处理类</span></span><br><span class="line">acceptor.setHandler(<span class="keyword">new</span> ServerHandler());</span><br><span class="line">acceptor.bind(<span class="keyword">new</span> InetSocketAddress(<span class="number">30001</span>));</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>如果要配置到spring中的话，具体配置如以下几项：<br>装载编解码过滤器<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 编解码过滤器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"codecFilter"</span> <span class="attribute">class</span>=<span class="value">"org.apache.mina.filter.codec.ProtocolCodecFilter"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">constructor-arg</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">bean</span></span><br><span class="line">				<span class="attribute">class</span>=<span class="value">"org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>装载心跳过滤器<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"keepAliveFilter"</span> <span class="attribute">class</span>=<span class="value">"org.apache.mina.filter.keepalive.KeepAliveFilter"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">constructor-arg</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">bean</span></span><br><span class="line">				<span class="attribute">class</span>=<span class="value">"com.difeng.spring.mina.server.KeepAliveMessageFactoryImpl"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">constructor-arg</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"forwardEvent"</span> <span class="attribute">value</span>=<span class="value">"true"</span> /&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"requestInterval"</span> <span class="attribute">value</span>=<span class="value">"30"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>配置过滤器链,将上面两个过滤器配置到其中,<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"filterChainBuilder"</span></span><br><span class="line">		<span class="attribute">class</span>=<span class="value">"org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"filters"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">map</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="title">entry</span> <span class="attribute">key</span>=<span class="value">"codecFilter"</span> <span class="attribute">value-ref</span>=<span class="value">"codecFilter"</span> /&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="title">entry</span> <span class="attribute">key</span>=<span class="value">"heart"</span> <span class="attribute">value-ref</span>=<span class="value">"keepAliveFilter"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="title">map</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>配置地址转换策略，这个是必须配置的要不然服务将不能启动<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">class</span>=<span class="value">"org.springframework.beans.factory.config.CustomEditorConfigurer"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"customEditors"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">map</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="title">entry</span> <span class="attribute">key</span>=<span class="value">"java.net.SocketAddress"</span></span><br><span class="line">					<span class="attribute">value</span>=<span class="value">"org.apache.mina.integration.beans.InetSocketAddressEditor"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="title">map</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>配置套接字<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"tcpAcceptor"</span> <span class="attribute">class</span>=<span class="value">"org.apache.mina.transport.socket.nio.NioSocketAcceptor"</span></span><br><span class="line">		<span class="attribute">init-method</span>=<span class="value">"bind"</span> <span class="attribute">destroy-method</span>=<span class="value">"unbind"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"defaultLocalAddress"</span> <span class="attribute">value</span>=<span class="value">":30001"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"handler"</span> <span class="attribute">ref</span>=<span class="value">"serverHandler"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"reuseAddress"</span> <span class="attribute">value</span>=<span class="value">"true"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"filterChainBuilder"</span> <span class="attribute">ref</span>=<span class="value">"filterChainBuilder"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>以上只是一个配置示例，如果要做更复杂的配置，如添加线程池自定义定义IOFilter的执行器等，还有多个server等，都可以一步一步去配置，目的就是要让spring去转载mina的组件。</p>
+<p>注意mina和spring结合时，必须添加这几个依赖构件：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.mina<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>mina-integration-beans<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.0.9<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.mina<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>mina-integration-jmx<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.0.9<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>以上只是介绍了配置思路，具体可以参考github上我给出的样例工程，这个工程用的是spring boot，因为spring boot便于配置也方便启动，很容易上手。<br>demo地址:<a href="https://github.com/difeng/demos/tree/master/spring-integrated-mina" target="_blank" rel="external">https://github.com/difeng/demos/tree/master/spring-integrated-mina</a></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-thinking-in-goujianzhifa" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -255,7 +327,7 @@
   
     <div class="article-meta">
       <a href="/2016/03/20/Construction-method-note/" class="article-date">
-  	<time datetime="2016-03-20T06:42:58.000Z" itemprop="datePublished">2016-03-20</time>
+  	<time datetime="2016-03-20T06:42:00.000Z" itemprop="datePublished">2016-03-20</time>
 </a>
     </div>
   
@@ -946,76 +1018,6 @@ log4j.additivity后面跟上据体要设置的包或类，类得带完整的包�
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/storm/">storm</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-design-pattern-observer" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/05/design-pattern-observer/" class="article-date">
-  	<time datetime="2015-10-05T08:25:44.000Z" itemprop="datePublished">2015-10-05</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/05/design-pattern-observer/">observer(观察者模式)-对象行为模式</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="意图：">意图：</h4><p>定义对象之间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到该状态通知并自动更新。</p>
-<h5 id="适用性：">适用性：</h5><blockquote>
-<ul>
-<li>一个抽象模型有两个方面，其中一个方面依赖于另一个方面。将两者封装为独立的对象以使他们可以各自独立地改变和复用。</li>
-<li>当一个对象的改变学要同时影响到其他对象，而不知道有具体多少个对象有待改变。</li>
-<li>当一个对象必须通知其他对象，而他又不能假定其他对象是谁，换言之，你不希望这些对象是耦合的。</li>
-</ul>
-</blockquote>
-<h5 id="结构图：">结构图：</h5><p><img src="http://7xawio.com1.z0.glb.clouddn.com/design_pattern_observer.png" alt="img"></p>
-<h4 id="抽象的主题">抽象的主题</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	List&lt;Observer&gt; observerList = <span class="keyword">new</span> ArrayList&lt;Observer&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * </span><br><span class="line">	 * add the observer</span><br><span class="line">	 * <span class="doctag">@param</span> observer</span><br><span class="line">	 * </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Attach</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">		observerList.add(observer);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * </span><br><span class="line">	 *delete the observer</span><br><span class="line">	 * <span class="doctag">@param</span> observer</span><br><span class="line">	 * </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Detach</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span>(Observer curObserver:observerList)&#123;</span><br><span class="line">			<span class="keyword">if</span>(curObserver == observer)&#123;</span><br><span class="line">				observerList.remove(observerList.indexOf(observer));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * </span><br><span class="line">	 * notify observer</span><br><span class="line">	 * </span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObserver</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(Observer curObserver:observerList)&#123;</span><br><span class="line">			curObserver.update();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="具体的主题">具体的主题</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteSubject</span> <span class="keyword">extends</span> <span class="title">Subject</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String subjectState;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> subjectState;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(String subjectState)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.subjectState = subjectState;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="抽象的观察者：">抽象的观察者：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">	   <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="具体的观察者：">具体的观察者：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver</span> <span class="keyword">extends</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String observerName;</span><br><span class="line">    <span class="keyword">private</span> String observerState;</span><br><span class="line">	<span class="keyword">private</span> ConcreteSubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getObserverName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> observerName;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setObserverName</span><span class="params">(String observerName)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.observerName = observerName;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getObserverState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> observerState;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setObserverState</span><span class="params">(String observerState)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.observerState = observerState;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteObserver</span><span class="params">(ConcreteSubject subject,String observerName)</span></span>&#123;</span><br><span class="line">    	<span class="keyword">this</span>.subject = subject;</span><br><span class="line">    	<span class="keyword">this</span>.observerName = observerName;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		observerState = subject.getState();</span><br><span class="line">	    System.out.println(<span class="string">"I'am "</span> + observerName + <span class="string">",I see  concreteSubject has a state change:"</span> + observerState);</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="客户端调用：">客户端调用：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String [] args)</span></span>&#123;</span><br><span class="line">    	   ConcreteSubject concreteSubject = <span class="keyword">new</span> ConcreteSubject();</span><br><span class="line">    	   Observer  observer1 = <span class="keyword">new</span> ConcreteObserver(concreteSubject,<span class="string">"observer1"</span>);</span><br><span class="line">    	   Observer  observer2 = <span class="keyword">new</span> ConcreteObserver(concreteSubject,<span class="string">"observer2"</span>);</span><br><span class="line">    	   Observer  observer3 = <span class="keyword">new</span> ConcreteObserver(concreteSubject,<span class="string">"observer3"</span>);</span><br><span class="line">    	   concreteSubject.Attach(observer1);</span><br><span class="line">    	   concreteSubject.Attach(observer2);</span><br><span class="line">    	   concreteSubject.Attach(observer3);</span><br><span class="line">    	   concreteSubject.setState(<span class="string">"I am running"</span>);</span><br><span class="line">    	   concreteSubject.notifyObserver();</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
 	</div>
 
       
