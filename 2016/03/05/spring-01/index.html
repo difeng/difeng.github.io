@@ -1,67 +1,254 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>spring框架简介 | difeng</title>
-  <meta name="author" content="difeng">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1.简介spring是优秀的开源框架，是为解决复杂的企业应用程序开发而创建的。
 2. spring框架的构成和各个模块的作用和简述spring框架有6个定义明确的模块组成，如下图所指示
 
-spring的容器负责spring应用中Bean的创建，配置和管理，主要组件是 BeanFactory。Bean">
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+spring的容器负责spring应用中Bean的创建，配置和管理，主要组件是 BeanFactory。BeanFactory使用控制反转（IOC）模式将应用程序的配置和依赖性规范与实际的应用程序代码分开。
 
-  <meta property="og:title" content="spring框架简介"/>
-  <meta property="og:site_name" content="difeng"/>
+s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring框架简介">
+<meta property="og:url" content="http://yoursite.com/2016/03/05/spring-01/index.html">
+<meta property="og:site_name" content="difeng">
+<meta property="og:description" content="1.简介spring是优秀的开源框架，是为解决复杂的企业应用程序开发而创建的。
+2. spring框架的构成和各个模块的作用和简述spring框架有6个定义明确的模块组成，如下图所指示
 
-  
-    <meta property="og:image" content="undefined"/>
-  
+spring的容器负责spring应用中Bean的创建，配置和管理，主要组件是 BeanFactory。BeanFactory使用控制反转（IOC）模式将应用程序的配置和依赖性规范与实际的应用程序代码分开。
 
-  <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="difeng" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  
+s">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/spring_models.png">
+<meta property="og:updated_time" content="2016-03-05T15:31:23.027Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring框架简介">
+<meta name="twitter:description" content="1.简介spring是优秀的开源框架，是为解决复杂的企业应用程序开发而创建的。
+2. spring框架的构成和各个模块的作用和简述spring框架有6个定义明确的模块组成，如下图所指示
 
+spring的容器负责spring应用中Bean的创建，配置和管理，主要组件是 BeanFactory。BeanFactory使用控制反转（IOC）模式将应用程序的配置和依赖性规范与实际的应用程序代码分开。
+
+s">
+  
+    <link rel="alternative" href="/atom.xml" title="difeng" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
 
-
 <body>
-  <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">difeng</a></h1>
-  <h2><a href="/"></a></h2>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xawio.com1.z0.glb.clouddn.com/fangao.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">difeng</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>關於</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/生活随笔">随笔</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/difeng" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml " title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/SOA框架dubbo/" style="font-size: 10px;">SOA框架dubbo</a> <a href="/tags/java多线程/" style="font-size: 10px;">java多线程</a> <a href="/tags/java并发编程/" style="font-size: 10px;">java并发编程</a> <a href="/tags/jmeter/" style="font-size: 10px;">jmeter</a> <a href="/tags/jvm监控/" style="font-size: 10px;">jvm监控</a> <a href="/tags/markdown编辑器/" style="font-size: 10px;">markdown编辑器</a> <a href="/tags/mysql数据库/" style="font-size: 15px;">mysql数据库</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/storm/" style="font-size: 10px;">storm</a> <a href="/tags/分形学/" style="font-size: 10px;">分形学</a> <a href="/tags/日志工具/" style="font-size: 10px;">日志工具</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
 </div>
-<nav id="main-nav" class="alignright">
-  <ul>
-    
-      <li><a href="/">Home</a></li>
-    
-      <li><a href="/archives">Archives</a></li>
-    
-  </ul>
-  <div class="clearfix"></div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">difeng</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xawio.com1.z0.glb.clouddn.com/fangao.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">difeng</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/生活随笔">随笔</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/difeng" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml " title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
 </nav>
-<div class="clearfix"></div></header>
-  <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+
+      <div class="body-wrap"><article id="post-spring-01" class="article article-type-post" itemscope itemprop="blogPost">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-05T15:27:59.000Z"><a href="/2016/03/05/spring-01/">2016-03-05</a></time>
-      
-      
+    <div class="article-meta">
+      <a href="/2016/03/05/spring-01/" class="article-date">
+  	<time datetime="2016-03-05T15:27:59.000Z" itemprop="datePublished">2016-03-05</time>
+</a>
+    </div>
   
-    <h1 class="title">spring框架简介</h1>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      spring框架简介
+    </h1>
   
 
-    </header>
-    <div class="entry">
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
       
         <h3 id="1-简介">1.简介</h3><pre><code><span class="keyword">spring</span>是优秀的开源框架，是为解决复杂的企业应用程序开发而创建的。
 </code></pre><h3 id="2-_spring框架的构成和各个模块的作用和简述">2. spring框架的构成和各个模块的作用和简述</h3><p>spring框架有6个定义明确的模块组成，如下图所指示<br><img src="http://7xawio.com1.z0.glb.clouddn.com/spring_models.png" alt="spring 模块图"></p>
@@ -81,132 +268,138 @@ spring的容器负责spring应用中Bean的创建，配置和管理，主要组�
 
       
     </div>
-    <footer>
-      
-        
-        
+    
+  </div>
   
-  <div class="tags">
-    <a href="/tags/spring/">spring</a>
-  </div>
-
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/20/Construction-method-note/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
         
-  <div class="addthis addthis_toolbox addthis_default_style">
-    
-      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-    
-    
-      <a class="addthis_button_tweet"></a>
-    
-    
-      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-    
-    
-      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
-    
-    <a class="addthis_counter addthis_pill_style"></a>
-  </div>
-  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+          构建之法(笔记)-软件测试
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/02/28/lifegame/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">生命游戏</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
 
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
+  
 </article>
 
 
-<section id="comment">
-  <h1 class="title">留言</h1>
-
-  
-      <div id="fb-root"></div>
-<script>
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
-
-<div class="fb-comments" data-href="http://yoursite.com/2016/03/05/spring-01/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
-      
-  
-</section>
-
-</div></div>
-    <aside id="sidebar" class="alignright">
-  <div class="search">
-  <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="搜尋">
-    <input type="hidden" name="q" value="site:yoursite.com">
-  </form>
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
 </div>
 
-  
 
-  
-<div class="widget tag">
-  <h3 class="title">標籤</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/SOA框架dubbo/">SOA框架dubbo</a><small>1</small></li>
-  
-    <li><a href="/tags/java多线程/">java多线程</a><small>1</small></li>
-  
-    <li><a href="/tags/java并发编程/">java并发编程</a><small>1</small></li>
-  
-    <li><a href="/tags/jmeter/">jmeter</a><small>1</small></li>
-  
-    <li><a href="/tags/jvm监控/">jvm监控</a><small>1</small></li>
-  
-    <li><a href="/tags/markdown编辑器/">markdown编辑器</a><small>1</small></li>
-  
-    <li><a href="/tags/mysql数据库/">mysql数据库</a><small>2</small></li>
-  
-    <li><a href="/tags/node/">node</a><small>1</small></li>
-  
-    <li><a href="/tags/redis/">redis</a><small>1</small></li>
-  
-    <li><a href="/tags/spring/">spring</a><small>1</small></li>
-  
-    <li><a href="/tags/storm/">storm</a><small>1</small></li>
-  
-    <li><a href="/tags/分形学/">分形学</a><small>1</small></li>
-  
-    <li><a href="/tags/日志工具/">日志工具</a><small>1</small></li>
-  
-    <li><a href="/tags/算法/">算法</a><small>1</small></li>
-  
-    <li><a href="/tags/设计模式/">设计模式</a><small>6</small></li>
-  
-  </ul>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="spring-01" data-title="spring框架简介" data-url="http://yoursite.com/2016/03/05/spring-01/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
 </div>
 
-</aside>
-    <div class="clearfix"></div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 difeng
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
   </div>
-  <footer id="footer" class="inner"><div class="alignleft">
-  
-  &copy; 2016 difeng
-  
-</div>
-<div class="clearfix"></div></footer>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
 
 
 
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-(function($){
-  $('.fancybox').fancybox();
-})(jQuery);
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
 </script>
 
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
 </body>
 </html>
