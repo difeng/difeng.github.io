@@ -196,6 +196,178 @@
 
       <div class="body-wrap">
   
+    <article id="post-https配置-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/03/https配置-1/" class="article-date">
+  	<time datetime="2016-11-03T15:46:12.000Z" itemprop="datePublished">2016-11-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/03/https配置-1/">https配置</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>将http升级到https的实践总结整理如下:<br>分以下几部部分：</p>
+<ul>
+<li>https的概念和原理</li>
+<li>openssl自建CA和颁发证书</li>
+<li>证书的使用</li>
+<li>nginx带openssl静态编译<h2 id="1-_https的概念和原理">1. https的概念和原理</h2>在升级http到https之前，一定要先理解好https的原理和整个通信过程，这样才能更清楚理解每一步的配置含义。推荐以下”阮一峰”老师的四篇文章，介绍得非常明白，对我们理解http的工作原理有很大的帮助。</li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="external">《HTTPS 协议概述》</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="external">《图解 HTTPS 协议》</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html" target="_blank" rel="external">《HTTPS 协议的七个误解》</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/09/ssl-latency.html" target="_blank" rel="external">《HTTPS 协议的延迟有多大？》</a></li>
+</ul>
+<h2 id="2-_openssl自建CA和颁发证书">2. openssl自建CA和颁发证书</h2><h3 id="2-1_PKI（英语：Public_Key_Infrastructure，缩写：PKI）">2.1 PKI（英语：Public Key Infrastructure，缩写：PKI）</h3><p>公开密钥基础建设（英语：Public Key Infrastructure，缩写：PKI），又称公开密钥基础架构、公钥基础建设、公钥基础设施或公钥基础架构，是一组由硬件、软件、参与者、管理政策与流程组成的基础架构，其目的在于创造、管理、分配、使用、存储以及撤销数字证书。<br>密码学上，公开密钥基础建设借着数字证书认证机构(CA)将用户的个人身份跟公开密钥链接在一起。对每个证书中心用户的身份必须是唯一的。链接关系通过注册和发布过程创建，取决于担保级别，链接关系可能由CA的各种软件或在人为监督下完成。PKI的确定链接关系的这一角色称为注册管理中心（Registration Authority，RA）。RA确保公开密钥和个人身份链接，可以防抵赖。<br>可信赖的第三者（Trusted third party，TTP）也常被用来指证书中心。PKI有时被错误地拿来代表公开密钥密码学或公开密钥算法。</p>
+<h3 id="2-2_CA(Certificate_Authority_缩写)">2.2 CA(Certificate Authority 缩写)</h3><p>数字证书认证机构，也称为电子商务认证中心、电子商务认证授权机构，是负责发放和管理数字证书的权威机构，并作为电子商务交易中受信任的第三方，承担公钥体系中公钥的合法性检验的责任。CA负责管理PKI结构下的所有用户(包括各种应用程序)的证书，把用户的公钥和用户的其他信息捆绑在一起，在网上验证用户的身份。CA机构的数字签名使得攻击者不能伪造和篡改证书。</p>
+<h3 id="2-3_使用OpenSSL自建CA">2.3 使用OpenSSL自建CA</h3><p>OpenSSL 是一个开放源码的软件，它由三部分功能组成：加密算法库，证书封装管理功能，实现TLS/SSL的功能。下面就基于OpenSSL来制作证书。</p>
+<h4 id="制作CA根证书">制作CA根证书</h4><p>选择一个服务器当做CA（证书授权中心）服务器。<br>这里以CentOS 6.5为例，使用openssl来制作<br>   CentOS 6.5 系统的ssl证书的目录结构如下所示：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/etc/pki/CA/</span><br><span class="line">            newcerts    存放CA签署（颁发）过的数字证书（证书备份目录）</span><br><span class="line">            private     用于存放CA的私钥</span><br><span class="line">            crl         吊销的证书</span><br><span class="line">/etc/pki/tls/</span><br><span class="line">             cert.pem    软链接到certs/ca-bundle.crt</span><br><span class="line">             certs/      该服务器上的证书存放目录，可以放自己的证书和内置证书</span><br><span class="line">                   ca-bundle.crt    内置信任的证书</span><br><span class="line">             private    证书密钥存放目录</span><br><span class="line">             openssl.cnf    openssl的CA主配置文件</span><br></pre></td></tr></table></figure></p>
+<p>颁发证书：<br>CA首先要有一个根证书，使用此根证书才能颁发证书给别人。在生成根证书之前应先修改好CA的配置文件、序列号、索引等等。<br>修改配置文件vi /etc/pki/tls/openssl.cnf：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">[ CA_default ]</span><br><span class="line"></span><br><span class="line">dir		= /etc/pki/CA		<span class="comment"># Where everything is kept</span></span><br><span class="line">certs		= <span class="variable">$dir</span>/certs		<span class="comment"># Where the issued certs are kept</span></span><br><span class="line">crl_dir		= <span class="variable">$dir</span>/crl		<span class="comment"># Where the issued crl are kept</span></span><br><span class="line">database	= <span class="variable">$dir</span>/index.txt	<span class="comment"># database index file.</span></span><br><span class="line"><span class="comment">#unique_subject	= no			# Set to 'no' to allow creation of</span></span><br><span class="line">					<span class="comment"># several ctificates with same subject.</span></span><br><span class="line">new_certs_dir	= <span class="variable">$dir</span>/newcerts		<span class="comment"># default place for new certs.</span></span><br><span class="line"></span><br><span class="line">certificate	= <span class="variable">$dir</span>/cacert.pem 	<span class="comment"># The CA certificate</span></span><br><span class="line">serial		= <span class="variable">$dir</span>/serial 		<span class="comment"># The current serial number</span></span><br><span class="line">crlnumber	= <span class="variable">$dir</span>/crlnumber	<span class="comment"># the current crl number</span></span><br><span class="line">					<span class="comment"># must be commented out to leave a V1 CRL</span></span><br><span class="line">crl		= <span class="variable">$dir</span>/crl.pem 		<span class="comment"># The current CRL</span></span><br><span class="line">private_key	= <span class="variable">$dir</span>/private/cakey.pem<span class="comment"># The private key</span></span><br><span class="line">RANDFILE	= <span class="variable">$dir</span>/private/.rand	<span class="comment"># private random number file</span></span><br><span class="line">...</span><br><span class="line">default_days	= <span class="number">365</span>			<span class="comment"># how long to certify for</span></span><br><span class="line">default_crl_days= <span class="number">30</span>			<span class="comment"># how long before next CRL</span></span><br><span class="line">default_md	= default		<span class="comment"># use public key default MD</span></span><br><span class="line">preserve	= no			<span class="comment"># keep passed DN ordering</span></span><br><span class="line"><span class="comment"># A few difference way of specifying how similar the request should look</span></span><br><span class="line"><span class="comment"># For type CA, the listed attributes must be the same, and the optional</span></span><br><span class="line"><span class="comment"># and supplied fields are just that :-)</span></span><br><span class="line">policy		= policy_match</span><br><span class="line"><span class="comment"># For the CA policy</span></span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br><span class="line"><span class="comment"># For the 'anything' policy</span></span><br><span class="line"><span class="comment"># At this point in time, you must list all acceptable 'object'</span></span><br><span class="line"><span class="comment"># types.</span></span><br><span class="line">[ policy_anything ]</span><br><span class="line">countryName		= optional</span><br><span class="line">stateOrProvinceName	= optional</span><br><span class="line">localityName		= optional</span><br><span class="line">organizationName	= optional</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress</span><br><span class="line">...</span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line">countryName                     = Country Name (<span class="number">2</span> letter code)</span><br><span class="line">countryName_default             = CN</span><br><span class="line">countryName_min                 = <span class="number">2</span></span><br><span class="line">countryName_max                 = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">stateOrProvinceName             = State or Province Name (full name)</span><br><span class="line"><span class="comment">#stateOrProvinceName_default    = Default Province</span></span><br><span class="line"></span><br><span class="line">localityName                    = Locality Name (eg, city)</span><br><span class="line">localityName_default    = BJ</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>配置项都有说明，可按需求去配置。<br>修改配置文件后在CA目录下创建两个初始文件：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">touch index.txt serial</span><br><span class="line"><span class="built_in">echo</span> <span class="number">01</span> &gt; serial</span><br></pre></td></tr></table></figure></p>
+<p>生成根密钥<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/pki/CA/</span><br><span class="line">openssl genrsa -out private/cakey.pem <span class="number">2048</span></span><br></pre></td></tr></table></figure></p>
+<p>使用req命令生成自签根证书：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -x509 -key private/cakey.pem -out cacert.pem</span><br></pre></td></tr></table></figure></p>
+<p>会提示输入一些内容，因为是私有的，所以可以随便输入（之前修改的openssl.cnf会在这里呈现），最好记住能与后面保持一致。上面的自签证书cacert.pem应该生成在/etc/pki/CA下。<br>以上操作均在CA服务器上操作，生成的根证书主要是用来给下面的web服务来签署证书用的</p>
+<h3 id="2-4_颁发证书">2.4 颁发证书</h3><p>先要生成待CA签名的证书文件，步骤如下:<br>为nginx服务器生成ssl密钥<br>在nginx服务器上生成ssl的密钥<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx/ssl</span><br><span class="line">openssl genrsa -out nginx.key <span class="number">2048</span></span><br></pre></td></tr></table></figure></p>
+<p>为nginx服务器生成待CA签名的证书文件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx/conf/ssl</span><br><span class="line">openssl req -new -key nginx.key -out nginx.csr</span><br></pre></td></tr></table></figure></p>
+<p>用CA来签署证书<br>这个必学在CA服务器上执行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -req -in nginx.csr -CA /etc/pki/CA/cacert.pem -CAkey /etc/pki/CA/private/cakey.pem -CAcreateserial –out nginx.crt</span><br></pre></td></tr></table></figure></p>
+<p>生成的nginx.crt就是CA颁发的证书。</p>
+<h2 id="3-_证书使用">3. 证书使用</h2><p>这里以nignx和tomcat为例来说明，也就是使用通用部署架构，前面是nginx，后面是tomcat，这样只需要在nginx端配置ssl即可，tomcat基本不需要更改。</p>
+<h4 id="3-1_nginx的ssl配置,在server中配置">3.1 nginx的ssl配置,在server中配置</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">....</span><br><span class="line">        listen <span class="number">8088</span> ssl;</span><br><span class="line">        ssl on;</span><br><span class="line">        <span class="comment">#证书文件</span></span><br><span class="line">        ssl_certificate /usr/<span class="built_in">local</span>/nginx/conf/ssl/nginx.crt;</span><br><span class="line">        <span class="comment">#私钥文件</span></span><br><span class="line">        ssl_certificate_key /usr/<span class="built_in">local</span>/nginx/conf/ssl/nginx.key;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在server的location块中添加<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">              proxy_redirect off; </span><br><span class="line">              proxy_<span class="built_in">set</span>_header Host <span class="variable">$host</span>:<span class="variable">$server_port</span>;</span><br><span class="line">              proxy_<span class="built_in">set</span>_header X-Real-IP <span class="variable">$remote_addr</span>; </span><br><span class="line">              <span class="comment">#请求标题可帮助您识别客户端用于连接您的服务器的协议（HTTP 或 HTTPS）</span></span><br><span class="line">              proxy_<span class="built_in">set</span>_header X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">              <span class="comment">#请求标头可帮助您识别客户端的 IP 地址</span></span><br><span class="line">              proxy_<span class="built_in">set</span>_header X-Forwarded-For           <span class="variable">$proxy_add_x_forwarded_for</span>; </span><br><span class="line">              <span class="comment">#请求标头可帮助您识别负载均衡器用于连接到客户端的端口</span></span><br><span class="line">              proxy_<span class="built_in">set</span>_header X-Forwarded-Port <span class="variable">$server_port</span>;</span><br><span class="line">              proxy_pass      http://webservice;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p>顺便解释一下这几个变量确切含义</p>
+<ul>
+<li><p>X-Forwarded-For</p>
+</li>
+<li><p>X-Forwarded-Proto</p>
+</li>
+<li>X-Forwarded-Port</li>
+</ul>
+<p>X-Forwarded-For</p>
+<p>在您使用 HTTP 或 HTTPS 负载均衡器时，X-Forwarded-For 请求标头可帮助您识别客户端的 IP 地址。因为负载均衡器会拦截客户端和服务器之间的流量，因此您的服务器访问日志中将仅含有负载均衡器的 IP 地址。如需查看客户端的 IP 地址，使用 X-Forwarded-For 请求标题。Elastic Load Balancing 会在 X-Forwarded-For 请求标头中存储客户端的 IP 地址，并将标头传递到您的服务器。</p>
+<p>X-Forwarded-For 请求标题将采用以下形式：</p>
+<p>X-Forwarded-For: clientIPAddress<br>下面是 IP 地址为 203.0.113.7 的客户端的 X-Forwarded-For 请求标头的示例。</p>
+<p>X-Forwarded-For: 203.0.113.7<br>下面是 IPv6 地址为 2001:DB8::21f:5bff:febf:ce22:8a2e 的客户端的 X-Forwarded-For 请求标头的示例。</p>
+<p>X-Forwarded-For: 2001:DB8::21f:5bff:febf:ce22:8a2e<br>如果请求流经了多个代理，则 X-Forwarded-For 请求标头中的 clientIPAddress 后面跟有在请求到达负载均衡器之前连续流经的各个代理的 IP 地址。因此，最右侧的 IP 地址是最近代理的 IP 地址，最左侧的 IP 地址是原始客户端的 IP 地址。在这种情况下，X-Forwarded-For 请求标头采用以下形式：</p>
+<p>X-Forwarded-For: OriginatingClientIPAddress, proxy1-IPAddress, proxy2-IPAddress<br>X-Forwarded-Proto</p>
+<p>X-Forwarded-Proto 请求标题可帮助您识别客户端用于连接您的服务器的协议（HTTP 或 HTTPS）。您的服务器访问日志仅包含在服务器和负载均衡器之间使用的协议；不含任何关于在客户端和负载均衡器之间使用的协议之信息。如需判断在客户端和负载均衡器之间使用的协议，使用 X-Forwarded-Proto 请求标题。Elastic Load Balancing 会在 X-Forwarded-Proto 请求标题中存储客户端和负载均衡器之间使用的协议，并随后将标题传递到您的服务器。</p>
+<p>您的应用程序或网站可以使用存储在 X-Forwarded-Proto 请求标题中的协议来表现重新导向至适用 URL 的响应。</p>
+<p>X-Forwarded-Proto 请求标题将采用以下形式：</p>
+<p>X-Forwarded-Proto: originatingProtocol<br>下例中包含的 X-Forwarded-Proto 请求标题源自作为 HTTPS 请求生成自客户端的请求：</p>
+<p>X-Forwarded-Proto: https<br>X-Forwarded-Port</p>
+<p>X-Forwarded-Port 请求标头可帮助您识别 HTTP 或 HTTPS 负载均衡器用于连接到客户端的端口。</p>
+<p>配置完必须重启nginx</p>
+<h4 id="3-2_tomcat配置">3.2 tomcat配置</h4><p>在Host里添加value节点<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;Host name=<span class="string">"localhost"</span>  appBase=<span class="string">"webapps"</span></span><br><span class="line">            unpackWARs=<span class="string">"true"</span> autoDeploy=<span class="string">"true"</span>&gt;</span><br><span class="line">        &lt;Valve className=<span class="string">"org.apache.catalina.valves.AccessLogValve"</span> directory=<span class="string">"logs"</span></span><br><span class="line">               prefix=<span class="string">"localhost_access_log."</span> suffix=<span class="string">".txt"</span></span><br><span class="line">               pattern=<span class="string">"%h %l %u %t &amp;quot;%r&amp;quot; %s %b"</span> /&gt;</span><br><span class="line"></span><br><span class="line">          &lt;Valve className=<span class="string">"org.apache.catalina.valves.RemoteIpValve"</span></span><br><span class="line">                  //以下四项是要配置的内容</span><br><span class="line">                  remoteIpHeader=<span class="string">"x-forwarded-for"</span></span><br><span class="line">                  remoteIpProxiesHeader=<span class="string">"x-forwarded-by"</span></span><br><span class="line">                  protocolHeader=<span class="string">"x-forwarded-proto"</span></span><br><span class="line">                  portHeader=<span class="string">"X-Forwarded-Port"</span></span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line">      &lt;/Host&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样配置完后，其实就是client和nginx 之间是https，而nginx和tomcat之间是http。一定要注意tomcat中的配置，这几个配置很重要：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  &lt;Valve className=<span class="string">"org.apache.catalina.valves.RemoteIpValve"</span></span><br><span class="line">                  remoteIpHeader=<span class="string">"x-forwarded-for"</span></span><br><span class="line">                  remoteIpProxiesHeader=<span class="string">"x-forwarded-by"</span></span><br><span class="line">                  protocolHeader=<span class="string">"x-forwarded-proto"</span></span><br><span class="line">                  portHeader=<span class="string">"X-Forwarded-Port"</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>没有必要tomcat和nginx都做ssl<br>验证配置是否生效<br>启动tomcat和nginx<br>可通过浏览器访问来验证，原来的网站<br>这里顺便记录一下，java如何调用https的webservice<br>首先必须制作java的keystore文件（用来存放信任证书的一种文件），使用keytool来制作，目的就是把openssl制作的证书添加到java的信任证书文件中。<br>将证书转为pkcs12 证书<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -export -clcerts -in nginx.crt -inkey nginx.key -out server.p12</span><br></pre></td></tr></table></figure></p>
+<p>这里需要输入一个密码<br>转换为jks的格式<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -importkeystore -srckeystore server.p12 -destkeystore server.jks -srcstoretype pkcs12 -deststoretype jks</span><br></pre></td></tr></table></figure></p>
+<p>然后我们可以验证下jks是否包含了完整的证书链<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -list -v -keystore server.jks</span><br></pre></td></tr></table></figure></p>
+<p>java客户端在调用webservice的时候，需要在客户端实例生成前添加如下代码,确保实例使用的是https，以前的调用方式不变。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//jks文件路径</span></span><br><span class="line">System.setProperty(<span class="string">"javax.net.ssl.keyStore"</span>, <span class="string">"jks_file_path"</span>);</span><br><span class="line"><span class="comment">//生成jks文件时设置的密码</span></span><br><span class="line">System.setProperty(<span class="string">"javax.net.ssl.keyStorePassword"</span>, <span class="string">"your_set_pwd"</span>);</span><br><span class="line"><span class="comment">//jks文件路径</span></span><br><span class="line">System.setProperty(<span class="string">"javax.net.ssl.trustStore"</span>, <span class="string">"jks_file_path"</span>);</span><br><span class="line"><span class="comment">//生成jks文件时设置的密码</span></span><br><span class="line">System.setProperty(<span class="string">"javax.net.ssl.trustStorePassword"</span>, <span class="string">"your_set_pwd"</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-_编译带openssl的nginx">4. 编译带openssl的nginx</h2><p>由于nginx的ssl模块依赖于openssl的库，所以编译安装时有两种方法：<br>一是系统先安装好要求版本的openssl，二是下载openssl源码，编译nginx时指定带openssl编译。两种方式各有利弊，这里介绍第二种方式。<br>下载ngnix源码包<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://nginx.org/download/nginx-<span class="number">1.9</span>.<span class="number">9</span>.tar.gz</span><br><span class="line">```	</span><br><span class="line">下载openssl</span><br><span class="line">```sh	</span><br><span class="line">wget https://www.openssl.org/<span class="built_in">source</span>/openssl-<span class="number">1.0</span>.<span class="number">2</span>h.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>下载pcre，nginx的url rewrite模块需要，也可以不安装nginx 的url rewrite模块，这样就可跳过本步骤，编译时指定不安装url rewrite模块就行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://sourceforge.net/projects/pcre/files/pcre/<span class="number">8.37</span>/pcre-<span class="number">8.37</span>.tar.gz/download</span><br></pre></td></tr></table></figure></p>
+<p>编译安装<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nginx-<span class="number">1.9</span>.<span class="number">9</span>.tar.gz</span><br><span class="line">tar -zxvf pcre-<span class="number">8.37</span>.tar.gz</span><br><span class="line">tar -zxvf openssl-<span class="number">1.0</span>.<span class="number">2</span>h.tar.gz</span><br><span class="line"><span class="built_in">cd</span> nginx-<span class="number">1.9</span>.<span class="number">9</span></span><br><span class="line">./configure --prefix=/usr/<span class="built_in">local</span>/nginx --with-http_ssl_module --with-openssl=../openssl-<span class="number">1.0</span>.<span class="number">2</span>h --with-pcre=../pcre-<span class="number">8.37</span></span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">```	</span><br><span class="line">检查版本</span><br><span class="line">```sh</span><br><span class="line">/usr/<span class="built_in">local</span>/nginx/sbin/nginx -v</span><br><span class="line">nginx version: nginx/<span class="number">1.9</span>.<span class="number">9</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-javamail通过socks代理发送邮件（使用danted-server作为socks代理）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/03/javamail通过socks代理发送邮件（使用danted-server作为socks代理）/" class="article-date">
+  	<time datetime="2016-07-02T16:28:00.000Z" itemprop="datePublished">2016-07-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/03/javamail通过socks代理发送邮件（使用danted-server作为socks代理）/">javamail通过socks代理发送邮件（使用danted-server作为socks代理）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-_下载danted-server的源码包">1. 下载danted-server的源码包</h3><p>从官网下载源码包<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.inet.no/dante/files/dante-1.4.1.tar.gz</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-_编译源码">2. 编译源码</h3><p>编译很标准,就是configure,make,install<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf  dante-1.4.1.tar.gz&#10;cd dante-1.4.1&#10;./configue&#10;make&#10;make install</span><br></pre></td></tr></table></figure></p>
+<p>编译过程很顺畅，基本不会有什么问题。</p>
+<h3 id="3-_配置详解">3. 配置详解</h3><p>配置文件中的一段说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The config file is divided into three parts;&#10;#    1) server settings&#10;#    2) rules&#10;#    3) routes&#10;#&#10;# The recommended order is:&#10;#   Server settings:&#10;#               logoutput&#10;#               internal&#10;#               external&#10;#               socksmethod&#10;#               clientmethod&#10;#               users&#10;#               compatibility&#10;#               extension&#10;#               timeout&#10;#               srchost&#10;#&#10;#  Rules:&#10;#        client block/pass&#10;#                from to&#10;#                libwrap&#10;#                log&#10;#&#10;#     block/pass&#10;#                from to&#10;#                socksmethod&#10;#                command&#10;#                libwrap&#10;#                log&#10;#                protocol&#10;#                proxyprotocol&#10;#</span><br></pre></td></tr></table></figure></p>
+<p>配置分为三块：<br>a). 通用设置，server setting:<br>由如下几项：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#26085;&#24535;&#37197;&#32622;&#10;/var/log/sockd.log&#10;#&#25509;&#25910;&#36830;&#25509;&#30340;&#22320;&#22336;&#21644;&#31471;&#21475;&#10;internal: 192.168.1.32 port = 1080&#10;#&#20174;&#26381;&#21153;&#22120;&#30340;&#25152;&#26377;&#20256;&#20986;&#30340;&#36830;&#25509;&#23558;&#20351;&#29992;&#30340;IP&#22320;&#22336;&#10;external: 192.168.1.32</span><br></pre></td></tr></table></figure></p>
+<p>b). rules,规则配置 :<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#35748;&#35777;methods&#37197;&#32622;&#65292;&#20004;&#31181;&#35748;&#35777;&#35268;&#21017;&#10;clientmethod &#21015;&#20986;client pass/client block rules&#20013;&#20351;&#29992;&#21040;&#30340;method,&#24212;&#29992;&#22312;socks&#21327;&#35758;&#21327;&#21830;&#20043;&#21069;&#25110;&#20854;&#20013;&#10;&#10;socksmethod &#21015;&#20986;&#35748;&#35777;&#30340;&#30340;methods&#65292;&#36825;&#20123;method&#23558;&#22312;client pass/client block rules&#20013;&#20351;&#29992;&#65292;&#19988;&#22312;SOCKS&#21327;&#35758;&#21327;&#21830;&#23436;&#21518;&#20351;&#29992;&#10;&#10;socksmethod &#20855;&#20307;&#21442;&#25968;&#24847;&#24605;&#10;&#10;none  &#19981;&#38656;&#35201;&#35748;&#35777;&#10;username  &#29992;&#25143;&#21517;&#23494;&#30721;&#10;rfc931  &#38656;&#35201;&#29992;&#25143;&#20027;&#26426;&#25552;&#20379;&#19968;&#20010;rfc931 reply&#65292;&#36825;&#20010;reply&#24517;&#39035;&#21305;&#37197;&#19968;&#20010;/etc/passwd&#20013;&#30340;&#29992;&#25143;&#21517;&#10;pam &#36890;&#36807;PAM&#26041;&#24335;&#35748;&#35777;&#10;&#10;clientmethod: none&#10;&#10;#&#29992;&#25143;&#36523;&#20221;&#35748;&#35777;&#10;# &#38656;&#35201;&#28041;&#21450;&#29305;&#27530;&#26435;&#38480;&#30340;&#25805;&#20316;&#65292;&#21487;&#25351;&#23450;&#29305;&#26435;&#29992;&#25143;&#10;# userid &#34;sockd&#34;.&#10;user.privileged: sockd&#10;&#10;# &#19968;&#33324;&#24773;&#20917;&#19979;&#23558;&#20351;&#29992;unprivileged&#29992;&#25143;&#10;user.unprivileged: sockd&#10;&#10;# &#22914;&#26524;&#26410;&#20351;&#29992; libwrap,&#20197;&#19979;&#21487;&#20197;&#19981;&#37197;&#32622;&#10;#&#35774;&#32622;&#29992;&#20160;&#20040;&#29992;&#25143;&#25191;&#34892;libwrap&#21629;&#20196;&#10;#user.libwrap: libwrap&#10;&#10;&#10;# &#20801;&#35768;&#20351;&#29992;&#30340;&#23458;&#25143;&#31471;&#37197;&#32622;&#65292;&#21253;&#25324;&#31471;&#21475;&#30340;&#33539;&#22260;&#10;client pass &#123;&#10;        from: 192.168.0.0/0 port 1-65535 to: 0.0.0.0/0&#10;        clientmethod: rfc931 # &#21305;&#37197;&#25152;&#26377;&#35748;&#35777;&#30340;&#29992;&#25143;&#26159;&#21542;&#37117;&#35748;&#35777;&#10;&#125;&#10;#&#33509;&#37197;&#32622;&#22810;&#20010;client pass&#35268;&#21017;&#65292;&#26159;&#25353;&#39034;&#24207;&#25191;&#34892;&#35268;&#21017;&#30340;&#65292;&#24403;&#21069;&#19968;&#20010;&#22833;&#36133;&#65292;&#21017;&#25191;&#34892;&#21518;&#19968;&#20010;&#65292;&#30452;&#21040;&#25104;&#21151;&#12290;&#10;&#10;#&#38459;&#27490;&#19981;&#26159;&#26412;&#32593;&#32476;&#30340;&#25152;&#26377;client&#30340;&#36830;&#25509;&#65292;&#20063;&#21487;&#20197;&#35774;&#32622;&#20855;&#20307;&#20123;&#65292;&#38480;&#21046;&#26412;&#32593;&#32476;&#20013;&#26576;&#20123;&#22320;&#22336;&#27573;&#30340;&#35775;&#38382;&#10;client block &#123;&#10;        from: 0.0.0.0/0 to: 0.0.0.0/0&#10;        log: connect error&#10;&#125;&#10;&#10;&#10;# &#20801;&#35768;&#36830;&#25509;&#30340;&#22320;&#22336;&#65292;192.168.1.0/24 &#36825;&#20123;&#22320;&#22336;&#26159;&#20801;&#35768;&#35775;&#38382;&#30340;&#10;# &#20801;&#35768;&#25152;&#26377;&#30340;tcp&#21644;udp&#21327;&#35758;&#30340;socks&#10;socks pass &#123;&#10;        from: 192.168.1.0/24 to: 0.0.0.0/0&#10;        protocol: tcp udp&#10;&#125;&#10;&#10;#&#38459;&#27490;&#26576;&#20123;ip&#22320;&#22336;&#30340;&#35775;&#38382;&#65292;&#36825;&#37324;&#22635;&#30340;&#26159;&#38459;&#27490;&#25152;&#26377;&#26412;&#32593;&#32476;&#20043;&#22806;&#30340;ip&#30340;&#35775;&#38382;&#10;socks block &#123;&#10;        from: 0.0.0.0/0 to: 0.0.0.0/0&#10;        log: connect error&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>c). routes设置,可以将接收到的固定协议的连接转到固定的代理服务上去，如下边的两个示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">##route to UPnP server&#10;# route &#123;&#10;#         from: 0.0.0.0/0 to: .example.org&#10;#             via: http://192.0.2.2:1900/InternetGatewayDevice.xml&#10;#         proxyprotocol: upnp&#10;#         method: none&#10;# &#125;&#10;&#10;##route to HTTP proxy&#10;#route &#123;                                                             &#10;#        from: 0.0.0.0/0 to: 0.0.0.0/0 via: 10.1.1.1 port = 3128    &#10;#        command: connect # only thing a httproxy supports.     &#10;#        protocol: tcp&#10;#        proxyprotocol: http_v1.0                                    &#10;#&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-_javamail通过socks代理来发邮件。">4. javamail通过socks代理来发邮件。</h3><p>示例：<br>socks代理(danted-server服务器)：192.168.1.118 port：1080<br>javamail发送端：192.168.1.32<br>代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MailUtils</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sendMail</span><span class="params">()</span> <span class="keyword">throws</span> AddressException, MessagingException </span>&#123;</span><br><span class="line">       Properties props = System.getProperties();</span><br><span class="line">       <span class="comment">//socksProxyHost,socksProxyPort是sock代理的全局配置</span></span><br><span class="line">       <span class="comment">//props.setProperty("socksProxyHost","192.168.1.118");</span></span><br><span class="line">       <span class="comment">//props.setProperty("socksProxyPort","1080");</span></span><br><span class="line">       <span class="comment">//mail.smtp.socks.host，mail.smtp.socks.port只针对smtp协议的sock连接</span></span><br><span class="line">	   props.setProperty(<span class="string">"mail.smtp.socks.host"</span>, <span class="string">"192.168.1.118"</span>);</span><br><span class="line">       props.setProperty(<span class="string">"mail.smtp.socks.port"</span>, <span class="string">"1080"</span>);</span><br><span class="line">       props.setProperty(<span class="string">"mail.smtp.host"</span>, <span class="string">"smtp.163.com"</span>);</span><br><span class="line">       props.setProperty(<span class="string">"mail.smtp.port"</span>, <span class="string">"465"</span>); </span><br><span class="line">       props.setProperty(<span class="string">"mail.smtp.auth"</span>, <span class="string">"true"</span>);</span><br><span class="line">       props.setProperty(<span class="string">"mail.debug"</span>, <span class="string">"true"</span>);</span><br><span class="line">	   props.put(<span class="string">"mail.smtp.ssl.enable"</span>, <span class="string">"true"</span>);</span><br><span class="line">       <span class="keyword">final</span> String username = <span class="string">"sender@163.com"</span>;</span><br><span class="line">       <span class="keyword">final</span> String password = <span class="string">"password"</span>;</span><br><span class="line">       Session session = Session.getDefaultInstance(props,</span><br><span class="line">                            <span class="keyword">new</span> Authenticator()&#123;</span><br><span class="line">                               <span class="function"><span class="keyword">protected</span> PasswordAuthentication <span class="title">getPasswordAuthentication</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                                  <span class="keyword">return</span> <span class="keyword">new</span> PasswordAuthentication(username, password);</span><br><span class="line">                               &#125;&#125;);</span><br><span class="line">       Message msg = <span class="keyword">new</span> MimeMessage(session);</span><br><span class="line">       msg.setFrom(<span class="keyword">new</span> InternetAddress(<span class="string">"sender@domain"</span>));</span><br><span class="line">       msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(<span class="string">"recipient@domain"</span>,<span class="keyword">false</span>));</span><br><span class="line">       msg.setSubject(<span class="string">"Hello"</span>);</span><br><span class="line">       msg.setText(<span class="string">"How are you"</span>);</span><br><span class="line">       msg.setSentDate(<span class="keyword">new</span> Date());</span><br><span class="line">       Transport.send(msg);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">try</span> &#123;</span><br><span class="line">			sendMail();</span><br><span class="line">		&#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意上面代码中的如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> //1.socksProxyHost,socksProxyPort&#26159;sock&#20195;&#29702;&#30340;&#20840;&#23616;&#37197;&#32622;&#10; //props.setProperty(&#34;socksProxyHost&#34;,&#34;192.168.1.118&#34;);&#10; //props.setProperty(&#34;socksProxyPort&#34;,&#34;1080&#34;);&#10; //2.mail.smtp.socks.host&#65292;mail.smtp.socks.port&#21482;&#38024;&#23545;smtp&#21327;&#35758;&#30340;sock&#36830;&#25509;&#10;props.setProperty(&#34;mail.smtp.socks.host&#34;, &#34;192.168.1.118&#34;);&#10; props.setProperty(&#34;mail.smtp.socks.port&#34;, &#34;1080&#34;);</span><br></pre></td></tr></table></figure></p>
+<p>socksProxyHost、socksProxyPort这两个属性对此jvm进程中的所有sock连接都有效,mail.smtp.socks.host、mail.smtp.socks.port两个属性只对stmp协议的sock有效，所以如果只是发邮件需要代理而其他不需要代理，则可以按配置2来设置</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-spring-boot下Servlet容器Tomcat和Undertow性能对比" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -223,7 +395,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="测试目的：">测试目的：</h2><p>Tomcat和Undertow的性能做对比，确定生产环境调优参数</p>
-<h2 id="测试工具">测试工具</h2><p>压测工具：jmeter<br>jvm监控工具：</p>
+<h2 id="测试工具">测试工具</h2><p>压测工具：jmeter<br>jvm监控工具：visualvm</p>
 <h2 id="测试过程：">测试过程：</h2><ol>
 <li>设置jmeter的线程组参数，设置如下:100个线程,每个线程发起100个请求,线程启动间隔是1秒<br><img src="http://7xawio.com1.z0.glb.clouddn.com/spring-boot-performace-jmeter_config.png" alt="jmeter线程组参数设置"></li>
 <li>设置请求参数,这里设置的是http，post请求。<br><img src="http://7xawio.com1.z0.glb.clouddn.com/spring-boot-performace-jmeter_request_config.png" alt="jmeter的http request参数设置"></li>
@@ -383,7 +555,7 @@
       
         <p>spring 和mina集成总结，spring 的配置就不做过多的介绍了，主要将mina如何配置到spring中做个介绍</p>
 <ol>
-<li><p>配置思路：<br> 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给mina来管理。</p>
+<li><p>配置思路：<br> 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给spring来管理。</p>
 </li>
 <li><p>配置样例<br>比如以下mina的server初始化代码</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//创建socket套接字</span></span><br><span class="line">SocketAcceptor acceptor = <span class="keyword">new</span> NioSocketAcceptor();</span><br><span class="line"><span class="comment">//创建IO过滤器链</span></span><br><span class="line">DefaultIoFilterChainBuilder chain = <span class="keyword">new</span> DefaultIoFilterChainBuilder();</span><br><span class="line"><span class="comment">//序列化编解码工厂对象</span></span><br><span class="line">ObjectSerializationCodecFactory codec = <span class="keyword">new</span> ObjectSerializationCodecFactory();</span><br><span class="line"><span class="comment">//心跳工厂类</span></span><br><span class="line">KeepAliveMessageFactoryImpl kamfi = <span class="keyword">new</span> KeepAliveMessageFactoryImpl();</span><br><span class="line"><span class="comment">//心跳过滤器</span></span><br><span class="line">KeepAliveFilter kaf = <span class="keyword">new</span> KeepAliveFilter(kamfi);</span><br><span class="line">kaf.setForwardEvent(<span class="keyword">false</span>);</span><br><span class="line"><span class="comment">//设置接收心跳的频率</span></span><br><span class="line">kaf.setRequestInterval(<span class="number">30</span>);</span><br><span class="line"><span class="comment">//添加编解码过滤器</span></span><br><span class="line">chain.addLast(<span class="string">"chain"</span>, <span class="keyword">new</span> ProtocolCodecFilter(codec));</span><br><span class="line"><span class="comment">//添加心跳过滤器</span></span><br><span class="line">chain.addLast(<span class="string">"heart"</span>, kaf);</span><br><span class="line"><span class="comment">//设置服务处理类</span></span><br><span class="line">acceptor.setHandler(<span class="keyword">new</span> ServerHandler());</span><br><span class="line">acceptor.bind(<span class="keyword">new</span> InetSocketAddress(<span class="number">30001</span>));</span><br></pre></td></tr></table></figure>
@@ -805,7 +977,7 @@
 <p>Cell代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.difeng.lifegame;</span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> difeng</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Cell</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span>  row;</span><br><span class="line">      <span class="keyword">int</span>  col;</span><br><span class="line">      <span class="keyword">boolean</span> islive;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Cell</span><span class="params">(<span class="keyword">int</span> row, <span class="keyword">int</span> col, <span class="keyword">boolean</span> islive)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">		<span class="keyword">this</span>.row = row;</span><br><span class="line">		<span class="keyword">this</span>.col = col;</span><br><span class="line">		<span class="keyword">this</span>.islive = islive;</span><br><span class="line">	&#125;     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>Constant的代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.difeng.lifegame;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.awt.Dimension;</span><br><span class="line"><span class="keyword">import</span> java.awt.Toolkit;</span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> difeng</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Constant</span> </span>&#123;</span><br><span class="line">     <span class="keyword">static</span> Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> SCREEN_WIDTH = (<span class="keyword">int</span>) dimension.getWidth();</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> SCREEN_HEIGHT = (<span class="keyword">int</span>)dimension.getHeight();</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> ROW_NUM;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> COL_NUM;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CELL_WIDTH = <span class="number">20</span>;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CELL_HEIGHT = <span class="number">20</span>;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REFRESH_INTERVALS = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>主控程序:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.difeng.lifegame;</span><br><span class="line"><span class="keyword">import</span> java.awt.BorderLayout;</span><br><span class="line"><span class="keyword">import</span> java.awt.GraphicsDevice;</span><br><span class="line"><span class="keyword">import</span> java.awt.GraphicsEnvironment;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.KeyAdapter;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.KeyEvent;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.swing.JFrame;</span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> difeng</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainFrame</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		JFrame life = <span class="keyword">new</span> JFrame();</span><br><span class="line">		Canvas canvas = <span class="keyword">new</span> Canvas();</span><br><span class="line">		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();</span><br><span class="line">	    life.getContentPane().add(canvas,BorderLayout.CENTER);</span><br><span class="line">	    life.setUndecorated(<span class="keyword">true</span>);</span><br><span class="line">	    <span class="comment">//设置全屏显示</span></span><br><span class="line">	    gd.setFullScreenWindow(life);</span><br><span class="line">	    <span class="comment">//添加程序退出的事件监听</span></span><br><span class="line">	    life.addKeyListener(<span class="keyword">new</span> KeyAdapter() &#123;</span><br><span class="line">	    	<span class="annotation">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">keyPressed</span><span class="params">(KeyEvent e)</span> </span>&#123;</span><br><span class="line">				<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">				<span class="keyword">super</span>.keyPressed(e);</span><br><span class="line">				<span class="keyword">if</span>(e.getKeyCode()==KeyEvent.VK_ESCAPE)&#123;</span><br><span class="line">					System.exit(<span class="number">0</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">	    <span class="keyword">new</span> Thread(canvas).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="4-_总结">4. 总结</h3><p>1.搞清楚问题的本质，也就是原理部分。<br>2.然后思考寻找合理的数据结构。再考虑类的设计和协作。<br>3.coding<br>生命游戏还有其他游戏的算法来高效的实现，上述只是自己刚接触时的想法。不过这个游戏确实挺有意思的，其实它也属于分形学。有兴趣的朋友还可以阅读《混沌与分形》这本书。也可以去看看极客们制作的漂亮额分形图形<a href="http://www.douban.com/note/54115757/" target="_blank" rel="external">http://www.douban.com/note/54115757/</a></p>
+<h3 id="4-_总结">4. 总结</h3><p>1.搞清楚问题的本质，也就是原理部分。<br>2.然后思考寻找合理的数据结构。再考虑类的设计和协作。<br>3.coding<br>生命游戏还有其他游戏的算法来高效的实现，上述只是自己刚接触时的想法。不过这个游戏确实挺有意思的，其实它也属于分形学。有兴趣的朋友还可以阅读《混沌与分形》这本书。也可以去看看极客们制作的<a href="https://www.douban.com/note/54115757/" target="_blank" rel="external">分形图形</a>。</p>
 
       
     </div>
@@ -990,132 +1162,6 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jmeter/">jmeter</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-redis-demo" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/03/redis-demo/" class="article-date">
-  	<time datetime="2016-01-03T12:36:16.000Z" itemprop="datePublished">2016-01-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/03/redis-demo/">redis单机多实例使用</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>redis单机多实例的配置,其实也就是在多个端口上启动redis实例，需要注意以下问题。<br>1.不同端口写不同配置文件<br>   如下：<br>   redis_6377.conf<br>   redis_6378.conf<br>   redis_6379.conf<br>2.在不同的配置文件中配置各自的策略<br>  注意以下几点<br>  1.端口配置<br>  2.pid文件的配置，不同端口配不同名字，最好加端口号，以便区分。<br>  3.log文件路径的配置<br>  4.持久化的文件配置，不可重复<br>    这里选择rbd<br>启动的时候<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-server /path/to/redis.conf</span><br></pre></td></tr></table></figure></p>
-<p>顺便说一下redis的持久化方式<br>分两种<br>1.rdb模式<br> 其实就是对内存中的东西按一些策略定期做snapshot,也就是快照<br>rdb保存的是二进制文件，是redis的默认方式。<br>配置如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">save &#60;seconds&#62; &#60;changes&#62;&#10;#100&#31186;&#20869;&#33267;&#23569;&#26377;10&#20010;key&#20540;&#21457;&#29983;&#25913;&#21464;&#25165;&#20570;&#25345;&#20037;&#21270;&#10;save 100  10 &#10;#&#26368;&#26032;&#30340;&#24555;&#29031;&#20445;&#23384;&#22833;&#36133;&#26102;&#20572;&#27490;&#20889;&#25805;&#20316;&#10;stop-writes-on-bgsave-error yes&#10;#&#20570;&#24555;&#29031;&#26102;&#26159;&#19981;&#26159;&#38656;&#35201;&#20570;&#21387;&#32553;&#10;rdbcompression yes&#10;#&#25968;&#25454;&#26657;&#39564;&#65292;&#20445;&#35777;&#25968;&#25454;&#27491;&#30830;&#24615;&#10;rdbchecksum yes&#10;#&#24555;&#29031;&#30340;&#25991;&#20214;&#21517;&#10;dbfilename dump.rdb&#10;#&#23384;&#25918;&#24555;&#29031;&#30340;&#30446;&#24405;&#10;dir /var/lib/redis</span><br></pre></td></tr></table></figure></p>
-<p>2.Append only file（AOF）的方式<br>  它将每一步操作的命令强制保存到磁盘上，持久性比较好，但对于写比较频繁的情况不适合，不推荐。 配置如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">appendonly no&#10;#append only file&#30340;&#21517;&#31216;,&#40664;&#35748;&#20026;appendonly.aof&#10;appendfilename &#34;appendonly.aof&#34;&#10;#&#22312;&#26085;&#24535;&#37325;&#20889;&#26102;&#65292;&#19981;&#36827;&#34892;&#21629;&#20196;&#36861;&#21152;&#25805;&#20316;&#65292;&#32780;&#21482;&#26159;&#23558;&#20854;&#25918;&#22312;&#32531;&#20914;&#21306;&#37324;&#65292;&#36991;&#20813;&#19982;&#21629;&#20196;&#30340;&#36861;&#21152;&#36896;&#25104;DISK IO&#19978;&#30340;&#20914;&#31361;&#12290;&#10;no-appendfsync-on-rewrite yes</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-log4j-study" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/12/27/log4j-study/" class="article-date">
-  	<time datetime="2015-12-27T14:32:36.000Z" itemprop="datePublished">2015-12-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/27/log4j-study/">log4j的使用</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>log4j作为日志工具，想必大家已经非常熟悉，我们在日常的项目开发中经常会用到，它的功能很强大，我就不一一熬述了，把我觉得比较常用的功能总结一下。</p>
-<h4 id="1-根日志属性项">1.根日志属性项</h4><pre><code><span class="title">level</span> 日志最低级别
-后面可跟多个appender
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">log4j.rootLogger  =   [ level ],appenderName1,appenderName2,...</span><br></pre></td></tr></table></figure>
-<p>如下配置意思：定义输出源A1，它的最低日志级别为DEBUG，然后将它附到根日志的属性后面去，A1的日志文件的路径为E:\debug.log<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#### 日志级别 </span><br><span class="line">log4j.rootLogger=DEBUG,A1</span><br><span class="line">#### 日志文件按天产生</span><br><span class="line">log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">#### 指定日志消息的输出最低层次</span><br><span class="line">log4j.appender.A1.Threshold=DEBUG</span><br><span class="line">#### 日志文件位置</span><br><span class="line">log4j.appender.A1.File=E:\\debug.log</span><br><span class="line">log4j.appender.A1.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.A1.Encoding=utf-8</span><br><span class="line">log4j.appender.A1.layout.ConversionPattern=[demo] %d %-5p %c %x - %m%n</span><br></pre></td></tr></table></figure></p>
-<h4 id="2-按包或类单独打日志文件">2.按包或类单独打日志文件</h4><pre><code>定义单独包或类的日志输出源
-设置子日志是否继承父日志,设置log4j.additivity的值设置规则如下：
-log4j<span class="class">.additivity</span><span class="class">.cn</span><span class="class">.com</span><span class="class">.a1</span><span class="class">.TestB</span> = false
-log4j.additivity后面跟上据体要设置的包或类，类得带完整的包路径
-</code></pre><h4 id="以下是一个配置的demo">以下是一个配置的demo</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 日志级别 </span><br><span class="line">log4j.rootLogger=DEBUG,A1</span><br><span class="line">#### 日志文件按天产生</span><br><span class="line">log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">#### 指定日志消息的输出最低层次</span><br><span class="line">log4j.appender.A1.Threshold=DEBUG</span><br><span class="line">#### 日志文件位置</span><br><span class="line">log4j.appender.A1.File=E:\\debug.log</span><br><span class="line">log4j.appender.A1.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.A1.Encoding=utf-8</span><br><span class="line">log4j.appender.A1.layout.ConversionPattern=[demo] %d %-5p %c %x - %m%n</span><br><span class="line"></span><br><span class="line">####false 子Logger只会在自己的appender里输出，而不会在父Logger的appender里输出。####</span><br><span class="line">#### 类cn.com.a1.TestB的日志只会打在自己的appender里而不会打到父appender里</span><br><span class="line">log4j.additivity.cn.com.a1.TestB = false </span><br><span class="line"></span><br><span class="line">log4j.appender.testb=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">log4j.appender.testb.Threshold=DEBUG</span><br><span class="line">#### 类TestB的日志文件位置</span><br><span class="line">log4j.appender.testb.File=E:\\testb.log</span><br><span class="line">log4j.appender.testb.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.testb.Encoding=utf-8</span><br><span class="line">log4j.appender.testb.layout.ConversionPattern=[QiConsoleDaemon] %d %-5p %c %x - %m%n</span><br><span class="line">####单独定义某个包或类的日志输出级别和输出源，输出源可有多个，以逗号分隔，具体格式如下</span><br><span class="line">####日志级别，文件输出源</span><br><span class="line">log4j.logger.cn.com.a1.TestB=DEBUG,testb</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/日志工具/">日志工具</a></li></ul>
 	</div>
 
       

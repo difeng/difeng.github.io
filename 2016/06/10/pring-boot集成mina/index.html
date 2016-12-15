@@ -8,29 +8,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="spring 和mina集成总结，spring 的配置就不做过多的介绍了，主要将mina如何配置到spring中做个介绍
 
-配置思路： 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给mina来管理。
+配置思路： 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给spring来管理。
 
 配置样例比如以下mina的server初始化代码
-1234567891011121314151617181920 //创建socket套接字SocketA">
+1234567891011121314151617181920 //创建socket套接字Socke">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring集成mina">
 <meta property="og:url" content="http://yoursite.com/2016/06/10/pring-boot集成mina/index.html">
 <meta property="og:site_name" content="difeng">
 <meta property="og:description" content="spring 和mina集成总结，spring 的配置就不做过多的介绍了，主要将mina如何配置到spring中做个介绍
 
-配置思路： 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给mina来管理。
+配置思路： 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给spring来管理。
 
 配置样例比如以下mina的server初始化代码
-1234567891011121314151617181920 //创建socket套接字SocketA">
-<meta property="og:updated_time" content="2016-06-13T14:54:56.041Z">
+1234567891011121314151617181920 //创建socket套接字Socke">
+<meta property="og:updated_time" content="2016-06-23T06:15:01.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring集成mina">
 <meta name="twitter:description" content="spring 和mina集成总结，spring 的配置就不做过多的介绍了，主要将mina如何配置到spring中做个介绍
 
-配置思路： 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给mina来管理。
+配置思路： 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给spring来管理。
 
 配置样例比如以下mina的server初始化代码
-1234567891011121314151617181920 //创建socket套接字SocketA">
+1234567891011121314151617181920 //创建socket套接字Socke">
   
   
     <link rel="icon" href="/favicon.png">
@@ -249,7 +249,7 @@
       
         <p>spring 和mina集成总结，spring 的配置就不做过多的介绍了，主要将mina如何配置到spring中做个介绍</p>
 <ol>
-<li><p>配置思路：<br> 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给mina来管理。</p>
+<li><p>配置思路：<br> 其实配置过程就是将我们启动mina服务的初始化过程全都配置到spring的配置文件中，交给spring来管理。</p>
 </li>
 <li><p>配置样例<br>比如以下mina的server初始化代码</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//创建socket套接字</span></span><br><span class="line">SocketAcceptor acceptor = <span class="keyword">new</span> NioSocketAcceptor();</span><br><span class="line"><span class="comment">//创建IO过滤器链</span></span><br><span class="line">DefaultIoFilterChainBuilder chain = <span class="keyword">new</span> DefaultIoFilterChainBuilder();</span><br><span class="line"><span class="comment">//序列化编解码工厂对象</span></span><br><span class="line">ObjectSerializationCodecFactory codec = <span class="keyword">new</span> ObjectSerializationCodecFactory();</span><br><span class="line"><span class="comment">//心跳工厂类</span></span><br><span class="line">KeepAliveMessageFactoryImpl kamfi = <span class="keyword">new</span> KeepAliveMessageFactoryImpl();</span><br><span class="line"><span class="comment">//心跳过滤器</span></span><br><span class="line">KeepAliveFilter kaf = <span class="keyword">new</span> KeepAliveFilter(kamfi);</span><br><span class="line">kaf.setForwardEvent(<span class="keyword">false</span>);</span><br><span class="line"><span class="comment">//设置接收心跳的频率</span></span><br><span class="line">kaf.setRequestInterval(<span class="number">30</span>);</span><br><span class="line"><span class="comment">//添加编解码过滤器</span></span><br><span class="line">chain.addLast(<span class="string">"chain"</span>, <span class="keyword">new</span> ProtocolCodecFilter(codec));</span><br><span class="line"><span class="comment">//添加心跳过滤器</span></span><br><span class="line">chain.addLast(<span class="string">"heart"</span>, kaf);</span><br><span class="line"><span class="comment">//设置服务处理类</span></span><br><span class="line">acceptor.setHandler(<span class="keyword">new</span> ServerHandler());</span><br><span class="line">acceptor.bind(<span class="keyword">new</span> InetSocketAddress(<span class="number">30001</span>));</span><br></pre></td></tr></table></figure>

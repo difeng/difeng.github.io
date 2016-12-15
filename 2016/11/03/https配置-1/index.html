@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>https配置 | difeng</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="将http升级到https的实践总结整理如下:分以下几部部分：
+
+https的概念和原理
+openssl自建CA和颁发证书
+证书的使用
+nginx带openssl静态编译1. https的概念和原理在升级http到https之前，一定要先理解好https的原理和整个通信过程，这样才能更清楚理解每一步的配置含义。推荐以下”阮一峰”老师的四篇文章，介绍得非常明白，对我们理解http的工作原理有很大的帮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="https配置">
+<meta property="og:url" content="http://yoursite.com/2016/11/03/https配置-1/index.html">
+<meta property="og:site_name" content="difeng">
+<meta property="og:description" content="将http升级到https的实践总结整理如下:分以下几部部分：
+
+https的概念和原理
+openssl自建CA和颁发证书
+证书的使用
+nginx带openssl静态编译1. https的概念和原理在升级http到https之前，一定要先理解好https的原理和整个通信过程，这样才能更清楚理解每一步的配置含义。推荐以下”阮一峰”老师的四篇文章，介绍得非常明白，对我们理解http的工作原理有很大的帮">
+<meta property="og:updated_time" content="2016-11-05T02:52:46.608Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="https配置">
+<meta name="twitter:description" content="将http升级到https的实践总结整理如下:分以下几部部分：
+
+https的概念和原理
+openssl自建CA和颁发证书
+证书的使用
+nginx带openssl静态编译1. https的概念和原理在升级http到https之前，一定要先理解好https的原理和整个通信过程，这样才能更清楚理解每一步的配置含义。推荐以下”阮一峰”老师的四篇文章，介绍得非常明白，对我们理解http的工作原理有很大的帮">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xawio.com1.z0.glb.clouddn.com/fangao.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">difeng</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>關於</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/生活随笔">随笔</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/difeng" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="/dudizidream@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/SOA框架dubbo/" style="font-size: 10px;">SOA框架dubbo</a> <a href="/tags/java多线程/" style="font-size: 10px;">java多线程</a> <a href="/tags/java并发编程/" style="font-size: 10px;">java并发编程</a> <a href="/tags/jmeter/" style="font-size: 10px;">jmeter</a> <a href="/tags/jvm监控/" style="font-size: 10px;">jvm监控</a> <a href="/tags/markdown编辑器/" style="font-size: 10px;">markdown编辑器</a> <a href="/tags/mysql数据库/" style="font-size: 15px;">mysql数据库</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 15px;">spring</a> <a href="/tags/spring-boot/" style="font-size: 10px;">spring-boot</a> <a href="/tags/storm/" style="font-size: 10px;">storm</a> <a href="/tags/分形学/" style="font-size: 10px;">分形学</a> <a href="/tags/日志工具/" style="font-size: 10px;">日志工具</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">difeng</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xawio.com1.z0.glb.clouddn.com/fangao.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">difeng</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/生活随笔">随笔</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/difeng" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="/dudizidream@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-https配置-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/03/https配置-1/" class="article-date">
+  	<time datetime="2016-11-03T15:46:12.000Z" itemprop="datePublished">2016-11-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      https配置
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>将http升级到https的实践总结整理如下:<br>分以下几部部分：</p>
+<ul>
+<li>https的概念和原理</li>
+<li>openssl自建CA和颁发证书</li>
+<li>证书的使用</li>
+<li>nginx带openssl静态编译<h2 id="1-_https的概念和原理">1. https的概念和原理</h2>在升级http到https之前，一定要先理解好https的原理和整个通信过程，这样才能更清楚理解每一步的配置含义。推荐以下”阮一峰”老师的四篇文章，介绍得非常明白，对我们理解http的工作原理有很大的帮助。</li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="external">《HTTPS 协议概述》</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="external">《图解 HTTPS 协议》</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html" target="_blank" rel="external">《HTTPS 协议的七个误解》</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/09/ssl-latency.html" target="_blank" rel="external">《HTTPS 协议的延迟有多大？》</a></li>
+</ul>
+<h2 id="2-_openssl自建CA和颁发证书">2. openssl自建CA和颁发证书</h2><h3 id="2-1_PKI（英语：Public_Key_Infrastructure，缩写：PKI）">2.1 PKI（英语：Public Key Infrastructure，缩写：PKI）</h3><p>公开密钥基础建设（英语：Public Key Infrastructure，缩写：PKI），又称公开密钥基础架构、公钥基础建设、公钥基础设施或公钥基础架构，是一组由硬件、软件、参与者、管理政策与流程组成的基础架构，其目的在于创造、管理、分配、使用、存储以及撤销数字证书。<br>密码学上，公开密钥基础建设借着数字证书认证机构(CA)将用户的个人身份跟公开密钥链接在一起。对每个证书中心用户的身份必须是唯一的。链接关系通过注册和发布过程创建，取决于担保级别，链接关系可能由CA的各种软件或在人为监督下完成。PKI的确定链接关系的这一角色称为注册管理中心（Registration Authority，RA）。RA确保公开密钥和个人身份链接，可以防抵赖。<br>可信赖的第三者（Trusted third party，TTP）也常被用来指证书中心。PKI有时被错误地拿来代表公开密钥密码学或公开密钥算法。</p>
+<h3 id="2-2_CA(Certificate_Authority_缩写)">2.2 CA(Certificate Authority 缩写)</h3><p>数字证书认证机构，也称为电子商务认证中心、电子商务认证授权机构，是负责发放和管理数字证书的权威机构，并作为电子商务交易中受信任的第三方，承担公钥体系中公钥的合法性检验的责任。CA负责管理PKI结构下的所有用户(包括各种应用程序)的证书，把用户的公钥和用户的其他信息捆绑在一起，在网上验证用户的身份。CA机构的数字签名使得攻击者不能伪造和篡改证书。</p>
+<h3 id="2-3_使用OpenSSL自建CA">2.3 使用OpenSSL自建CA</h3><p>OpenSSL 是一个开放源码的软件，它由三部分功能组成：加密算法库，证书封装管理功能，实现TLS/SSL的功能。下面就基于OpenSSL来制作证书。</p>
+<h4 id="制作CA根证书">制作CA根证书</h4><p>选择一个服务器当做CA（证书授权中心）服务器。<br>这里以CentOS 6.5为例，使用openssl来制作<br>   CentOS 6.5 系统的ssl证书的目录结构如下所示：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/etc/pki/CA/</span><br><span class="line">            newcerts    存放CA签署（颁发）过的数字证书（证书备份目录）</span><br><span class="line">            private     用于存放CA的私钥</span><br><span class="line">            crl         吊销的证书</span><br><span class="line">/etc/pki/tls/</span><br><span class="line">             cert.pem    软链接到certs/ca-bundle.crt</span><br><span class="line">             certs/      该服务器上的证书存放目录，可以放自己的证书和内置证书</span><br><span class="line">                   ca-bundle.crt    内置信任的证书</span><br><span class="line">             private    证书密钥存放目录</span><br><span class="line">             openssl.cnf    openssl的CA主配置文件</span><br></pre></td></tr></table></figure></p>
+<p>颁发证书：<br>CA首先要有一个根证书，使用此根证书才能颁发证书给别人。在生成根证书之前应先修改好CA的配置文件、序列号、索引等等。<br>修改配置文件vi /etc/pki/tls/openssl.cnf：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">[ CA_default ]</span><br><span class="line"></span><br><span class="line">dir		= /etc/pki/CA		<span class="comment"># Where everything is kept</span></span><br><span class="line">certs		= <span class="variable">$dir</span>/certs		<span class="comment"># Where the issued certs are kept</span></span><br><span class="line">crl_dir		= <span class="variable">$dir</span>/crl		<span class="comment"># Where the issued crl are kept</span></span><br><span class="line">database	= <span class="variable">$dir</span>/index.txt	<span class="comment"># database index file.</span></span><br><span class="line"><span class="comment">#unique_subject	= no			# Set to 'no' to allow creation of</span></span><br><span class="line">					<span class="comment"># several ctificates with same subject.</span></span><br><span class="line">new_certs_dir	= <span class="variable">$dir</span>/newcerts		<span class="comment"># default place for new certs.</span></span><br><span class="line"></span><br><span class="line">certificate	= <span class="variable">$dir</span>/cacert.pem 	<span class="comment"># The CA certificate</span></span><br><span class="line">serial		= <span class="variable">$dir</span>/serial 		<span class="comment"># The current serial number</span></span><br><span class="line">crlnumber	= <span class="variable">$dir</span>/crlnumber	<span class="comment"># the current crl number</span></span><br><span class="line">					<span class="comment"># must be commented out to leave a V1 CRL</span></span><br><span class="line">crl		= <span class="variable">$dir</span>/crl.pem 		<span class="comment"># The current CRL</span></span><br><span class="line">private_key	= <span class="variable">$dir</span>/private/cakey.pem<span class="comment"># The private key</span></span><br><span class="line">RANDFILE	= <span class="variable">$dir</span>/private/.rand	<span class="comment"># private random number file</span></span><br><span class="line">...</span><br><span class="line">default_days	= <span class="number">365</span>			<span class="comment"># how long to certify for</span></span><br><span class="line">default_crl_days= <span class="number">30</span>			<span class="comment"># how long before next CRL</span></span><br><span class="line">default_md	= default		<span class="comment"># use public key default MD</span></span><br><span class="line">preserve	= no			<span class="comment"># keep passed DN ordering</span></span><br><span class="line"><span class="comment"># A few difference way of specifying how similar the request should look</span></span><br><span class="line"><span class="comment"># For type CA, the listed attributes must be the same, and the optional</span></span><br><span class="line"><span class="comment"># and supplied fields are just that :-)</span></span><br><span class="line">policy		= policy_match</span><br><span class="line"><span class="comment"># For the CA policy</span></span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br><span class="line"><span class="comment"># For the 'anything' policy</span></span><br><span class="line"><span class="comment"># At this point in time, you must list all acceptable 'object'</span></span><br><span class="line"><span class="comment"># types.</span></span><br><span class="line">[ policy_anything ]</span><br><span class="line">countryName		= optional</span><br><span class="line">stateOrProvinceName	= optional</span><br><span class="line">localityName		= optional</span><br><span class="line">organizationName	= optional</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress</span><br><span class="line">...</span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line">countryName                     = Country Name (<span class="number">2</span> letter code)</span><br><span class="line">countryName_default             = CN</span><br><span class="line">countryName_min                 = <span class="number">2</span></span><br><span class="line">countryName_max                 = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">stateOrProvinceName             = State or Province Name (full name)</span><br><span class="line"><span class="comment">#stateOrProvinceName_default    = Default Province</span></span><br><span class="line"></span><br><span class="line">localityName                    = Locality Name (eg, city)</span><br><span class="line">localityName_default    = BJ</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>配置项都有说明，可按需求去配置。<br>修改配置文件后在CA目录下创建两个初始文件：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">touch index.txt serial</span><br><span class="line"><span class="built_in">echo</span> <span class="number">01</span> &gt; serial</span><br></pre></td></tr></table></figure></p>
+<p>生成根密钥<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/pki/CA/</span><br><span class="line">openssl genrsa -out private/cakey.pem <span class="number">2048</span></span><br></pre></td></tr></table></figure></p>
+<p>使用req命令生成自签根证书：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -x509 -key private/cakey.pem -out cacert.pem</span><br></pre></td></tr></table></figure></p>
+<p>会提示输入一些内容，因为是私有的，所以可以随便输入（之前修改的openssl.cnf会在这里呈现），最好记住能与后面保持一致。上面的自签证书cacert.pem应该生成在/etc/pki/CA下。<br>以上操作均在CA服务器上操作，生成的根证书主要是用来给下面的web服务来签署证书用的</p>
+<h3 id="2-4_颁发证书">2.4 颁发证书</h3><p>先要生成待CA签名的证书文件，步骤如下:<br>为nginx服务器生成ssl密钥<br>在nginx服务器上生成ssl的密钥<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx/ssl</span><br><span class="line">openssl genrsa -out nginx.key <span class="number">2048</span></span><br></pre></td></tr></table></figure></p>
+<p>为nginx服务器生成待CA签名的证书文件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx/conf/ssl</span><br><span class="line">openssl req -new -key nginx.key -out nginx.csr</span><br></pre></td></tr></table></figure></p>
+<p>用CA来签署证书<br>这个必学在CA服务器上执行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -req -in nginx.csr -CA /etc/pki/CA/cacert.pem -CAkey /etc/pki/CA/private/cakey.pem -CAcreateserial –out nginx.crt</span><br></pre></td></tr></table></figure></p>
+<p>生成的nginx.crt就是CA颁发的证书。</p>
+<h2 id="3-_证书使用">3. 证书使用</h2><p>这里以nignx和tomcat为例来说明，也就是使用通用部署架构，前面是nginx，后面是tomcat，这样只需要在nginx端配置ssl即可，tomcat基本不需要更改。</p>
+<h4 id="3-1_nginx的ssl配置,在server中配置">3.1 nginx的ssl配置,在server中配置</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">....</span><br><span class="line">        listen <span class="number">8088</span> ssl;</span><br><span class="line">        ssl on;</span><br><span class="line">        <span class="comment">#证书文件</span></span><br><span class="line">        ssl_certificate /usr/<span class="built_in">local</span>/nginx/conf/ssl/nginx.crt;</span><br><span class="line">        <span class="comment">#私钥文件</span></span><br><span class="line">        ssl_certificate_key /usr/<span class="built_in">local</span>/nginx/conf/ssl/nginx.key;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在server的location块中添加<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">              proxy_redirect off; </span><br><span class="line">              proxy_<span class="built_in">set</span>_header Host <span class="variable">$host</span>:<span class="variable">$server_port</span>;</span><br><span class="line">              proxy_<span class="built_in">set</span>_header X-Real-IP <span class="variable">$remote_addr</span>; </span><br><span class="line">              <span class="comment">#请求标题可帮助您识别客户端用于连接您的服务器的协议（HTTP 或 HTTPS）</span></span><br><span class="line">              proxy_<span class="built_in">set</span>_header X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">              <span class="comment">#请求标头可帮助您识别客户端的 IP 地址</span></span><br><span class="line">              proxy_<span class="built_in">set</span>_header X-Forwarded-For           <span class="variable">$proxy_add_x_forwarded_for</span>; </span><br><span class="line">              <span class="comment">#请求标头可帮助您识别负载均衡器用于连接到客户端的端口</span></span><br><span class="line">              proxy_<span class="built_in">set</span>_header X-Forwarded-Port <span class="variable">$server_port</span>;</span><br><span class="line">              proxy_pass      http://webservice;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p>顺便解释一下这几个变量确切含义</p>
+<ul>
+<li><p>X-Forwarded-For</p>
+</li>
+<li><p>X-Forwarded-Proto</p>
+</li>
+<li>X-Forwarded-Port</li>
+</ul>
+<p>X-Forwarded-For</p>
+<p>在您使用 HTTP 或 HTTPS 负载均衡器时，X-Forwarded-For 请求标头可帮助您识别客户端的 IP 地址。因为负载均衡器会拦截客户端和服务器之间的流量，因此您的服务器访问日志中将仅含有负载均衡器的 IP 地址。如需查看客户端的 IP 地址，使用 X-Forwarded-For 请求标题。Elastic Load Balancing 会在 X-Forwarded-For 请求标头中存储客户端的 IP 地址，并将标头传递到您的服务器。</p>
+<p>X-Forwarded-For 请求标题将采用以下形式：</p>
+<p>X-Forwarded-For: clientIPAddress<br>下面是 IP 地址为 203.0.113.7 的客户端的 X-Forwarded-For 请求标头的示例。</p>
+<p>X-Forwarded-For: 203.0.113.7<br>下面是 IPv6 地址为 2001:DB8::21f:5bff:febf:ce22:8a2e 的客户端的 X-Forwarded-For 请求标头的示例。</p>
+<p>X-Forwarded-For: 2001:DB8::21f:5bff:febf:ce22:8a2e<br>如果请求流经了多个代理，则 X-Forwarded-For 请求标头中的 clientIPAddress 后面跟有在请求到达负载均衡器之前连续流经的各个代理的 IP 地址。因此，最右侧的 IP 地址是最近代理的 IP 地址，最左侧的 IP 地址是原始客户端的 IP 地址。在这种情况下，X-Forwarded-For 请求标头采用以下形式：</p>
+<p>X-Forwarded-For: OriginatingClientIPAddress, proxy1-IPAddress, proxy2-IPAddress<br>X-Forwarded-Proto</p>
+<p>X-Forwarded-Proto 请求标题可帮助您识别客户端用于连接您的服务器的协议（HTTP 或 HTTPS）。您的服务器访问日志仅包含在服务器和负载均衡器之间使用的协议；不含任何关于在客户端和负载均衡器之间使用的协议之信息。如需判断在客户端和负载均衡器之间使用的协议，使用 X-Forwarded-Proto 请求标题。Elastic Load Balancing 会在 X-Forwarded-Proto 请求标题中存储客户端和负载均衡器之间使用的协议，并随后将标题传递到您的服务器。</p>
+<p>您的应用程序或网站可以使用存储在 X-Forwarded-Proto 请求标题中的协议来表现重新导向至适用 URL 的响应。</p>
+<p>X-Forwarded-Proto 请求标题将采用以下形式：</p>
+<p>X-Forwarded-Proto: originatingProtocol<br>下例中包含的 X-Forwarded-Proto 请求标题源自作为 HTTPS 请求生成自客户端的请求：</p>
+<p>X-Forwarded-Proto: https<br>X-Forwarded-Port</p>
+<p>X-Forwarded-Port 请求标头可帮助您识别 HTTP 或 HTTPS 负载均衡器用于连接到客户端的端口。</p>
+<p>配置完必须重启nginx</p>
+<h4 id="3-2_tomcat配置">3.2 tomcat配置</h4><p>在Host里添加value节点<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;Host name=<span class="string">"localhost"</span>  appBase=<span class="string">"webapps"</span></span><br><span class="line">            unpackWARs=<span class="string">"true"</span> autoDeploy=<span class="string">"true"</span>&gt;</span><br><span class="line">        &lt;Valve className=<span class="string">"org.apache.catalina.valves.AccessLogValve"</span> directory=<span class="string">"logs"</span></span><br><span class="line">               prefix=<span class="string">"localhost_access_log."</span> suffix=<span class="string">".txt"</span></span><br><span class="line">               pattern=<span class="string">"%h %l %u %t &amp;quot;%r&amp;quot; %s %b"</span> /&gt;</span><br><span class="line"></span><br><span class="line">          &lt;Valve className=<span class="string">"org.apache.catalina.valves.RemoteIpValve"</span></span><br><span class="line">                  //以下四项是要配置的内容</span><br><span class="line">                  remoteIpHeader=<span class="string">"x-forwarded-for"</span></span><br><span class="line">                  remoteIpProxiesHeader=<span class="string">"x-forwarded-by"</span></span><br><span class="line">                  protocolHeader=<span class="string">"x-forwarded-proto"</span></span><br><span class="line">                  portHeader=<span class="string">"X-Forwarded-Port"</span></span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line">      &lt;/Host&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样配置完后，其实就是client和nginx 之间是https，而nginx和tomcat之间是http。一定要注意tomcat中的配置，这几个配置很重要：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  &lt;Valve className=<span class="string">"org.apache.catalina.valves.RemoteIpValve"</span></span><br><span class="line">                  remoteIpHeader=<span class="string">"x-forwarded-for"</span></span><br><span class="line">                  remoteIpProxiesHeader=<span class="string">"x-forwarded-by"</span></span><br><span class="line">                  protocolHeader=<span class="string">"x-forwarded-proto"</span></span><br><span class="line">                  portHeader=<span class="string">"X-Forwarded-Port"</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>没有必要tomcat和nginx都做ssl<br>验证配置是否生效<br>启动tomcat和nginx<br>可通过浏览器访问来验证，原来的网站<br>这里顺便记录一下，java如何调用https的webservice<br>首先必须制作java的keystore文件（用来存放信任证书的一种文件），使用keytool来制作，目的就是把openssl制作的证书添加到java的信任证书文件中。<br>将证书转为pkcs12 证书<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -export -clcerts -in nginx.crt -inkey nginx.key -out server.p12</span><br></pre></td></tr></table></figure></p>
+<p>这里需要输入一个密码<br>转换为jks的格式<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -importkeystore -srckeystore server.p12 -destkeystore server.jks -srcstoretype pkcs12 -deststoretype jks</span><br></pre></td></tr></table></figure></p>
+<p>然后我们可以验证下jks是否包含了完整的证书链<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -list -v -keystore server.jks</span><br></pre></td></tr></table></figure></p>
+<p>java客户端在调用webservice的时候，需要在客户端实例生成前添加如下代码,确保实例使用的是https，以前的调用方式不变。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//jks文件路径</span></span><br><span class="line">System.setProperty(<span class="string">"javax.net.ssl.keyStore"</span>, <span class="string">"jks_file_path"</span>);</span><br><span class="line"><span class="comment">//生成jks文件时设置的密码</span></span><br><span class="line">System.setProperty(<span class="string">"javax.net.ssl.keyStorePassword"</span>, <span class="string">"your_set_pwd"</span>);</span><br><span class="line"><span class="comment">//jks文件路径</span></span><br><span class="line">System.setProperty(<span class="string">"javax.net.ssl.trustStore"</span>, <span class="string">"jks_file_path"</span>);</span><br><span class="line"><span class="comment">//生成jks文件时设置的密码</span></span><br><span class="line">System.setProperty(<span class="string">"javax.net.ssl.trustStorePassword"</span>, <span class="string">"your_set_pwd"</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-_编译带openssl的nginx">4. 编译带openssl的nginx</h2><p>由于nginx的ssl模块依赖于openssl的库，所以编译安装时有两种方法：<br>一是系统先安装好要求版本的openssl，二是下载openssl源码，编译nginx时指定带openssl编译。两种方式各有利弊，这里介绍第二种方式。<br>下载ngnix源码包<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://nginx.org/download/nginx-<span class="number">1.9</span>.<span class="number">9</span>.tar.gz</span><br><span class="line">```	</span><br><span class="line">下载openssl</span><br><span class="line">```sh	</span><br><span class="line">wget https://www.openssl.org/<span class="built_in">source</span>/openssl-<span class="number">1.0</span>.<span class="number">2</span>h.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>下载pcre，nginx的url rewrite模块需要，也可以不安装nginx 的url rewrite模块，这样就可跳过本步骤，编译时指定不安装url rewrite模块就行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://sourceforge.net/projects/pcre/files/pcre/<span class="number">8.37</span>/pcre-<span class="number">8.37</span>.tar.gz/download</span><br></pre></td></tr></table></figure></p>
+<p>编译安装<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nginx-<span class="number">1.9</span>.<span class="number">9</span>.tar.gz</span><br><span class="line">tar -zxvf pcre-<span class="number">8.37</span>.tar.gz</span><br><span class="line">tar -zxvf openssl-<span class="number">1.0</span>.<span class="number">2</span>h.tar.gz</span><br><span class="line"><span class="built_in">cd</span> nginx-<span class="number">1.9</span>.<span class="number">9</span></span><br><span class="line">./configure --prefix=/usr/<span class="built_in">local</span>/nginx --with-http_ssl_module --with-openssl=../openssl-<span class="number">1.0</span>.<span class="number">2</span>h --with-pcre=../pcre-<span class="number">8.37</span></span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">```	</span><br><span class="line">检查版本</span><br><span class="line">```sh</span><br><span class="line">/usr/<span class="built_in">local</span>/nginx/sbin/nginx -v</span><br><span class="line">nginx version: nginx/<span class="number">1.9</span>.<span class="number">9</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/07/03/javamail通过socks代理发送邮件（使用danted-server作为socks代理）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">javamail通过socks代理发送邮件（使用danted-server作为socks代理）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="https配置-1" data-title="https配置" data-url="http://yoursite.com/2016/11/03/https配置-1/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 difeng
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>javamail通过socks代理发送邮件（使用danted-server作为socks代理） | difeng</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. 下载danted-server的源码包从官网下载源码包1wget http://www.inet.no/dante/files/dante-1.4.1.tar.gz
+2. 编译源码编译很标准,就是configure,make,install1tar -zxvf  dante-1.4.1.tar.gz&amp;#10;cd dante-1.4.1&amp;#10;./configue&amp;#10;make&amp;#10">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javamail通过socks代理发送邮件（使用danted-server作为socks代理）">
+<meta property="og:url" content="http://yoursite.com/2016/07/03/javamail通过socks代理发送邮件（使用danted-server作为socks代理）/index.html">
+<meta property="og:site_name" content="difeng">
+<meta property="og:description" content="1. 下载danted-server的源码包从官网下载源码包1wget http://www.inet.no/dante/files/dante-1.4.1.tar.gz
+2. 编译源码编译很标准,就是configure,make,install1tar -zxvf  dante-1.4.1.tar.gz&amp;#10;cd dante-1.4.1&amp;#10;./configue&amp;#10;make&amp;#10">
+<meta property="og:updated_time" content="2016-09-28T12:33:46.662Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javamail通过socks代理发送邮件（使用danted-server作为socks代理）">
+<meta name="twitter:description" content="1. 下载danted-server的源码包从官网下载源码包1wget http://www.inet.no/dante/files/dante-1.4.1.tar.gz
+2. 编译源码编译很标准,就是configure,make,install1tar -zxvf  dante-1.4.1.tar.gz&amp;#10;cd dante-1.4.1&amp;#10;./configue&amp;#10;make&amp;#10">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xawio.com1.z0.glb.clouddn.com/fangao.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">difeng</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>關於</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/生活随笔">随笔</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/difeng" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="/dudizidream@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/SOA框架dubbo/" style="font-size: 10px;">SOA框架dubbo</a> <a href="/tags/java多线程/" style="font-size: 10px;">java多线程</a> <a href="/tags/java并发编程/" style="font-size: 10px;">java并发编程</a> <a href="/tags/jmeter/" style="font-size: 10px;">jmeter</a> <a href="/tags/jvm监控/" style="font-size: 10px;">jvm监控</a> <a href="/tags/markdown编辑器/" style="font-size: 10px;">markdown编辑器</a> <a href="/tags/mysql数据库/" style="font-size: 15px;">mysql数据库</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 15px;">spring</a> <a href="/tags/spring-boot/" style="font-size: 10px;">spring-boot</a> <a href="/tags/storm/" style="font-size: 10px;">storm</a> <a href="/tags/分形学/" style="font-size: 10px;">分形学</a> <a href="/tags/日志工具/" style="font-size: 10px;">日志工具</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">difeng</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xawio.com1.z0.glb.clouddn.com/fangao.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">difeng</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/生活随笔">随笔</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/difeng" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="/dudizidream@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-javamail通过socks代理发送邮件（使用danted-server作为socks代理）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/03/javamail通过socks代理发送邮件（使用danted-server作为socks代理）/" class="article-date">
+  	<time datetime="2016-07-02T16:28:00.000Z" itemprop="datePublished">2016-07-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      javamail通过socks代理发送邮件（使用danted-server作为socks代理）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-_下载danted-server的源码包">1. 下载danted-server的源码包</h3><p>从官网下载源码包<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.inet.no/dante/files/dante-1.4.1.tar.gz</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-_编译源码">2. 编译源码</h3><p>编译很标准,就是configure,make,install<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf  dante-1.4.1.tar.gz&#10;cd dante-1.4.1&#10;./configue&#10;make&#10;make install</span><br></pre></td></tr></table></figure></p>
+<p>编译过程很顺畅，基本不会有什么问题。</p>
+<h3 id="3-_配置详解">3. 配置详解</h3><p>配置文件中的一段说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The config file is divided into three parts;&#10;#    1) server settings&#10;#    2) rules&#10;#    3) routes&#10;#&#10;# The recommended order is:&#10;#   Server settings:&#10;#               logoutput&#10;#               internal&#10;#               external&#10;#               socksmethod&#10;#               clientmethod&#10;#               users&#10;#               compatibility&#10;#               extension&#10;#               timeout&#10;#               srchost&#10;#&#10;#  Rules:&#10;#        client block/pass&#10;#                from to&#10;#                libwrap&#10;#                log&#10;#&#10;#     block/pass&#10;#                from to&#10;#                socksmethod&#10;#                command&#10;#                libwrap&#10;#                log&#10;#                protocol&#10;#                proxyprotocol&#10;#</span><br></pre></td></tr></table></figure></p>
+<p>配置分为三块：<br>a). 通用设置，server setting:<br>由如下几项：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#26085;&#24535;&#37197;&#32622;&#10;/var/log/sockd.log&#10;#&#25509;&#25910;&#36830;&#25509;&#30340;&#22320;&#22336;&#21644;&#31471;&#21475;&#10;internal: 192.168.1.32 port = 1080&#10;#&#20174;&#26381;&#21153;&#22120;&#30340;&#25152;&#26377;&#20256;&#20986;&#30340;&#36830;&#25509;&#23558;&#20351;&#29992;&#30340;IP&#22320;&#22336;&#10;external: 192.168.1.32</span><br></pre></td></tr></table></figure></p>
+<p>b). rules,规则配置 :<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#35748;&#35777;methods&#37197;&#32622;&#65292;&#20004;&#31181;&#35748;&#35777;&#35268;&#21017;&#10;clientmethod &#21015;&#20986;client pass/client block rules&#20013;&#20351;&#29992;&#21040;&#30340;method,&#24212;&#29992;&#22312;socks&#21327;&#35758;&#21327;&#21830;&#20043;&#21069;&#25110;&#20854;&#20013;&#10;&#10;socksmethod &#21015;&#20986;&#35748;&#35777;&#30340;&#30340;methods&#65292;&#36825;&#20123;method&#23558;&#22312;client pass/client block rules&#20013;&#20351;&#29992;&#65292;&#19988;&#22312;SOCKS&#21327;&#35758;&#21327;&#21830;&#23436;&#21518;&#20351;&#29992;&#10;&#10;socksmethod &#20855;&#20307;&#21442;&#25968;&#24847;&#24605;&#10;&#10;none  &#19981;&#38656;&#35201;&#35748;&#35777;&#10;username  &#29992;&#25143;&#21517;&#23494;&#30721;&#10;rfc931  &#38656;&#35201;&#29992;&#25143;&#20027;&#26426;&#25552;&#20379;&#19968;&#20010;rfc931 reply&#65292;&#36825;&#20010;reply&#24517;&#39035;&#21305;&#37197;&#19968;&#20010;/etc/passwd&#20013;&#30340;&#29992;&#25143;&#21517;&#10;pam &#36890;&#36807;PAM&#26041;&#24335;&#35748;&#35777;&#10;&#10;clientmethod: none&#10;&#10;#&#29992;&#25143;&#36523;&#20221;&#35748;&#35777;&#10;# &#38656;&#35201;&#28041;&#21450;&#29305;&#27530;&#26435;&#38480;&#30340;&#25805;&#20316;&#65292;&#21487;&#25351;&#23450;&#29305;&#26435;&#29992;&#25143;&#10;# userid &#34;sockd&#34;.&#10;user.privileged: sockd&#10;&#10;# &#19968;&#33324;&#24773;&#20917;&#19979;&#23558;&#20351;&#29992;unprivileged&#29992;&#25143;&#10;user.unprivileged: sockd&#10;&#10;# &#22914;&#26524;&#26410;&#20351;&#29992; libwrap,&#20197;&#19979;&#21487;&#20197;&#19981;&#37197;&#32622;&#10;#&#35774;&#32622;&#29992;&#20160;&#20040;&#29992;&#25143;&#25191;&#34892;libwrap&#21629;&#20196;&#10;#user.libwrap: libwrap&#10;&#10;&#10;# &#20801;&#35768;&#20351;&#29992;&#30340;&#23458;&#25143;&#31471;&#37197;&#32622;&#65292;&#21253;&#25324;&#31471;&#21475;&#30340;&#33539;&#22260;&#10;client pass &#123;&#10;        from: 192.168.0.0/0 port 1-65535 to: 0.0.0.0/0&#10;        clientmethod: rfc931 # &#21305;&#37197;&#25152;&#26377;&#35748;&#35777;&#30340;&#29992;&#25143;&#26159;&#21542;&#37117;&#35748;&#35777;&#10;&#125;&#10;#&#33509;&#37197;&#32622;&#22810;&#20010;client pass&#35268;&#21017;&#65292;&#26159;&#25353;&#39034;&#24207;&#25191;&#34892;&#35268;&#21017;&#30340;&#65292;&#24403;&#21069;&#19968;&#20010;&#22833;&#36133;&#65292;&#21017;&#25191;&#34892;&#21518;&#19968;&#20010;&#65292;&#30452;&#21040;&#25104;&#21151;&#12290;&#10;&#10;#&#38459;&#27490;&#19981;&#26159;&#26412;&#32593;&#32476;&#30340;&#25152;&#26377;client&#30340;&#36830;&#25509;&#65292;&#20063;&#21487;&#20197;&#35774;&#32622;&#20855;&#20307;&#20123;&#65292;&#38480;&#21046;&#26412;&#32593;&#32476;&#20013;&#26576;&#20123;&#22320;&#22336;&#27573;&#30340;&#35775;&#38382;&#10;client block &#123;&#10;        from: 0.0.0.0/0 to: 0.0.0.0/0&#10;        log: connect error&#10;&#125;&#10;&#10;&#10;# &#20801;&#35768;&#36830;&#25509;&#30340;&#22320;&#22336;&#65292;192.168.1.0/24 &#36825;&#20123;&#22320;&#22336;&#26159;&#20801;&#35768;&#35775;&#38382;&#30340;&#10;# &#20801;&#35768;&#25152;&#26377;&#30340;tcp&#21644;udp&#21327;&#35758;&#30340;socks&#10;socks pass &#123;&#10;        from: 192.168.1.0/24 to: 0.0.0.0/0&#10;        protocol: tcp udp&#10;&#125;&#10;&#10;#&#38459;&#27490;&#26576;&#20123;ip&#22320;&#22336;&#30340;&#35775;&#38382;&#65292;&#36825;&#37324;&#22635;&#30340;&#26159;&#38459;&#27490;&#25152;&#26377;&#26412;&#32593;&#32476;&#20043;&#22806;&#30340;ip&#30340;&#35775;&#38382;&#10;socks block &#123;&#10;        from: 0.0.0.0/0 to: 0.0.0.0/0&#10;        log: connect error&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>c). routes设置,可以将接收到的固定协议的连接转到固定的代理服务上去，如下边的两个示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">##route to UPnP server&#10;# route &#123;&#10;#         from: 0.0.0.0/0 to: .example.org&#10;#             via: http://192.0.2.2:1900/InternetGatewayDevice.xml&#10;#         proxyprotocol: upnp&#10;#         method: none&#10;# &#125;&#10;&#10;##route to HTTP proxy&#10;#route &#123;                                                             &#10;#        from: 0.0.0.0/0 to: 0.0.0.0/0 via: 10.1.1.1 port = 3128    &#10;#        command: connect # only thing a httproxy supports.     &#10;#        protocol: tcp&#10;#        proxyprotocol: http_v1.0                                    &#10;#&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-_javamail通过socks代理来发邮件。">4. javamail通过socks代理来发邮件。</h3><p>示例：<br>socks代理(danted-server服务器)：192.168.1.118 port：1080<br>javamail发送端：192.168.1.32<br>代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MailUtils</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sendMail</span><span class="params">()</span> <span class="keyword">throws</span> AddressException, MessagingException </span>&#123;</span><br><span class="line">       Properties props = System.getProperties();</span><br><span class="line">       <span class="comment">//socksProxyHost,socksProxyPort是sock代理的全局配置</span></span><br><span class="line">       <span class="comment">//props.setProperty("socksProxyHost","192.168.1.118");</span></span><br><span class="line">       <span class="comment">//props.setProperty("socksProxyPort","1080");</span></span><br><span class="line">       <span class="comment">//mail.smtp.socks.host，mail.smtp.socks.port只针对smtp协议的sock连接</span></span><br><span class="line">	   props.setProperty(<span class="string">"mail.smtp.socks.host"</span>, <span class="string">"192.168.1.118"</span>);</span><br><span class="line">       props.setProperty(<span class="string">"mail.smtp.socks.port"</span>, <span class="string">"1080"</span>);</span><br><span class="line">       props.setProperty(<span class="string">"mail.smtp.host"</span>, <span class="string">"smtp.163.com"</span>);</span><br><span class="line">       props.setProperty(<span class="string">"mail.smtp.port"</span>, <span class="string">"465"</span>); </span><br><span class="line">       props.setProperty(<span class="string">"mail.smtp.auth"</span>, <span class="string">"true"</span>);</span><br><span class="line">       props.setProperty(<span class="string">"mail.debug"</span>, <span class="string">"true"</span>);</span><br><span class="line">	   props.put(<span class="string">"mail.smtp.ssl.enable"</span>, <span class="string">"true"</span>);</span><br><span class="line">       <span class="keyword">final</span> String username = <span class="string">"sender@163.com"</span>;</span><br><span class="line">       <span class="keyword">final</span> String password = <span class="string">"password"</span>;</span><br><span class="line">       Session session = Session.getDefaultInstance(props,</span><br><span class="line">                            <span class="keyword">new</span> Authenticator()&#123;</span><br><span class="line">                               <span class="function"><span class="keyword">protected</span> PasswordAuthentication <span class="title">getPasswordAuthentication</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                                  <span class="keyword">return</span> <span class="keyword">new</span> PasswordAuthentication(username, password);</span><br><span class="line">                               &#125;&#125;);</span><br><span class="line">       Message msg = <span class="keyword">new</span> MimeMessage(session);</span><br><span class="line">       msg.setFrom(<span class="keyword">new</span> InternetAddress(<span class="string">"sender@domain"</span>));</span><br><span class="line">       msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(<span class="string">"recipient@domain"</span>,<span class="keyword">false</span>));</span><br><span class="line">       msg.setSubject(<span class="string">"Hello"</span>);</span><br><span class="line">       msg.setText(<span class="string">"How are you"</span>);</span><br><span class="line">       msg.setSentDate(<span class="keyword">new</span> Date());</span><br><span class="line">       Transport.send(msg);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">try</span> &#123;</span><br><span class="line">			sendMail();</span><br><span class="line">		&#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意上面代码中的如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> //1.socksProxyHost,socksProxyPort&#26159;sock&#20195;&#29702;&#30340;&#20840;&#23616;&#37197;&#32622;&#10; //props.setProperty(&#34;socksProxyHost&#34;,&#34;192.168.1.118&#34;);&#10; //props.setProperty(&#34;socksProxyPort&#34;,&#34;1080&#34;);&#10; //2.mail.smtp.socks.host&#65292;mail.smtp.socks.port&#21482;&#38024;&#23545;smtp&#21327;&#35758;&#30340;sock&#36830;&#25509;&#10;props.setProperty(&#34;mail.smtp.socks.host&#34;, &#34;192.168.1.118&#34;);&#10; props.setProperty(&#34;mail.smtp.socks.port&#34;, &#34;1080&#34;);</span><br></pre></td></tr></table></figure></p>
+<p>socksProxyHost、socksProxyPort这两个属性对此jvm进程中的所有sock连接都有效,mail.smtp.socks.host、mail.smtp.socks.port两个属性只对stmp协议的sock有效，所以如果只是发邮件需要代理而其他不需要代理，则可以按配置2来设置</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/03/https配置-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          https配置
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/16/spring-boot下Servlet容器Tomcat和Undertow性能对比/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">spring boot下Servlet容器Tomcat和Undertow性能对比</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="javamail通过socks代理发送邮件（使用danted-server作为socks代理）" data-title="javamail通过socks代理发送邮件（使用danted-server作为socks代理）" data-url="http://yoursite.com/2016/07/03/javamail通过socks代理发送邮件（使用danted-server作为socks代理）/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 difeng
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
