@@ -16,8 +16,6 @@
 <meta name="twitter:title" content="difeng">
 <meta name="twitter:description">
   
-    <link rel="alternative" href="/atom.xml" title="difeng" type="application/atom+xml">
-  
   
     <link rel="icon" href="/favicon.png">
   
@@ -105,7 +103,7 @@
 					        
 								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
 					        
-								<a class="rss" target="_blank" href="/atom.xml " title="rss">rss</a>
+								<a class="mail" target="_blank" href="/dudizidream@gmail.com" title="mail">mail</a>
 					        
 						</div>
 					</nav>
@@ -114,7 +112,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/SOA框架dubbo/" style="font-size: 10px;">SOA框架dubbo</a> <a href="/tags/java多线程/" style="font-size: 10px;">java多线程</a> <a href="/tags/java并发编程/" style="font-size: 10px;">java并发编程</a> <a href="/tags/jmeter/" style="font-size: 10px;">jmeter</a> <a href="/tags/jvm监控/" style="font-size: 10px;">jvm监控</a> <a href="/tags/markdown编辑器/" style="font-size: 10px;">markdown编辑器</a> <a href="/tags/mysql数据库/" style="font-size: 15px;">mysql数据库</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 15px;">spring</a> <a href="/tags/storm/" style="font-size: 10px;">storm</a> <a href="/tags/分形学/" style="font-size: 10px;">分形学</a> <a href="/tags/日志工具/" style="font-size: 10px;">日志工具</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+						<a href="/tags/SOA框架dubbo/" style="font-size: 10px;">SOA框架dubbo</a> <a href="/tags/java多线程/" style="font-size: 10px;">java多线程</a> <a href="/tags/java并发编程/" style="font-size: 10px;">java并发编程</a> <a href="/tags/jmeter/" style="font-size: 10px;">jmeter</a> <a href="/tags/jvm监控/" style="font-size: 10px;">jvm监控</a> <a href="/tags/markdown编辑器/" style="font-size: 10px;">markdown编辑器</a> <a href="/tags/mysql数据库/" style="font-size: 15px;">mysql数据库</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 15px;">spring</a> <a href="/tags/spring-boot/" style="font-size: 10px;">spring-boot</a> <a href="/tags/storm/" style="font-size: 10px;">storm</a> <a href="/tags/分形学/" style="font-size: 10px;">分形学</a> <a href="/tags/日志工具/" style="font-size: 10px;">日志工具</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
 					</div>
 				</section>
 				
@@ -188,7 +186,7 @@
 			        
 						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
 			        
-						<a class="rss" target="_blank" href="/atom.xml " title="rss">rss</a>
+						<a class="mail" target="_blank" href="/dudizidream@gmail.com" title="mail">mail</a>
 			        
 				</div>
 			</nav>
@@ -197,6 +195,165 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-spring-boot下Servlet容器Tomcat和Undertow性能对比" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/16/spring-boot下Servlet容器Tomcat和Undertow性能对比/" class="article-date">
+  	<time datetime="2016-06-16T07:57:00.000Z" itemprop="datePublished">2016-06-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/16/spring-boot下Servlet容器Tomcat和Undertow性能对比/">spring boot下Servlet容器Tomcat和Undertow性能对比</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="测试目的：">测试目的：</h2><p>Tomcat和Undertow的性能做对比，确定生产环境调优参数</p>
+<h2 id="测试工具">测试工具</h2><p>压测工具：jmeter<br>jvm监控工具：</p>
+<h2 id="测试过程：">测试过程：</h2><ol>
+<li>设置jmeter的线程组参数，设置如下:100个线程,每个线程发起100个请求,线程启动间隔是1秒<br><img src="http://7xawio.com1.z0.glb.clouddn.com/spring-boot-performace-jmeter_config.png" alt="jmeter线程组参数设置"></li>
+<li>设置请求参数,这里设置的是http，post请求。<br><img src="http://7xawio.com1.z0.glb.clouddn.com/spring-boot-performace-jmeter_request_config.png" alt="jmeter的http request参数设置"></li>
+<li>测试tomcat下的性能表现<br>viusalVm监控结果：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/spring-boot-performace-tomcat-monitor.png" alt="tomcat下的性能监控图"><br>jmeter聚合报告：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/spring-boot-performace-jmeter_tomcat_report.png" alt="jmeter聚合报告-tomcat"></li>
+<li>测试Undertow下的性能表现<br><img src="http://7xawio.com1.z0.glb.clouddn.com/spring-boot-performace-_undertow_monitor.png" alt="undertow下的性能监控图"><br>jmeter聚合报告：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/spring-boot-performace-_undertow_report.png" alt="jmeter聚合报告-undertow"></li>
+</ol>
+<h2 id="测试结果">测试结果</h2><p>  当服务启动后有监控图对比</p>
+<table>
+<thead>
+<tr>
+<th>servlet容器</th>
+<th>使用内存(最大)</th>
+<th>线程数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tomcat</td>
+<td>65M</td>
+<td>122</td>
+</tr>
+<tr>
+<td>undertow</td>
+<td>47M</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<p>  jmeter压测过程中监控结果对比</p>
+<table>
+<thead>
+<tr>
+<th>servlet容器</th>
+<th>使用内存(最大)</th>
+<th>线程数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tomcat</td>
+<td>148M</td>
+<td>19</td>
+</tr>
+<tr>
+<td>undertow</td>
+<td>127M</td>
+<td>47</td>
+</tr>
+</tbody>
+</table>
+<p>  jmeter报告的对比</p>
+<table>
+<thead>
+<tr>
+<th>使用servlet容器</th>
+<th>samples</th>
+<th>Average</th>
+<th>Media</th>
+<th>90%Line</th>
+<th>95%Line</th>
+<th>99%Line</th>
+<th>Min</th>
+<th>Max</th>
+<th>Error%</th>
+<th>Throughput</th>
+<th>KB/Sec</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tomcat</td>
+<td>10000</td>
+<td>166</td>
+<td>122</td>
+<td>247</td>
+<td>359</td>
+<td>1390</td>
+<td>2</td>
+<td>3982</td>
+<td>0.00%</td>
+<td>467.3/sec</td>
+<td>115.1</td>
+</tr>
+<tr>
+<td>undertow</td>
+<td>10000</td>
+<td>151</td>
+<td>113</td>
+<td>270</td>
+<td>375</td>
+<td>788</td>
+<td>3</td>
+<td>2324</td>
+<td>0.00%</td>
+<td>545.4/sec</td>
+<td>132.6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>结论</strong>：<br>在相同资源使用量的情况下undertow有较好的吞吐量和较低的访问时延，所以生产环境<br>以上只是粗略的测试，也不够专业，敬请谅解，但大致能对比出结果。如果大家有更好的测试方法，欢迎交流，可邮件联系。</p>
+<p>参考资料：<br>Spring Boot 性能优化:<br><a href="http://blog.oneapm.com/apm-tech/385.html" target="_blank" rel="external">OneApm王鹏的分享</a><br><a href="http://www.alexecollins.com/spring-boot-performance/" target="_blank" rel="external">Spring Boot Performance</a></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot/">spring-boot</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-pring-boot集成mina" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -959,65 +1116,6 @@ log4j.additivity后面跟上据体要设置的包或类，类得带完整的包�
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/日志工具/">日志工具</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-storm-kafka-demo" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/19/storm-kafka-demo/" class="article-date">
-  	<time datetime="2015-11-19T13:22:31.000Z" itemprop="datePublished">2015-11-19</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/19/storm-kafka-demo/">storm-kafka使用</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-storm-kafka介绍">1.storm-kafka介绍</h3><p>storm-kafka是storm自带的从kafka上获取消息的kafka客户端程序。<br>提供kafka和Trident的spout实现从kafka消费数据。</p>
-<h3 id="2-storm-kafka的使用实例">2.storm-kafka的使用实例</h3><p>maven的依赖配置文件,要注意strom-kafka是使用的kafka的低级api，因此也要引用kafka的包。如果不引，虽然编译不报错，但运行时会报错，我在初次使用时就是因为这个原因一直有问题。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.storm<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>storm-core<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">version</span>&gt;</span>0.9.5<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.storm<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>storm-kafka<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">version</span>&gt;</span>0.9.5<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.kafka<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>kafka_2.10<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">version</span>&gt;</span>0.8.1.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">exclusions</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">exclusion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.zookeeper<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>zookeeper<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">exclusion</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">exclusion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">exclusion</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>下面是我写的一个demo<br>具体步骤如下<br>1.new BrokerHosts<br>  需要的参数zookeeper的地址<br>2.new SpoutConfig<br> 构建SpoutConfig，需要设置BrokerHosts，kafka的topic，strom在zookeeper上的根等相关的参数。<br>3.new TopologyBuilder<br> 给TopologyBuilder设置Soupt和Boult用于构建一个Topology<br>4.配置Config并设置参数，启动LocalCluster，提交topology任务。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.BrokerHosts;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.KafkaSpout;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.SpoutConfig;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.StringScheme;</span><br><span class="line"><span class="keyword">import</span> storm.kafka.ZkHosts;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.Config;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.LocalCluster;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.spout.SchemeAsMultiScheme;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.task.OutputCollector;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.task.TopologyContext;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.topology.OutputFieldsDeclarer;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.topology.TopologyBuilder;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.topology.base.BaseRichBolt;</span><br><span class="line"><span class="keyword">import</span> backtype.storm.tuple.Tuple;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * <span class="doctag">@Description</span>:strom-kafka 使用</span><br><span class="line"> * <span class="doctag">@author</span>:duyongfeng</span><br><span class="line"> * <span class="doctag">@time</span>:2015年11月18日 上午10:18:31</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StormKafkaConsumer</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PingCounter</span> <span class="keyword">extends</span> <span class="title">BaseRichBolt</span></span>&#123;</span><br><span class="line">		<span class="comment">/**</span><br><span class="line">		 * </span><br><span class="line">		 */</span></span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">		<span class="keyword">private</span> OutputCollector collector;</span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Tuple input)</span> </span>&#123;</span><br><span class="line">			String msg = input.getString(<span class="number">0</span>);</span><br><span class="line">			System.out.println(<span class="string">"---------------------"</span> + msg + <span class="string">"-----------------"</span>);</span><br><span class="line">			collector.ack(input);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(Map arg0, TopologyContext arg1, OutputCollector arg2)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.collector = arg2;</span><br><span class="line">            System.out.println(<span class="string">"++++++++++++++++++++prepare++++++++++++++++++++++++++++++++++"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">declareOutputFields</span><span class="params">(OutputFieldsDeclarer arg0)</span> </span>&#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">			 System.out.println(<span class="string">"++++++++++++++++++++declareOutputFields+++++++++++++++++++++"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	    <span class="comment">//zookeeper的服务器地址</span></span><br><span class="line">		String zks = <span class="string">"192.168.1.50:2181,192.168.1.57:2181,192.168.1.58:2181"</span>;</span><br><span class="line">	    <span class="comment">//消息的topic</span></span><br><span class="line">		String topic = <span class="string">"data_icmp_ping"</span>;</span><br><span class="line">		<span class="comment">//strom在zookeeper上的根</span></span><br><span class="line">		String zkRoot = <span class="string">"/storm"</span>; </span><br><span class="line">		String id = <span class="string">"data_icmp_ping"</span>;</span><br><span class="line">		BrokerHosts brokerHosts = <span class="keyword">new</span> ZkHosts(zks);</span><br><span class="line">		SpoutConfig spoutConf = <span class="keyword">new</span> SpoutConfig(brokerHosts, topic, zkRoot, id);</span><br><span class="line">		spoutConf.scheme = <span class="keyword">new</span> SchemeAsMultiScheme(<span class="keyword">new</span> StringScheme());</span><br><span class="line">		spoutConf.forceFromStart = <span class="keyword">true</span>;</span><br><span class="line">		spoutConf.zkServers = Arrays.asList(<span class="keyword">new</span> String[] &#123;<span class="string">"192.168.1.50,192.168.1.57,192.168.1.58"</span>&#125;);</span><br><span class="line">		spoutConf.zkPort = <span class="number">2181</span>;</span><br><span class="line">		</span><br><span class="line">		TopologyBuilder builder = <span class="keyword">new</span> TopologyBuilder();</span><br><span class="line">		builder.setSpout(<span class="string">"kafka-reader"</span>, <span class="keyword">new</span> KafkaSpout(spoutConf),<span class="number">3</span>); </span><br><span class="line">		builder.setBolt(<span class="string">"ping-counter"</span>, <span class="keyword">new</span> PingCounter(),<span class="number">3</span>).shuffleGrouping(<span class="string">"kafka-reader"</span>);</span><br><span class="line">		Config conf = <span class="keyword">new</span> Config();</span><br><span class="line">        conf.setDebug(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//设置任务线程数</span></span><br><span class="line">        conf.setMaxTaskParallelism(<span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">        LocalCluster cluster = <span class="keyword">new</span> LocalCluster();</span><br><span class="line">		cluster.submitTopology(<span class="string">"test"</span>, conf, builder.createTopology());</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Thread.sleep(<span class="number">60000</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		cluster.shutdown();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/storm/">storm</a></li></ul>
 	</div>
 
       
