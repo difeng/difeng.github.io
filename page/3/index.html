@@ -196,6 +196,78 @@
 
       <div class="body-wrap">
   
+    <article id="post-java-btrace" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/28/java-btrace/" class="article-date">
+  	<time datetime="2015-07-28T10:06:39.000Z" itemprop="datePublished">2015-07-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/28/java-btrace/">java性能监控工具Btrace的使用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-btrace的简介">1.btrace的简介</h3><p>BTrace是java平台上一种安全的，动态的跟踪工具。BTrace可用于动态跟踪运行中的Java程序。Btrace可以在目标程序的字节码中中注入跟踪代码(字节码跟踪)。</p>
+<h3 id="2-btrace的安装（以linux平台为例）">2.btrace的安装（以linux平台为例）</h3><p>去Btrace的官网下载Btrace安装包btrace-bin.tar.gz，这里下的是1.2.5.1的版本<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# wget https://kenai.com/projects/btrace/downloads/download/releases/release-1.2.5.1/btrace-bin.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>将下载下来的btrace解压到目标文件夹。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mkdir /usr/local/btrace&#10;[root@localhost ~]# tar -zxvf btrace-bin.tar.gz -C /usr/local/btrace</span><br></pre></td></tr></table></figure></p>
+<p>然后配置BTRACE_HOME，编辑/etc/profile文件，在path中加入btrace。<br>BTRACE_HOME的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export BTRACE_HOME=/usr/local/btrace</span><br></pre></td></tr></table></figure></p>
+<p>将btrace加入到path中。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$BTRACE_HOME/bin</span><br></pre></td></tr></table></figure></p>
+<p>配置完成后在命令行输入btrace，即可看到如下信息。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># btrace</span></span><br><span class="line">Usage: btrace &lt;options&gt; &lt;pid&gt; &lt;btrace <span class="built_in">source</span> or .class file&gt; &lt;btrace arguments&gt;</span><br><span class="line"><span class="built_in">where</span> possible options include:</span><br><span class="line">  -classpath &lt;path&gt; Specify <span class="built_in">where</span> to find user class files and annotation processors</span><br><span class="line">  -cp &lt;path&gt;        Specify <span class="built_in">where</span> to find user class files and annotation processors</span><br><span class="line">  -I &lt;path&gt;         Specify <span class="built_in">where</span> to find include files</span><br><span class="line">  -p &lt;port&gt;         Specify port to <span class="built_in">which</span> the btrace agent listens <span class="keyword">for</span> clients</span><br></pre></td></tr></table></figure></p>
+<p>3.编写待监控的程序。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Case1</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		CaseObject caseObject = <span class="keyword">new</span> CaseObject();</span><br><span class="line">		Random random = <span class="keyword">new</span> Random();</span><br><span class="line">		<span class="keyword">boolean</span> ret = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">while</span>(ret)&#123;</span><br><span class="line">        	caseObject.execute(random.nextInt(<span class="number">1000</span>));</span><br><span class="line">        	Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CaseObject</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">execute</span><span class="params">(<span class="keyword">int</span> sleepTime)</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"sleep:"</span> + sleepTime);</span><br><span class="line">		Thread.sleep(sleepTime);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-写监控脚本">4.写监控脚本</h3><p>a.获取类CaseObject的方法exute调用时传的参数，返回值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="annotation">@BTrace</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CaseTraceMethodArgsAndReturn</span></span>&#123;</span><br><span class="line"><span class="annotation">@OnMethod</span>(</span><br><span class="line">clazz=<span class="string">"com.CaseObject"</span>,</span><br><span class="line">method=<span class="string">"execute"</span>,</span><br><span class="line">location=<span class="annotation">@Location</span>(Kind.RETURN)</span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traceExecute</span><span class="params">(<span class="keyword">int</span>     sleepTime,@Return <span class="keyword">boolean</span> result)</span></span>&#123;</span><br><span class="line">   println(<span class="string">"call CaseObject.execute"</span>);</span><br><span class="line">   println(strcat(<span class="string">"sleepTime is:"</span>,str(sleepTime)));</span><br><span class="line">   println(strcat(<span class="string">"return value is:"</span>,str(result)));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>b.获取excute执行耗时<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"><span class="annotation">@BTrace</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span>  <span class="title">CaseTraceMethodExcuteTime</span></span>&#123;</span><br><span class="line">   <span class="annotation">@OnMethod</span>(clazz = <span class="string">"com.CaseObject"</span>, method = <span class="string">"execute"</span>,location =       <span class="annotation">@Location</span>(Kind.RETURN))</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">onExecuteReturn</span><span class="params">(@Duration <span class="keyword">long</span> durationL)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> duration = (<span class="keyword">int</span>) durationL / <span class="number">1000000</span>;</span><br><span class="line">        println(strcat(<span class="string">"excute method time is "</span>,strcat(str(duration),<span class="string">" ms "</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>c.获取方法的调用者<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"><span class="annotation">@BTrace</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CaseTraceMethodInvoker</span></span>&#123;</span><br><span class="line">   <span class="annotation">@OnMethod</span>(clazz = <span class="string">"com.CaseObject"</span>, method = <span class="string">"execute"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getInvoker</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       println(<span class="string">"who call CaseObject.execute :"</span>);</span><br><span class="line">       jstack();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="5-运行监控脚本">5.运行监控脚本</h3><p>a.编译被监测程序<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost demo]# javac com/Case1.java</span><br></pre></td></tr></table></figure></p>
+<p>b.监控程序启动<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost demo]# java com/Case1&#10;[root@localhost demo]# java com/Case1&#10;sleep:426&#10;sleep:160&#10;sleep:515</span><br></pre></td></tr></table></figure></p>
+<p>c.通过jps获取被监控程序的进程号<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# jps&#10;19354 Jps&#10;19272 Case1</span><br></pre></td></tr></table></figure></p>
+<p>d.执行监控脚本<br>获取方法执行参数和返回值<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# btrace -cp build/ -p 2021 19272 CaseTraceMethodArgsAndReturn.java  &#10;call CaseObject.execute&#10;sleepTime is:578&#10;return value is:true</span><br></pre></td></tr></table></figure></p>
+<p>获取方法的执行时间<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# btrace -cp build/ -p 2021 19272 CaseTraceMethodExcuteTime.java &#10;excute method time is 282 ms &#10;excute method time is 81 ms</span><br></pre></td></tr></table></figure></p>
+<p>获取方法的调用者<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost btrace]# btrace -cp build/ -p 2021 19272 CaseTraceMethodInvoker.java &#10;who call CaseObject.execute :&#10;com.CaseObject.execute(Case1.java)&#10;com.Case1.main(Case1.java:11)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm监控/">jvm监控</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-mysql-replication" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -780,61 +852,9 @@
 
 
   
-    <article id="post-fly" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/05/fly/" class="article-date">
-  	<time datetime="2015-03-05T15:40:17.000Z" itemprop="datePublished">2015-03-05</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/05/fly/">fly</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 </div>
@@ -842,7 +862,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2016 difeng
+    		&copy; 2017 difeng
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten

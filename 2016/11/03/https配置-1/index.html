@@ -22,7 +22,7 @@ https的概念和原理
 openssl自建CA和颁发证书
 证书的使用
 nginx带openssl静态编译1. https的概念和原理在升级http到https之前，一定要先理解好https的原理和整个通信过程，这样才能更清楚理解每一步的配置含义。推荐以下”阮一峰”老师的四篇文章，介绍得非常明白，对我们理解http的工作原理有很大的帮">
-<meta property="og:updated_time" content="2016-11-05T02:52:46.608Z">
+<meta property="og:updated_time" content="2016-12-21T06:14:50.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="https配置">
 <meta name="twitter:description" content="将http升级到https的实践总结整理如下:分以下几部部分：
@@ -265,7 +265,7 @@ nginx带openssl静态编译1. https的概念和原理在升级http到https之前
 <p>会提示输入一些内容，因为是私有的，所以可以随便输入（之前修改的openssl.cnf会在这里呈现），最好记住能与后面保持一致。上面的自签证书cacert.pem应该生成在/etc/pki/CA下。<br>以上操作均在CA服务器上操作，生成的根证书主要是用来给下面的web服务来签署证书用的</p>
 <h3 id="2-4_颁发证书">2.4 颁发证书</h3><p>先要生成待CA签名的证书文件，步骤如下:<br>为nginx服务器生成ssl密钥<br>在nginx服务器上生成ssl的密钥<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx/ssl</span><br><span class="line">openssl genrsa -out nginx.key <span class="number">2048</span></span><br></pre></td></tr></table></figure></p>
 <p>为nginx服务器生成待CA签名的证书文件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx/conf/ssl</span><br><span class="line">openssl req -new -key nginx.key -out nginx.csr</span><br></pre></td></tr></table></figure></p>
-<p>用CA来签署证书<br>这个必学在CA服务器上执行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -req -in nginx.csr -CA /etc/pki/CA/cacert.pem -CAkey /etc/pki/CA/private/cakey.pem -CAcreateserial –out nginx.crt</span><br></pre></td></tr></table></figure></p>
+<p>用CA来签署证书<br>这个必学在CA服务器上执行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -days <span class="number">36500</span> -req -in nginx.csr -CA /etc/pki/CA/cacert.pem -CAkey /etc/pki/CA/private/cakey.pem -CAcreateserial -out nginx.crt</span><br></pre></td></tr></table></figure></p>
 <p>生成的nginx.crt就是CA颁发的证书。</p>
 <h2 id="3-_证书使用">3. 证书使用</h2><p>这里以nignx和tomcat为例来说明，也就是使用通用部署架构，前面是nginx，后面是tomcat，这样只需要在nginx端配置ssl即可，tomcat基本不需要更改。</p>
 <h4 id="3-1_nginx的ssl配置,在server中配置">3.1 nginx的ssl配置,在server中配置</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">....</span><br><span class="line">        listen <span class="number">8088</span> ssl;</span><br><span class="line">        ssl on;</span><br><span class="line">        <span class="comment">#证书文件</span></span><br><span class="line">        ssl_certificate /usr/<span class="built_in">local</span>/nginx/conf/ssl/nginx.crt;</span><br><span class="line">        <span class="comment">#私钥文件</span></span><br><span class="line">        ssl_certificate_key /usr/<span class="built_in">local</span>/nginx/conf/ssl/nginx.key;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -309,6 +309,15 @@ nginx带openssl静态编译1. https的概念和原理在升级http到https之前
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/12/22/跳跃列表-Skip-list-原理和实现/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          跳跃列表(Skip list)原理和实现
+        
+      </div>
+    </a>
   
   
     <a href="/2016/07/03/javamail通过socks代理发送邮件（使用danted-server作为socks代理）/" id="article-nav-older" class="article-nav-link-wrap">
@@ -372,7 +381,7 @@ nginx带openssl静态编译1. https的概念和原理在升级http到https之前
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2016 difeng
+    		&copy; 2017 difeng
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten

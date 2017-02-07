@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>跳跃列表(Skip list)原理和实现 | difeng</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="跳跃列表原理和实现1.跳跃列表简介：跳跃列表是一种随机化的数据结构，基于并联的链表，其效率可比拟于二叉查找树。基本上，跳跃列表是对有序的链表增加上附加的前进连接，增加是以随机化的方式进行的，所以在列表中的查找可以快速地跳过部分列表，因此而得名。所有操作都以对数随机化时间进行。以上简介摘自-维基百科-跳跃列表
+2.跳跃列表的产生思想有序链表大家都熟悉，假如有一个如下的有序链表：查找元素23,得从头结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跳跃列表(Skip list)原理和实现">
+<meta property="og:url" content="http://yoursite.com/2016/12/22/跳跃列表-Skip-list-原理和实现/index.html">
+<meta property="og:site_name" content="difeng">
+<meta property="og:description" content="跳跃列表原理和实现1.跳跃列表简介：跳跃列表是一种随机化的数据结构，基于并联的链表，其效率可比拟于二叉查找树。基本上，跳跃列表是对有序的链表增加上附加的前进连接，增加是以随机化的方式进行的，所以在列表中的查找可以快速地跳过部分列表，因此而得名。所有操作都以对数随机化时间进行。以上简介摘自-维基百科-跳跃列表
+2.跳跃列表的产生思想有序链表大家都熟悉，假如有一个如下的有序链表：查找元素23,得从头结">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/skiplist-1.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/skiplist-2.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/skiplist-3.png">
+<meta property="og:image" content="http://7xawio.com1.z0.glb.clouddn.com/skiplist-4.png">
+<meta property="og:updated_time" content="2016-12-23T07:23:29.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="跳跃列表(Skip list)原理和实现">
+<meta name="twitter:description" content="跳跃列表原理和实现1.跳跃列表简介：跳跃列表是一种随机化的数据结构，基于并联的链表，其效率可比拟于二叉查找树。基本上，跳跃列表是对有序的链表增加上附加的前进连接，增加是以随机化的方式进行的，所以在列表中的查找可以快速地跳过部分列表，因此而得名。所有操作都以对数随机化时间进行。以上简介摘自-维基百科-跳跃列表
+2.跳跃列表的产生思想有序链表大家都熟悉，假如有一个如下的有序链表：查找元素23,得从头结">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xawio.com1.z0.glb.clouddn.com/fangao.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">difeng</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>關於</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/生活随笔">随笔</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/difeng" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="/dudizidream@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/SOA框架dubbo/" style="font-size: 10px;">SOA框架dubbo</a> <a href="/tags/java多线程/" style="font-size: 10px;">java多线程</a> <a href="/tags/java并发编程/" style="font-size: 10px;">java并发编程</a> <a href="/tags/jmeter/" style="font-size: 10px;">jmeter</a> <a href="/tags/jvm监控/" style="font-size: 10px;">jvm监控</a> <a href="/tags/markdown编辑器/" style="font-size: 10px;">markdown编辑器</a> <a href="/tags/mysql数据库/" style="font-size: 15px;">mysql数据库</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 15px;">spring</a> <a href="/tags/spring-boot/" style="font-size: 10px;">spring-boot</a> <a href="/tags/storm/" style="font-size: 10px;">storm</a> <a href="/tags/分形学/" style="font-size: 10px;">分形学</a> <a href="/tags/日志工具/" style="font-size: 10px;">日志工具</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">difeng</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xawio.com1.z0.glb.clouddn.com/fangao.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">difeng</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/生活随笔">随笔</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/difeng" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="/dudizidream@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-跳跃列表-Skip-list-原理和实现" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/22/跳跃列表-Skip-list-原理和实现/" class="article-date">
+  	<time datetime="2016-12-22T12:59:12.000Z" itemprop="datePublished">2016-12-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      跳跃列表(Skip list)原理和实现
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="跳跃列表原理和实现">跳跃列表原理和实现</h1><h3 id="1-跳跃列表简介：">1.跳跃列表简介：</h3><p>跳跃列表是一种随机化的数据结构，基于并联的链表，其效率可比拟于二叉查找树。基本上，跳跃列表是对有序的链表增加上附加的前进连接，增加是以随机化的方式进行的，所以在列表中的查找可以快速地跳过部分列表，因此而得名。所有操作都以对数随机化时间进行。<br>以上简介摘自-<a href="https://zh.wikipedia.org/wiki/%E8%B7%B3%E8%B7%83%E5%88%97%E8%A1%A8" target="_blank" rel="external">维基百科-跳跃列表</a></p>
+<h3 id="2-跳跃列表的产生思想">2.跳跃列表的产生思想</h3><p>有序链表大家都熟悉，假如有一个如下的有序链表：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/skiplist-1.png" alt=""><br>查找元素23,得从头结点开始依次遍历节点直到找到此节点。这样如果链表很长，而正要查找的元素位于链表比较靠后的位置，则就相当于全部遍历。</p>
+<p>怎么能使查找变快呢？可否跳过中间的一些节点呢？<br>基于这样的想法，我们可以大胆假想链表如下结构：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/skiplist-2.png" alt=""><br>假如在构造此链表的时候，我们构造了另一个链表，它指向原链表中的元素，只不过它中间跳过一些节点，但任然是按照原链表顺序将其中元素串起来，这样在查找过程中可以跳过一些节点。既然构造一个可以，那多个呢？但是插入，删除元素呢会有什么问题呢？基于这些疑问，接下来我们看看跳跃列表的详细构造和描述。</p>
+<h3 id="3-跳跃表的构造和描述">3.跳跃表的构造和描述</h3><p>跳跃表描述:</p>
+<ul>
+<li>一个跳跃列表由几层组成</li>
+<li>底层包含所有元素</li>
+<li>每一层都是一个有序链表</li>
+<li>在层 i 中的元素按某个固定的概率 p (通常为0.5或0.25)出现在层 i+1 中(也就是说高层中的元素必然在低层)</li>
+<li>第i层的某个元素可以向下访问与它有相同值的下层节点<br>如下所示：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level 4&#65306;1&#10;level 3&#65306;1-----4---6&#10;level 2&#65306;1---3-4---6-----9&#10;level 1&#65306;1-2-3-4-5-6-7-8-9-10</span><br></pre></td></tr></table></figure>
+<p>也skiplist的cookbook：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/skiplist-3.png" alt=""><br>下来说一下跳跃表的插入，删除，查询的操作<br>插入操作步骤：</p>
+<ul>
+<li>1.从顶层链表开始遍历,寻找插入点。<br>具体：<br>插入元素x和当前指向的节点的值y比较：<br>x &lt; y:从当前查找位置，下降一层<br>x &gt; y:继续向前遍历<br>重复上面步骤直到结束。遍历时记录每一层的最后遍历位置，这里用update表示，也就是要插入的位置。</li>
+<li><p>2.申请新节点，将新元素放入，随机产生一个层数。如果层数大于当前跳跃表的层数，扩大1步骤中的层记录，将新层的值修改为头节点。</p>
+</li>
+<li><p>3.将update记录的指向对应层的指针指向新的节点，新节点的各个层的指针指向后一个节点。（和普通链表的插入时调整指针是类似的,只不过这里是多层调整）</p>
+</li>
+<li>4.修改跳跃列表的层数</li>
+</ul>
+<p>图解：<br><img src="http://7xawio.com1.z0.glb.clouddn.com/skiplist-4.png" alt=""><br>图为元素21找到插入位置后，然后将前面的红箭头都指向21，21指向23</p>
+<p>删除操作：</p>
+<ul>
+<li>1.从顶层链表开始遍历,寻找删除位置点。<br> 具体：<br> 插入元素x和当前指向的节点的值y比较：<br> x &lt; y:从当前查找位置，下降一层<br> x &gt; y:继续向前遍历<br> 重复上面步骤直到结束。遍历时记录每一层的最后遍历位置，这里用update表示，也就是要删除的元素。</li>
+<li>2.取出最底层的最后遍历位置的元素，与要删除的元素对比，如果相等，则此元素是要删除的元素，与插入类似，将update记录的对应层的指针指修改为删除节点上的对应层上的指针值（和普通链表的删除时调整指针是类似的，只不过这里是多层调整），释放</li>
+<li>4.修改跳跃列表的层数。</li>
+</ul>
+<h3 id="4-跳跃表的实现">4.跳跃表的实现</h3><p>节点类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SkipNode</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">    K k;</span><br><span class="line">    V v;</span><br><span class="line">    SkipNode&lt;K,V&gt;[] forward; </span><br><span class="line">    </span><br><span class="line">    <span class="annotation">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">SkipNode</span><span class="params">(K k,V v,<span class="keyword">int</span> level)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">this</span>.k = k;</span><br><span class="line">    	<span class="keyword">this</span>.v = v;</span><br><span class="line">    	forward = (SkipNode&lt;K,V&gt;[])<span class="keyword">new</span> SkipNode[level + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; level;i++) &#123;</span><br><span class="line">        	forward[i] = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"SkipNode [k="</span> + k + <span class="string">", v="</span> + v + <span class="string">", forward="</span> + Arrays.toString(forward) + <span class="string">"]"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>跳跃列表类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SkipList</span>&lt;<span class="title">K</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;? <span class="title">super</span> <span class="title">K</span>&gt;,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">	SkipNode&lt;K,V&gt; head;</span><br><span class="line">	<span class="keyword">int</span> level;</span><br><span class="line">	<span class="keyword">int</span> size;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">SkipList</span><span class="params">()</span></span>&#123;</span><br><span class="line">		head = <span class="keyword">new</span> SkipNode&lt;K,V&gt;(<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="number">0</span>);</span><br><span class="line">		<span class="comment">//刚开始只有一层，也就是第0层</span></span><br><span class="line">		level = <span class="number">0</span>;</span><br><span class="line">		size = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * <span class="doctag">@Description</span>:随机生成层数</span><br><span class="line">	 * <span class="doctag">@return</span>:int</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">randomLevel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> lev;</span><br><span class="line">		<span class="keyword">for</span>(lev = <span class="number">1</span>;Util.random(<span class="number">2</span>) == <span class="number">0</span>;lev++);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> lev;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(K k,V v)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> newLevel = randomLevel();</span><br><span class="line">		<span class="comment">//调整头节点</span></span><br><span class="line">		<span class="keyword">if</span>(newLevel &gt; level)&#123;</span><br><span class="line">			SkipNode&lt;K,V&gt; tmp = head;</span><br><span class="line">			head = <span class="keyword">new</span> SkipNode&lt;K,V&gt;(<span class="keyword">null</span>,<span class="keyword">null</span>,newLevel);</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; tmp.forward.length;i++)&#123;</span><br><span class="line">				head.forward[i] = tmp.forward[i];</span><br><span class="line">			&#125;</span><br><span class="line">			level = newLevel;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="annotation">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">		SkipNode&lt;K,V&gt;[] update = <span class="keyword">new</span> SkipNode[level + <span class="number">1</span>];</span><br><span class="line">		SkipNode&lt;K,V&gt; x = head;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = level;i &gt;= <span class="number">0</span>;i--) &#123;</span><br><span class="line">			<span class="keyword">while</span>(x.forward[i] != <span class="keyword">null</span> &amp;&amp; x.forward[i].k.compareTo(k) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">				x = x.forward[i];</span><br><span class="line">			&#125;</span><br><span class="line">			update[i] = x;</span><br><span class="line">		&#125;</span><br><span class="line">		x = x.forward[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">if</span>(x != <span class="keyword">null</span> &amp;&amp; x.k != <span class="keyword">null</span> &amp;&amp; x.k.compareTo(k) == <span class="number">0</span>) &#123;</span><br><span class="line">			x.v = v;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			x = <span class="keyword">new</span> SkipNode&lt;K,V&gt;(k,v,newLevel);</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; newLevel;i++) &#123;</span><br><span class="line">				x.forward[i] = update[i].forward[i];</span><br><span class="line">				update[i].forward[i] = x;</span><br><span class="line">			&#125;</span><br><span class="line">			size++;  </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> V <span class="title">find</span><span class="params">(K k)</span> </span>&#123;</span><br><span class="line">		SkipNode&lt;K,V&gt; x = head;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = level;i &gt;= <span class="number">0</span>;i--) &#123;</span><br><span class="line">			<span class="keyword">while</span>(x.forward[i] != <span class="keyword">null</span> &amp;&amp; x.forward[i].k.compareTo(k) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">				x = x.forward[i];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		x = x.forward[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">if</span>(k.compareTo(x.k) == <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> x.v;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(K k)</span> </span>&#123;</span><br><span class="line">		<span class="annotation">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">		SkipNode&lt;K,V&gt;[] update = <span class="keyword">new</span> SkipNode[level + <span class="number">1</span>];</span><br><span class="line">		SkipNode&lt;K,V&gt; x = head;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = level;i &gt;= <span class="number">0</span>;i--) &#123;</span><br><span class="line">			<span class="keyword">while</span>(x.forward[i] != <span class="keyword">null</span> &amp;&amp; x.forward[i].k.compareTo(k) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">				x = x.forward[i];</span><br><span class="line">			&#125;</span><br><span class="line">			update[i] = x;</span><br><span class="line">		&#125;</span><br><span class="line">		x = x.forward[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">if</span>(k.compareTo(x.k) == <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; level;i++) &#123;</span><br><span class="line">				<span class="keyword">if</span>(update[i].forward[i] != x) &#123;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				update[i].forward[i] = x.forward[i];</span><br><span class="line">			&#125;</span><br><span class="line">			x = <span class="keyword">null</span>;</span><br><span class="line">			<span class="keyword">while</span>(level &gt; <span class="number">0</span> &amp;&amp; head.forward[level] == <span class="keyword">null</span>) &#123;</span><br><span class="line">				level = level - <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			size--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * <span class="doctag">@Description</span>:按层输出(只输出key)</span><br><span class="line">	 * <span class="doctag">@return</span>:void</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printKeyByLevel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		SkipNode&lt;K,V&gt;  x = head;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = level - <span class="number">1</span>;i &gt;= <span class="number">0</span>;i--) &#123;</span><br><span class="line">			System.out.print(<span class="string">"level-"</span> + i + <span class="string">":"</span>);</span><br><span class="line">			x = head.forward[<span class="number">0</span>];</span><br><span class="line">			String headCurLevelForward = head.forward[i] != <span class="keyword">null</span>?head.forward[i].k.toString() : <span class="string">"NULL"</span>;</span><br><span class="line">			System.out.print(String.format(<span class="string">"%5s"</span>,headCurLevelForward) + <span class="string">" "</span>);</span><br><span class="line">			<span class="keyword">while</span>(x != <span class="keyword">null</span>) &#123;</span><br><span class="line">				<span class="keyword">if</span>(x.forward.length &lt;= i) &#123;</span><br><span class="line">					System.out.print(String.format(<span class="string">"%5s"</span>,<span class="string">" "</span>) + <span class="string">" "</span>);</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">if</span>(x.forward[i] == <span class="keyword">null</span>) &#123;</span><br><span class="line">						System.out.print(String.format(<span class="string">"%5s"</span>,<span class="string">" "</span>) + <span class="string">" "</span>);</span><br><span class="line">					&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">						System.out.print(String.format(<span class="string">"%5s"</span>, x.forward[i].k) + <span class="string">" "</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				x = x.forward[<span class="number">0</span>];</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * <span class="doctag">@Description</span>:按节点输出(只输出key)</span><br><span class="line">	 * <span class="doctag">@return</span>:void</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printKeyByNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		SkipNode&lt;K,V&gt; x = head;</span><br><span class="line">		<span class="keyword">while</span>(x != <span class="keyword">null</span>) &#123;</span><br><span class="line">			System.out.print(String.format(<span class="string">"%4s forward-size-%s:"</span>,x.k == <span class="keyword">null</span>?<span class="string">"head"</span>:x.k,x.forward.length) + <span class="string">" "</span>);</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; x.forward.length;i++) &#123;</span><br><span class="line">				<span class="keyword">if</span>(x.forward[i] == <span class="keyword">null</span>) &#123;</span><br><span class="line">					System.out.print(String.format(<span class="string">"%3s"</span>,<span class="string">" "</span>) + <span class="string">" "</span>);</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					System.out.print(String.format(<span class="string">"%3s"</span>,x.forward[i].k,x.forward[i].v) + <span class="string">" "</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println();</span><br><span class="line">			x = x.forward[<span class="number">0</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * <span class="doctag">@Description</span>: 随机数生成</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Util</span> </span>&#123;</span><br><span class="line">		<span class="keyword">static</span> Random  random = <span class="keyword">new</span> Random();</span><br><span class="line">		<span class="function"><span class="keyword">public</span>  <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">random</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">return</span> Math.abs(random.nextInt()) % n;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SkipList&lt;Integer,Integer&gt; skipList = <span class="keyword">new</span> SkipList&lt;Integer, Integer&gt;();</span><br><span class="line">		skipList.insert(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">		skipList.insert(<span class="number">5</span>, <span class="number">5</span>);</span><br><span class="line">		skipList.insert(<span class="number">17</span>, <span class="number">17</span>);</span><br><span class="line">		skipList.insert(<span class="number">19</span>, <span class="number">19</span>);</span><br><span class="line">		skipList.insert(<span class="number">23</span>, <span class="number">23</span>);</span><br><span class="line">		skipList.insert(<span class="number">26</span>, <span class="number">26</span>);</span><br><span class="line">		skipList.insert(<span class="number">21</span>, <span class="number">21</span>);</span><br><span class="line">		System.out.println(<span class="string">"printKeyByLevel:"</span>);</span><br><span class="line">		skipList.printKeyByLevel();</span><br><span class="line">		System.out.println(<span class="string">"printKeyByNode:"</span>);</span><br><span class="line">		skipList.printKeyByNode();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果样例：<br>新建跳跃列表，插入元素(1,1),(5,5),(17,17),(19,19)，(21,21)，(23,23)，(26,26)<br>由于是随机化的，所以每次结果都会不一样，所以这里只作为参照。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">printKeyByLevel:</span><br><span class="line">level-<span class="number">4</span>:   <span class="number">17</span>                                           </span><br><span class="line">level-<span class="number">3</span>:   <span class="number">17</span>                                           </span><br><span class="line">level-<span class="number">2</span>:   <span class="number">17</span>                <span class="number">23</span>                         </span><br><span class="line">level-<span class="number">1</span>:    <span class="number">1</span>    <span class="number">17</span>          <span class="number">23</span>                         </span><br><span class="line">level-<span class="number">0</span>:    <span class="number">1</span>     <span class="number">5</span>    <span class="number">17</span>    <span class="number">19</span>    <span class="number">21</span>    <span class="number">23</span>    <span class="number">26</span>       </span><br><span class="line">printKeyByNode:</span><br><span class="line">head forward-size-<span class="number">6</span>:   <span class="number">1</span>   <span class="number">1</span>  <span class="number">17</span>  <span class="number">17</span>  <span class="number">17</span>     </span><br><span class="line">   <span class="number">1</span> forward-size-<span class="number">3</span>:   <span class="number">5</span>  <span class="number">17</span>     </span><br><span class="line">   <span class="number">5</span> forward-size-<span class="number">2</span>:  <span class="number">17</span>     </span><br><span class="line">  <span class="number">17</span> forward-size-<span class="number">6</span>:  <span class="number">19</span>  <span class="number">23</span>  <span class="number">23</span>             </span><br><span class="line">  <span class="number">19</span> forward-size-<span class="number">2</span>:  <span class="number">21</span>     </span><br><span class="line">  <span class="number">21</span> forward-size-<span class="number">2</span>:  <span class="number">23</span>     </span><br><span class="line">  <span class="number">23</span> forward-size-<span class="number">4</span>:  <span class="number">26</span>             </span><br><span class="line">  <span class="number">26</span> forward-size-<span class="number">2</span>:</span><br></pre></td></tr></table></figure></p>
+<p>以上已我看着skiplist的cookbook上的算法实现的，这里做了一点调整，就是在插入元素的时候，先随机生成层数，扩大层调整头节点后，再依次查找，寻找插入位置。也就是将扩大层后对头结点调整的动作提前。<a href="https://github.com/difeng/data-structures-and-algorithms" target="_blank" rel="external">源码连接</a><br>参看资料：</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Skip_list" target="_blank" rel="external">Skip_list</a></li>
+<li><a href="https://zh.wikipedia.org/zh-hans/%E8%B7%B3%E8%B7%83%E5%88%97%E8%A1%A8" target="_blank" rel="external">跳跃列表</a></li>
+<li><a href="http://blog.csdn.net/yang_yulei/article/details/46275283" target="_blank" rel="external">图文翔解SkipList（跳跃表）</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/03/https配置-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">https配置</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="跳跃列表-Skip-list-原理和实现" data-title="跳跃列表(Skip list)原理和实现" data-url="http://yoursite.com/2016/12/22/跳跃列表-Skip-list-原理和实现/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 difeng
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
